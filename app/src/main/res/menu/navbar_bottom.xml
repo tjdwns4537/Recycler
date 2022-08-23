@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/home"
+        android:enabled="true"
+        android:icon="@drawable/ic_home"
+        android:title="홈"
+        app:showAsAction="always"
+        />
+
+    <item
+        android:id="@+id/store"
+        android:enabled="true"
+        android:icon="@drawable/ic_settings"
+        android:title="스토어"
+        app:showAsAction="always"
+        />
+
+    <item
+        android:id="@+id/community"
+        android:enabled="true"
+        android:icon="@drawable/ic_settings"
+        android:title="커뮤니티"
+        app:showAsAction="always"
+        />
+
+    <item
+        android:id="@+id/chatting"
+        android:enabled="true"
+        android:icon="@drawable/ic_settings"
+        android:title="채팅"
+        app:showAsAction="always"
+        />
+
+
+
+    <item
+        android:id="@+id/mypage"
+        android:enabled="true"
+        android:icon="@drawable/ic_home"
+        android:title="마이페이지"
+        app:showAsAction="always"
+        />
+
+    <!--
+    app:showAsAction="always" -> 항상 보이게 표시
+    app:showAsAction="never" -> 항상 overflow 표
+    app:showAsAction="ifRoom" -> 액션바에 공간이 있는 경우 표
+    app:showAsAction="withText" -> 액션바에 아이콘과 텍스트 함께 표시
+
+    -->
+
+
+</menu>
