@@ -1,17 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment.CommunityFragment">
+    tools:context=".Fragment.CommunityFragment"
+    android:weightSum="2"
+    android:orientation="vertical"
+    >
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <!-- 상단 검색바 시작-->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="30sp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="0.2"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:weightSum="100"
         android:layout_gravity="center"
-        android:gravity="center_horizontal"
-        android:text="@string/hello_blank_fragment" />
+        >
+        <ImageButton
+            android:id="@+id/searchImage"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="10"
+            android:background="@drawable/search"
+            />
 
-</FrameLayout>
+        <EditText
+            android:id="@+id/editSearch"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="60"
+            android:hint="검색어를 입력하세요."/>
+
+        <ImageButton
+            android:id="@+id/alarmButton"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="15"
+            android:background="@drawable/ic_settings"
+            android:textSize="15sp" />
+
+        <ImageButton
+            android:id="@+id/scrapButton"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="15"
+            android:background="@drawable/scrap"
+            />
+    </LinearLayout>
+    <!-- 상단 검색바 끝-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.6"
+        android:weightSum="2"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.1"
+            android:layout_marginTop="5dp"
+            android:background="#FAED7D"
+            android:text="카테고리"
+            android:gravity="center"
+            />
+
+        <ListView
+            android:id="@+id/listview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.9"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="10dp"
+
+            android:background="#dedede"/>
+
+    </LinearLayout>
+
+
+    <!-- 하단 고정바 -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigationview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.2"
+        app:labelVisibilityMode="labeled"
+        app:itemBackground="@color/white"
+        app:menu="@menu/navbar_bottom"
+        app:itemTextAppearanceActive="@style/BottomNavigationView.Active"
+        app:itemTextAppearanceInactive="@style/BottomNavigationView"
+        />
+    <!-- 하단 고정바 -->
+
+
+</LinearLayout>

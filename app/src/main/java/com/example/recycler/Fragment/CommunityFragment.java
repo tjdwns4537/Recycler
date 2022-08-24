@@ -2,65 +2,63 @@ package com.example.recycler.Fragment;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ListView;
 
+import com.example.recycler.Activity.ListViewActivity;
+import com.example.recycler.Adapter.ListViewAdapter;
+import com.example.recycler.Adapter.SearchAdapter;
+import com.example.recycler.BearItem;
+import com.example.recycler.MainActivity;
 import com.example.recycler.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CommunityFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.List;
+
 public class CommunityFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public CommunityFragment() {
-        // Required empty public constructor
-    }
-
     /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CommunityFragment.
+     * 현재 프래그먼트 형태가 아닌 액티비티로 동작 중이므로 프래그먼트는 필요 없음
      */
-    // TODO: Rename and change types and number of parameters
-    public static CommunityFragment newInstance(String param1, String param2) {
-        CommunityFragment fragment = new CommunityFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+//    private ListView listview = null;
+//    private ListViewAdapter adapter = new ListViewAdapter();
+//
+//    @Override
+//    public void onCreate(Bundle savedInstanceState) {
+//
+//        super.onCreate(savedInstanceState);
+//
+//    }
+//
+//    @Override
+//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+//                             Bundle savedInstanceState) {
+//
+//        listview = (ListView) getActivity().findViewById(R.id.listview);
+//
+//        //Adapter 안에 아이템의 정보 담기
+//        adapter.addItem(new BearItem("1", "파랑이", R.drawable.ic_settings));
+//        adapter.addItem(new BearItem("2", "민트트", R.drawable.ic_settings));
+//        adapter.addItem(new BearItem("3", "하늘이", R.drawable.ic_settings));
+//        adapter.addItem(new BearItem("4", "하양이", R.drawable.ic_settings));
+//        adapter.addItem(new BearItem("5", "분홍이", R.drawable.ic_settings));
+//        adapter.addItem(new BearItem("6", "노랑이", R.drawable.ic_settings));
+//        adapter.addItem(new BearItem("7", "보라라", R.drawable.ic_settings));
+//        adapter.addItem(new BearItem("8", "믹스스", R.drawable.ic_settings));
+//
+//        //리스트뷰에 Adapter 설정
+//        listview.setAdapter(adapter);
+//
+//        return inflater.inflate(R.layout.fragment_community, container, false);
+//    }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_community, container, false);
-    }
 }
