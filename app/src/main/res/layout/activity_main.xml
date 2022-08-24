@@ -5,26 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp"
-    android:weightSum="2"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+    <!-- 상단 검색바 시작-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_weight="0.2"
         android:layout_marginTop="20dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:weightSum="100"
         android:layout_gravity="center"
         >
         <ImageButton
             android:id="@+id/searchImage"
-            android:layout_width="0dp"
+            android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_weight="10"
             android:background="@drawable/search"
             />
 
@@ -32,46 +29,43 @@
             android:id="@+id/editSearch"
             android:layout_width="0dp"
             android:layout_height="60dp"
-            android:layout_weight="60"
+            android:layout_weight="1"
             android:hint="검색어를 입력하세요."/>
 
         <ImageButton
             android:id="@+id/alarmButton"
-            android:layout_width="0dp"
+            android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_weight="15"
             android:background="@drawable/ic_settings"
-            android:textSize="15sp" />
+            />
 
         <ImageButton
             android:id="@+id/scrapButton"
-            android:layout_width="0dp"
+            android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_weight="15"
             android:background="@drawable/scrap"
             />
     </LinearLayout>
-    <!-- 상단 검색바 -->
+    <!-- 상단 검색바 끝-->
+
+
 
     <FrameLayout
         android:id="@+id/containers"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1.7"
-        >
+        android:layout_weight="1" />
 
-    </FrameLayout>
-    <!-- 하단 고정바 -->
+    <!-- 하단 고정바 시작 -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigationview"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.15"
+        android:layout_height="wrap_content"
         app:labelVisibilityMode="labeled"
         app:itemBackground="@color/white"
         app:menu="@menu/navbar_bottom"
         />
-    <!-- 하단 고정바 -->
+    <!-- 하단 고정바 끝-->
 
 
 </LinearLayout>

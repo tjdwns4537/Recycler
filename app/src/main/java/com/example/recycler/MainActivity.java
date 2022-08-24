@@ -1,7 +1,9 @@
 package com.example.recycler;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -42,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private ChattingFragment chattingFragment;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -52,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
         storeFragment = new StoreFragment();
         communityFragment = new CommunityFragment();
         chattingFragment = new ChattingFragment();
+
+//        FragmentManager fragmentManager = getSupportFragmentManager();
 
         getSupportFragmentManager().beginTransaction().replace(R.id.containers, homeFragment).commit();
 
