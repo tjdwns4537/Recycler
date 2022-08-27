@@ -35,8 +35,6 @@
         app:showAsAction="always"
         />
 
-
-
     <item
         android:id="@+id/mypage"
         android:enabled="true"

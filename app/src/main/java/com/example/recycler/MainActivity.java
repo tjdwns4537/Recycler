@@ -1,9 +1,9 @@
 package com.example.recycler;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,13 +15,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.example.recycler.Activity.ListViewActivity;
-import com.example.recycler.Adapter.SearchAdapter;
-import com.example.recycler.Fragment.ChattingFragment;
-import com.example.recycler.Fragment.CommunityFragment;
-import com.example.recycler.Fragment.HomeFragment;
-import com.example.recycler.Fragment.MypageFragment;
-import com.example.recycler.Fragment.StoreFragment;
+import com.example.recycler.activities.BoardAddActivity;
+import com.example.recycler.activities.ChatMainActivity;
+import com.example.recycler.activities.ListViewActivity;
+import com.example.recycler.adapters.SearchAdapter;
+import com.example.recycler.fragment.ChattingFragment;
+import com.example.recycler.fragment.CommunityFragment;
+import com.example.recycler.fragment.HomeFragment;
+import com.example.recycler.fragment.MypageFragment;
+import com.example.recycler.fragment.StoreFragment;
 import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.ArrayList;
@@ -55,9 +57,10 @@ public class MainActivity extends AppCompatActivity {
         communityFragment = new CommunityFragment();
         chattingFragment = new ChattingFragment();
 
-//        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.containers, homeFragment).commit();
+        transaction.replace(R.id.containers, homeFragment).commit();
 
         NavigationBarView navigationBarView = findViewById(R.id.bottom_navigationview);
         navigationBarView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -66,17 +69,19 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (item.getItemId()){
                     case R.id.home:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.containers, homeFragment).commit();
+                        transaction.replace(R.id.containers, homeFragment).commit();
                     case R.id.store:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.containers, storeFragment).commit();
+                        transaction.replace(R.id.containers, storeFragment).commit();
                     case R.id.community:
-//                        getSupportFragmentManager().beginTransaction().replace(R.id.containers, communityFragment).commit();
+//                        transaction.replace(R.id.containers, communityFragment).commit();
                         Intent intent = new Intent(MainActivity.this, ListViewActivity.class);
                         startActivity(intent);
                     case R.id.chatting:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.containers, chattingFragment).commit();
+                        Intent intent2 = new Intent(MainActivity.this, ChatMainActivity.class);
+                        startActivity(intent2);
+//                        transaction.replace(R.id.containers, chattingFragment).commit();
                     case R.id.mypage:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.containers, mypageFragment).commit();
+//                        transaction.replace(R.id.containers, mypageFragment).commit();
                 }
 
                 return false;
@@ -84,6 +89,18 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // 하단바 끝
+
+        // 게시글 추가 버튼 시작
+        Button button = (Button) findViewById(R.id.boardadd);
+        button.setOnClickListener(new Button.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, BoardAddActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // 게시글 추가 버튼 끝
 
 
         // 상단바 시작

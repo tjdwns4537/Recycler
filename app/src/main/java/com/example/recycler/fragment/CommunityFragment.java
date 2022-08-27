@@ -1,28 +1,38 @@
-package com.example.recycler.Activity;
+package com.example.recycler.fragment;
 
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.example.recycler.Adapter.ListViewAdapter;
+import com.example.recycler.adapters.ListViewAdapter;
 import com.example.recycler.BearItem;
 import com.example.recycler.R;
 
-public class ListViewActivity extends AppCompatActivity {
+public class CommunityFragment extends Fragment {
 
-    private ListView listview = null;
-    private ListViewAdapter adapter = null;
+    /**
+     * 현재 프래그먼트 형태가 아닌 액티비티로 동작 중이므로 프래그먼트는 필요 없음
+     */
+
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_community);
+    public void onCreate(Bundle savedInstanceState) {
 
-        listview = (ListView) findViewById(R.id.listview);
-        adapter = new ListViewAdapter();
+        super.onCreate(savedInstanceState);
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        ListView listview = getActivity().findViewById(R.id.listview);
+        ListViewAdapter adapter = new ListViewAdapter();
 
         //Adapter 안에 아이템의 정보 담기
         adapter.addItem(new BearItem("1", "1번 제목", R.drawable.ic_launcher_background,"1번 내용",1));
@@ -36,9 +46,9 @@ public class ListViewActivity extends AppCompatActivity {
 
         //리스트뷰에 Adapter 설정
         listview.setAdapter(adapter);
+
+        return inflater.inflate(R.layout.fragment_community, container, false);
     }
-
-
 
 
 }

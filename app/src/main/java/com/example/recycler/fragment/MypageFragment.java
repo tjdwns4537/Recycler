@@ -1,4 +1,4 @@
-package com.example.recycler.Fragment;
+package com.example.recycler.fragment;
 
 import android.os.Bundle;
 

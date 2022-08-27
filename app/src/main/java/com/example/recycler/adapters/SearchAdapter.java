@@ -1,4 +1,4 @@
-package com.example.recycler.Adapter;
+package com.example.recycler.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.example.recycler.Fragment.CommunityFragment;
 import com.example.recycler.R;
 
 import java.util.List;

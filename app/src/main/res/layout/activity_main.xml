@@ -67,5 +67,12 @@
         />
     <!-- 하단 고정바 끝-->
 
+    <Button
+        android:id="@+id/boardadd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_settings"
+        />
+
 
 </LinearLayout>

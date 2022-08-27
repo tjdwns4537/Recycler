@@ -1,4 +1,4 @@
-package com.example.recycler.Adapter;
+package com.example.recycler.adapters;
 
 import android.content.Context;
 import android.util.Log;
@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.recycler.Activity.ListViewActivity;
+import com.example.recycler.activities.ListViewActivity;
 import com.example.recycler.BearItem;
 import com.example.recycler.R;
 
