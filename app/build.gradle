@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.application'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -62,6 +63,7 @@ dependencies {
     // Firebase
     implementation 'com.google.firebase:firebase-messaging:23.0.7'
     implementation 'com.google.firebase:firebase-firestore:24.2.2'
+    implementation 'com.google.firebase:firebase-core:9.6.1'
 
     // MultiDex
     implementation 'androidx.multidex:multidex:2.0.1'

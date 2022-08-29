@@ -17,6 +17,8 @@ import com.example.recycler.models.User;
 import com.example.recycler.utilities.Constants;
 import com.example.recycler.utilities.PreferenceManager;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
@@ -39,9 +41,11 @@ public class ChatMainActivity extends BaseActivity implements ConversionListener
     private FirebaseFirestore database;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         binding = ActivityChatmainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         preferenceManager = new PreferenceManager(getApplicationContext());
@@ -50,9 +54,11 @@ public class ChatMainActivity extends BaseActivity implements ConversionListener
         getToken();
         setListeners();
         listenerConversations();
+
     }
 
     private void init(){
+
         conversations = new ArrayList<>();
         conversationsAdapter =  new RecentConversationsAdapter(conversations, this);
         binding.conversationRecyclerView.setAdapter(conversationsAdapter);
