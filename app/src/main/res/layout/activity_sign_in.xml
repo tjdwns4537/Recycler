@@ -19,11 +19,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_40sdp"
-            android:text="@string/welcome_back"
+            android:text="@string/recycler"
             android:textColor="@color/primary_text"
-            android:textSize="@dimen/_18ssp"
-            android:textStyle="bold"/>
+            android:textSize="@dimen/_24ssp"/>
 
         <TextView
             android:layout_width="wrap_content"
