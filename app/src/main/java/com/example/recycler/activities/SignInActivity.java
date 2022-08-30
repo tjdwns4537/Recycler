@@ -2,14 +2,21 @@ package com.example.recycler.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.recycler.databinding.ActivitySignInBinding;
 import com.example.recycler.utilities.Constants;
 import com.example.recycler.utilities.PreferenceManager;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -17,11 +24,13 @@ public class SignInActivity extends AppCompatActivity {
 
     private ActivitySignInBinding binding;
     private PreferenceManager preferenceManager;
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         preferenceManager = new PreferenceManager(getApplicationContext());
+        auth = FirebaseAuth.getInstance();
 
         if(preferenceManager.getBoolean(Constants.KEY_IS_SIGNED_IN)){
             Intent intent = new Intent(getApplicationContext(), ChatMainActivity.class);
@@ -39,7 +48,7 @@ public class SignInActivity extends AppCompatActivity {
         binding.buttonSignIn.setOnClickListener(view -> {
             if (isVaildSignDetails()){
                 boolean isCheckedAutoSignIn = binding.checkBoxAutoSignIn.isChecked();
-                signIn();
+                //signIn();
             }
         });
 
@@ -51,6 +60,28 @@ public class SignInActivity extends AppCompatActivity {
         binding.buttonFacebookSignin.setOnClickListener(view -> {});
     }
 
+    private void signIn(String email, String password) {
+        auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d("TAG", "signInWithEmail:success");
+                            FirebaseUser user = auth.getCurrentUser();
+                            //updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w("TAG", "signInWithEmail:failure", task.getException());
+                            showToast("Authentication failed.");
+                            //updateUI(null);
+                        }
+                    }
+                });
+        // [END sign_in_with_email]
+    }
+
+/*
     private void signIn(){
         loading(true);
         FirebaseFirestore database = FirebaseFirestore.getInstance();
@@ -75,6 +106,7 @@ public class SignInActivity extends AppCompatActivity {
                 });
 
     }
+*/
 
     private void loading(Boolean isLoading){
         if(isLoading){

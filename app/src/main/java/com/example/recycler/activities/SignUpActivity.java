@@ -7,17 +7,25 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.recycler.databinding.ActivitySignUpBinding;
+import com.example.recycler.models.User;
 import com.example.recycler.utilities.Constants;
 import com.example.recycler.utilities.PreferenceManager;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.ByteArrayOutputStream;
@@ -29,6 +37,7 @@ public class SignUpActivity extends AppCompatActivity {
     private ActivitySignUpBinding binding;
     private PreferenceManager preferenceManager;
     private String encodedImage;
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +45,7 @@ public class SignUpActivity extends AppCompatActivity {
         binding = ActivitySignUpBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         preferenceManager = new PreferenceManager(getApplicationContext());
+        auth = FirebaseAuth.getInstance();
         setListeners();
     }
 
@@ -44,7 +54,7 @@ public class SignUpActivity extends AppCompatActivity {
         binding.textSignInToContinue.setOnClickListener(view -> onBackPressed());
         binding.buttonSignUp.setOnClickListener(view -> {
             if (isValidSignUpDetails()){
-                signUp();
+                createAccount();
             }
         });
         binding.layoutImage.setOnClickListener(view -> {
@@ -58,6 +68,47 @@ public class SignUpActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 
+    private void createAccount() {
+        loading(true);
+        String email = binding.inputEamil.getText().toString().trim();
+        String password = binding.inputPassword.getText().toString().trim();
+        String name = binding.inputName.getText().toString();
+
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        User user = new User(name,
+                            encodedImage,
+                            email);
+
+        auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        Log.d("TAG", "createUserWithEmail:success");
+                        FirebaseUser curUser = auth.getCurrentUser();
+                        user.setId(curUser.getUid());
+                        database.collection(Constants.KEY_COLLECTION_USERS)
+                                .document(curUser.getUid())
+                                .set(user)
+                                .addOnSuccessListener(unused -> {
+                                    loading(false);
+                                    preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
+                                    preferenceManager.putString(Constants.KEY_USER_ID, user.getId());
+                                    preferenceManager.putString(Constants.KEY_NAME, name);
+                                    preferenceManager.putString(Constants.KEY_IMAGE, encodedImage);
+                                    Intent intent = new Intent(getApplicationContext(), ChatMainActivity.class);
+                                    intent.addFlags((Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                                    startActivity(intent);
+                                }).addOnFailureListener(e -> {
+                                    loading(false);
+                                    showToast(e.getMessage());
+                                });
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.w("TAG", "createUserWithEmail:failure", task.getException());
+                        showToast("Authentication failed.");
+                    }
+                });
+    }
+/*
     private void signUp(){
         loading(true);
         FirebaseFirestore database = FirebaseFirestore.getInstance();
@@ -83,7 +134,7 @@ public class SignUpActivity extends AppCompatActivity {
                     showToast(e.getMessage());
                 });
     }
-
+*/
     private String encodeImage(Bitmap bitmap){
         int previewWidth = 150;
         int previewHeight = bitmap.getHeight() * previewWidth / bitmap.getWidth();
