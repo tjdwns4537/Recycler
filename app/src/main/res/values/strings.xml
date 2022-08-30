@@ -13,7 +13,7 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
     <!-- chat string -->
-    <string name="login_to_continue">Login to continue</string>
+    <string name="singin_to_continue"><u>혹시 회원이신가요?</u></string>
     <string name="email">이메일</string>
     <string name="password">비밀번호</string>
     <string name="sign_in">로그인</string>
@@ -31,4 +31,5 @@
     <string name="search_account">아이디 찾기</string>
     <string name="update_password">비밀번호 재설정</string>
     <string name="sns_sign_in">SNS 간편 로그인</string>
+    <string name="nick_name">닉네임 | 3글자 이상, 16글자 이하</string>
 </resources>

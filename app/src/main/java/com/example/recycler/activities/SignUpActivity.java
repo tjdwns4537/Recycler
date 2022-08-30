@@ -40,7 +40,8 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void setListeners(){
-        binding.textSignIn.setOnClickListener(view -> onBackPressed());
+        binding.buttonBack.setOnClickListener(view -> onBackPressed());
+        binding.textSignInToContinue.setOnClickListener(view -> onBackPressed());
         binding.buttonSignUp.setOnClickListener(view -> {
             if (isValidSignUpDetails()){
                 signUp();
