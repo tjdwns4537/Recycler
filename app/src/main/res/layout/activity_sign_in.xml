@@ -6,61 +6,80 @@
     android:layout_height="match_parent"
     android:clipToPadding="false"
     android:overScrollMode="never"
-    android:padding="@dimen/_24sdp"
     android:scrollbars="none"
     tools:context=".activities.SignInActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
+        android:paddingStart="@dimen/_20sdp"
+        android:paddingEnd="@dimen/_20sdp"
         android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_40sdp"
+            android:includeFontPadding="false"
             android:text="@string/recycler"
             android:textColor="@color/primary_text"
+            android:fontFamily="@font/noto_sans_cjk_kr_regular"
             android:textSize="@dimen/_24ssp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_4sdp"
-            android:text="@string/login_to_continue"
+            android:includeFontPadding="false"
+            android:text="@string/sub_title"
             android:textColor="@color/secondary_text"
-            android:textSize="@dimen/_12ssp"
-            android:textStyle="bold"/>
+            android:fontFamily="@font/noto_sans_cjk_kr_light"
+            android:textSize="@dimen/_16ssp"/>
 
         <EditText
             android:id="@+id/inputEamil"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_45sdp"
-            android:layout_marginTop="@dimen/_40sdp"
-            android:background="@drawable/background_input"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginTop="@dimen/_50sdp"
+            android:background="@drawable/background_sign_in_input"
             android:hint="@string/email"
             android:imeOptions="actionNext"
             android:importantForAutofill="no"
             android:inputType="textEmailAddress"
-            android:paddingStart="@dimen/_16sdp"
-            android:paddingEnd="@dimen/_16sdp"
+            android:paddingStart="@dimen/_24sdp"
+            android:paddingEnd="@dimen/_24sdp"
             android:textColor="@color/primary_text"
             android:textSize="@dimen/_13ssp"/>
 
         <EditText
             android:id="@+id/inputPassword"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_45sdp"
-            android:layout_marginTop="@dimen/_16sdp"
-            android:background="@drawable/background_input"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:background="@drawable/background_sign_in_input"
             android:hint="@string/password"
             android:imeOptions="actionDone"
             android:importantForAutofill="no"
             android:inputType="textPassword"
-            android:paddingStart="@dimen/_16sdp"
-            android:paddingEnd="@dimen/_16sdp"
+            android:paddingStart="@dimen/_24sdp"
+            android:paddingEnd="@dimen/_24sdp"
             android:textColor="@color/primary_text"
             android:textSize="@dimen/_13ssp"/>
+
+        <CheckBox
+            android:id="@+id/checkBoxAutoSignIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:buttonTint="@color/button_background"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:text="@string/auto_sign_in"
+            android:textSize="@dimen/_12ssp"
+            android:textColor="@color/primary_text"
+            android:includeFontPadding="false"
+            android:fontFamily="@font/noto_sans_cjk_kr_regular"/>
+
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -72,12 +91,13 @@
                 android:id="@+id/buttonSignIn"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_50sdp"
-                android:layout_marginTop="@dimen/_20sdp"
                 android:text="@string/sign_in"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_13ssp"
-                android:textStyle="bold"
-                app:cornerRadius="@dimen/_8sdp"/>
+                android:textSize="@dimen/_16ssp"
+                android:includeFontPadding="false"
+                android:backgroundTint="@color/button_background"
+                android:fontFamily="@font/noto_sans_cjk_kr_regular"
+                app:cornerRadius="@dimen/_20sdp"/>
 
             <ProgressBar
                 android:id="@+id/progressBar"
@@ -88,17 +108,114 @@
 
         </FrameLayout>
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_gravity="center">
+
+        <TextView
+            android:id="@+id/textSearchAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_14sdp"
+            android:layout_marginEnd="@dimen/_14sdp"
+            android:gravity="center"
+            android:fontFamily="@font/noto_sans_cjk_kr_regular"
+            android:includeFontPadding="false"
+            android:text="@string/search_account"
+            android:textColor="@color/primary_text"
+            android:textSize="@dimen/_12ssp"/>
+
+        <View
+            android:layout_width="@dimen/_1sdp"
+            android:layout_height="match_parent"
+            android:background="@color/secondary_text"/>
+
+        <TextView
+            android:id="@+id/textUpdatePassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_14sdp"
+            android:layout_marginEnd="@dimen/_14sdp"
+            android:gravity="center"
+            android:fontFamily="@font/noto_sans_cjk_kr_regular"
+            android:includeFontPadding="false"
+            android:text="@string/update_password"
+            android:textColor="@color/primary_text"
+            android:textSize="@dimen/_12ssp"/>
+
+        <View
+            android:layout_width="@dimen/_1sdp"
+            android:layout_height="match_parent"
+            android:background="@color/secondary_text"/>
 
         <TextView
             android:id="@+id/textCreateNewAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_marginStart="@dimen/_14sdp"
+            android:layout_marginEnd="@dimen/_14sdp"
+            android:gravity="center"
+            android:fontFamily="@font/noto_sans_cjk_kr_regular"
+            android:includeFontPadding="false"
             android:text="@string/create_new_account"
-            android:textColor="@color/primary"
-            android:textSize="@dimen/_13ssp"
-            android:textStyle="bold"/>
+            android:textColor="@color/primary_text"
+            android:textSize="@dimen/_12ssp"/>
+        </LinearLayout>
 
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_85sdp">
+            <View
+                android:layout_width="@dimen/_196sdp"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:layout_gravity="center"
+                android:background="@color/secondary_text"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/_5sdp"
+                android:paddingEnd="@dimen/_5sdp"
+                android:layout_gravity="center"
+                android:text="@string/sns_sign_in"
+                android:textColor="@color/secondary_text"
+                android:textSize="@dimen/_12ssp"
+                android:fontFamily="@font/noto_sans_cjk_kr_regular"
+                android:includeFontPadding="false"
+                android:background="@color/white"/>
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_32sdp"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonGoogleSignin"
+                android:layout_width="@dimen/_68sdp"
+                android:layout_height="@dimen/_52sdp"
+                android:elevation="@dimen/_6sdp"
+                android:background="@drawable/background_sign_in_input"
+                app:cornerRadius="@dimen/_20sdp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonFacebookSignin"
+                android:layout_width="@dimen/_68sdp"
+                android:layout_height="@dimen/_52sdp"
+                android:elevation="@dimen/_6sdp"
+                android:layout_marginStart="@dimen/_36sdp"
+                android:background="@drawable/background_sign_in_input"
+                app:cornerRadius="@dimen/_20sdp"/>
+        </LinearLayout>
 
 
 

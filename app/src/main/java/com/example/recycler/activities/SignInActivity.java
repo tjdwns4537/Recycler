@@ -22,11 +22,13 @@ public class SignInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         preferenceManager = new PreferenceManager(getApplicationContext());
+
         if(preferenceManager.getBoolean(Constants.KEY_IS_SIGNED_IN)){
             Intent intent = new Intent(getApplicationContext(), ChatMainActivity.class);
             startActivity(intent);
             finish();
         }
+
         binding = ActivitySignInBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setListeners();
@@ -34,14 +36,19 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void setListeners(){
-        binding.textCreateNewAccount.setOnClickListener(view ->
-                startActivity(new Intent(getApplicationContext(), SignUpActivity.class)));
         binding.buttonSignIn.setOnClickListener(view -> {
             if (isVaildSignDetails()){
+                boolean isCheckedAutoSignIn = binding.checkBoxAutoSignIn.isChecked();
                 signIn();
-
             }
         });
+
+        binding.textSearchAccount.setOnClickListener(view -> {});
+        binding.textUpdatePassword.setOnClickListener(view -> {});
+        binding.textCreateNewAccount.setOnClickListener(view ->
+                startActivity(new Intent(getApplicationContext(), SignUpActivity.class)));
+        binding.buttonGoogleSignin.setOnClickListener(view -> {});
+        binding.buttonFacebookSignin.setOnClickListener(view -> {});
     }
 
     private void signIn(){

@@ -13,18 +13,22 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
     <!-- chat string -->
-    <string name="welcome_back">Welcome Back!</string>
     <string name="login_to_continue">Login to continue</string>
-    <string name="email">Email</string>
-    <string name="password">Password</string>
-    <string name="sign_in">Sign In</string>
-    <string name="create_new_account">Create New Account</string>
-    <string name="add_image">Add Image</string>
-    <string name="name">Name</string>
-    <string name="confirm_password">Confirm Password</string>
-    <string name="sing_up">Sign Up</string>
+    <string name="email">이메일</string>
+    <string name="password">비밀번호</string>
+    <string name="sign_in">로그인</string>
+    <string name="create_new_account">회원가입</string>
+    <string name="add_image">이미지 넣기</string>
+    <string name="name">이름</string>
+    <string name="confirm_password">비밀번호 확인</string>
+    <string name="sing_up">회원가입</string>
     <string name="select_user">Select User</string>
     <string name="type_a_message">Type a message</string>
     <string name="online">Online</string>
     <string name="recycler">리사이클러</string>
+    <string name="sub_title">카피라이팅\n환영합니다!</string>
+    <string name="auto_sign_in">자동 로그인</string>
+    <string name="search_account">아이디 찾기</string>
+    <string name="update_password">비밀번호 재설정</string>
+    <string name="sns_sign_in">SNS 간편 로그인</string>
 </resources>
