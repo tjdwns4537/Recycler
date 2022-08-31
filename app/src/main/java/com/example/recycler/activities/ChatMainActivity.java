@@ -40,8 +40,6 @@ public class ChatMainActivity extends BaseActivity implements ConversionListener
     private RecentConversationsAdapter conversationsAdapter;
     private FirebaseFirestore database;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

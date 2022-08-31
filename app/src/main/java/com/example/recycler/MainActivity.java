@@ -19,12 +19,15 @@ import com.example.recycler.activities.BoardAddActivity;
 import com.example.recycler.activities.ChatMainActivity;
 import com.example.recycler.activities.ListViewActivity;
 import com.example.recycler.adapters.SearchAdapter;
+import com.example.recycler.databases.TestDatabase;
 import com.example.recycler.fragment.ChattingFragment;
 import com.example.recycler.fragment.CommunityFragment;
 import com.example.recycler.fragment.HomeFragment;
 import com.example.recycler.fragment.MypageFragment;
 import com.example.recycler.fragment.StoreFragment;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,11 +47,19 @@ public class MainActivity extends AppCompatActivity {
     private StoreFragment storeFragment;
     private CommunityFragment communityFragment;
     private ChattingFragment chattingFragment;
+    private TestDatabase testDatabase;
 
     @Override
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // DB
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+        DatabaseReference myRef = database.getReference("contents");
+
+        myRef.setValue("Hello, World!");
 
         // 하단바 소스 코드
         homeFragment = new HomeFragment();
