@@ -40,25 +40,21 @@ public class ChatMainActivity extends BaseActivity implements ConversionListener
     private RecentConversationsAdapter conversationsAdapter;
     private FirebaseFirestore database;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         binding = ActivityChatmainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
         preferenceManager = new PreferenceManager(getApplicationContext());
         init();
         loadUserDetails();
         getToken();
         setListeners();
         listenerConversations();
-
     }
 
     private void init(){
-
         conversations = new ArrayList<>();
         conversationsAdapter =  new RecentConversationsAdapter(conversations, this);
         binding.conversationRecyclerView.setAdapter(conversationsAdapter);

@@ -14,16 +14,12 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.recycler.databinding.ActivitySignUpBinding;
 import com.example.recycler.models.User;
 import com.example.recycler.utilities.Constants;
 import com.example.recycler.utilities.PreferenceManager;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -31,7 +27,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.HashMap;
 
 public class SignUpActivity extends AppCompatActivity {
     private ActivitySignUpBinding binding;

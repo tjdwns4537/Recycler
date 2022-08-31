@@ -32,4 +32,12 @@
     <string name="update_password">비밀번호 재설정</string>
     <string name="sns_sign_in">SNS 간편 로그인</string>
     <string name="nick_name">닉네임 | 3글자 이상, 16글자 이하</string>
+
+    <!--  Facebook  -->
+    <string name="facebook_app_id">835613990761642</string>
+    <string name="fb_login_protocol_scheme">835613990761642</string>
+    <string name="facebook_client_token">5103ca44345c564fa828b2f0ea0f7f23</string>
+
+
+
 </resources>

@@ -29,6 +29,10 @@ public class Constants {
     public static final String REMOTE_MSG_CONTENT_TYPE = "Content-Type";
     public static final String REMOTE_MSG_DATA = "data";
     public static final String REMOTE_MSG_REGISTRATION_IDS = "registration_ids";
+    public static final int GOOGLE_SIGN_IN = 9001;
+    public static final int FACEBOOK_SIGN_IN = 64206;
+    public static final String EMAIL = "email";
+    public static final String PUBLIC_PROFILE = "public_profile";
 
     public static HashMap<String, String> remoteMsgHeaders = null;
     public static HashMap<String, String> getRemoteMsgHeaders(){

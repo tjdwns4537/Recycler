@@ -204,6 +204,7 @@
                 android:layout_width="@dimen/_68sdp"
                 android:layout_height="@dimen/_52sdp"
                 android:elevation="@dimen/_6sdp"
+                android:text="구글"
                 android:background="@drawable/background_sign_in_input"
                 app:cornerRadius="@dimen/_20sdp"/>
 
@@ -213,6 +214,7 @@
                 android:layout_height="@dimen/_52sdp"
                 android:elevation="@dimen/_6sdp"
                 android:layout_marginStart="@dimen/_36sdp"
+                android:text="페이스북"
                 android:background="@drawable/background_sign_in_input"
                 app:cornerRadius="@dimen/_20sdp"/>
         </LinearLayout>
