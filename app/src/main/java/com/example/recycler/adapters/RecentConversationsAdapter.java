@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.recycler.databinding.ItemContainerRecentConversionBinding;
 import com.example.recycler.listeners.ConversionListener;
 import com.example.recycler.models.ChatMessage;
@@ -30,13 +31,8 @@ public class RecentConversationsAdapter extends RecyclerView.Adapter<RecentConve
     @NonNull
     @Override
     public ConversionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ConversionViewHolder(
-                ItemContainerRecentConversionBinding.inflate(
-                        LayoutInflater.from(parent.getContext()),
-                        parent,
-                        false
-                )
-        );
+        return new ConversionViewHolder(ItemContainerRecentConversionBinding
+                                        .inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
@@ -59,14 +55,15 @@ public class RecentConversationsAdapter extends RecyclerView.Adapter<RecentConve
         }
 
         void setData(ChatMessage chatMessage){
-            binding.imageProfile.setImageBitmap(getConversionImage(chatMessage.conversionImage));
+//            binding.imageProfile.setImageBitmap(getConversionImage(chatMessage.conversionImageUrl));
+            Glide.with(binding.getRoot().getContext()).load(chatMessage.conversionImageUrl).into(binding.imageProfile);
             binding.textName.setText(chatMessage.conversionName);
             binding.textRecentMessage.setText(chatMessage.message);
             binding.getRoot().setOnClickListener(view -> {
                 User user = new User();
                 user.setId(chatMessage.conversionId);
                 user.setName(chatMessage.conversionName);
-                user.setImage(chatMessage.conversionImage);
+                user.setImageUrl(chatMessage.conversionImageUrl);
                 conversionListener.onConversionClicked(user);
             });
         }

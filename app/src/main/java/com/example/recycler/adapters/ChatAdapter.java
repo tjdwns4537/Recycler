@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.recycler.databinding.ItemContainerReceivedMessageBinding;
 import com.example.recycler.databinding.ItemContainerSentMessageBinding;
 import com.example.recycler.models.ChatMessage;
@@ -17,15 +18,15 @@ import java.util.List;
 public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final List<ChatMessage> chatMessages;
-    private final Bitmap receiverProfileImage;
+    private final String receiverProfileImageUrl;
     private final String senderId;
 
     public static final int VIEW_TYPE_SENT = 1;
     public static final int VIEW_TYPE_RECEIVED = 2;
 
-    public ChatAdapter(List<ChatMessage> chatMessages, Bitmap receiverProfileImage, String senderId) {
+    public ChatAdapter(List<ChatMessage> chatMessages, String receiverProfileImageUrl, String senderId) {
         this.chatMessages = chatMessages;
-        this.receiverProfileImage = receiverProfileImage;
+        this.receiverProfileImageUrl = receiverProfileImageUrl;
         this.senderId = senderId;
     }
 
@@ -56,7 +57,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if(getItemViewType(position) == VIEW_TYPE_SENT){
             ((SentMessageViewHolder) holder).setData(chatMessages.get(position));
         } else {
-            ((ReceivedMessageViewHolder) holder).setData(chatMessages.get(position), receiverProfileImage);
+            ((ReceivedMessageViewHolder) holder).setData(chatMessages.get(position), receiverProfileImageUrl);
         }
     }
 
@@ -97,10 +98,11 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             this.binding = binding;
         }
 
-        void setData(ChatMessage chatMessage, Bitmap receiverProfileImage){
+        void setData(ChatMessage chatMessage, String receiverProfileImageUrl){
             binding.textMessage.setText(chatMessage.message);
             binding.textDateTime.setText(chatMessage.dateTime);
-            binding.imageProfile.setImageBitmap(receiverProfileImage);
+            Glide.with(binding.getRoot().getContext()).load(receiverProfileImageUrl).into(binding.imageProfile);
+//            binding.imageProfile.setImageBitmap(receiverProfileImage);
         }
     }
 

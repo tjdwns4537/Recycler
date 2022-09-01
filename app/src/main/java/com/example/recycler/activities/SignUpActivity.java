@@ -4,9 +4,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Base64;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
@@ -20,9 +20,13 @@ import com.example.recycler.databinding.ActivitySignUpBinding;
 import com.example.recycler.models.User;
 import com.example.recycler.utilities.Constants;
 import com.example.recycler.utilities.PreferenceManager;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -31,8 +35,11 @@ import java.io.InputStream;
 public class SignUpActivity extends AppCompatActivity {
     private ActivitySignUpBinding binding;
     private PreferenceManager preferenceManager;
-    private String encodedImage;
+    private Bitmap bitmap;
     private FirebaseAuth auth;
+    private FirebaseStorage storage;
+    private String downloadUri;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +48,7 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         preferenceManager = new PreferenceManager(getApplicationContext());
         auth = FirebaseAuth.getInstance();
+        storage = FirebaseStorage.getInstance();
         setListeners();
     }
 
@@ -67,35 +75,64 @@ public class SignUpActivity extends AppCompatActivity {
         loading(true);
         String email = binding.inputEamil.getText().toString().trim();
         String password = binding.inputPassword.getText().toString().trim();
-        String name = binding.inputName.getText().toString();
-
-        FirebaseFirestore database = FirebaseFirestore.getInstance();
-        User user = new User(name,
-                            encodedImage,
-                            email);
+        String name = binding.inputName.getText().toString().trim();
 
         auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
                         Log.d("TAG", "createUserWithEmail:success");
-                        FirebaseUser curUser = auth.getCurrentUser();
-                        user.setId(curUser.getUid());
-                        database.collection(Constants.KEY_COLLECTION_USERS)
-                                .document(curUser.getUid())
-                                .set(user)
-                                .addOnSuccessListener(unused -> {
-                                    loading(false);
-                                    preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
-                                    preferenceManager.putString(Constants.KEY_USER_ID, user.getId());
-                                    preferenceManager.putString(Constants.KEY_NAME, name);
-                                    preferenceManager.putString(Constants.KEY_IMAGE, encodedImage);
-                                    Intent intent = new Intent(getApplicationContext(), ChatMainActivity.class);
-                                    intent.addFlags((Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                                    startActivity(intent);
-                                }).addOnFailureListener(e -> {
-                                    loading(false);
-                                    showToast(e.getMessage());
-                                });
+                        FirebaseUser user = auth.getCurrentUser();
+                        Log.d("TAG", "Current userId:" + user.getUid());
+
+                        Log.d("TAG", "가져온 비트맵 이미지" + bitmap.toString());
+//                        new CreateUserTask().execute(bitmap);
+
+                        Log.d("TAG", "uid:" + user.getUid());
+                        StorageReference storageRef = storage.getReference();
+                        StorageReference usersRef = storageRef.child("images/"+ user.getUid() + "_profile_image.jpg");
+                        Log.d("TAG", "usersRef.getPath():" + usersRef.getPath());
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                        Log.d("TAG", bitmap.toString());
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                        byte[] data = baos.toByteArray();
+                        UploadTask uploadTask = usersRef.putBytes(data);
+
+                        uploadTask.continueWithTask(subTask -> {
+                            if (!subTask.isSuccessful()){
+                                throw subTask.getException();
+                            }
+                            return usersRef.getDownloadUrl();
+                        }).addOnCompleteListener(subTask -> {
+                            if (subTask.isSuccessful()){
+                                downloadUri = subTask.getResult().toString();
+                                Log.d("TAG", "Download Uri:" + downloadUri);
+
+                                if (downloadUri != null){
+                                    // 유저 객체 생성한다.
+                                    User newUser = new User(name, downloadUri, email, user.getUid());
+
+                                    FirebaseFirestore database = FirebaseFirestore.getInstance();
+                                    // 디비에 유저 객체를 저장한다.
+                                    database.collection(Constants.KEY_COLLECTION_USERS)
+                                            .document(user.getUid())
+                                            .set(newUser)
+                                            .addOnSuccessListener(unused -> {
+                                                loading(false);
+                                                preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
+                                                preferenceManager.putString(Constants.KEY_USER_ID, user.getUid());
+                                                preferenceManager.putString(Constants.KEY_USER_NAME, name);
+                                                preferenceManager.putString(Constants.KEY_USER_IMAGE_URI, downloadUri);
+                                                Intent intent = new Intent(getApplicationContext(), ChatMainActivity.class);
+                                                intent.addFlags((Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                                                startActivity(intent);
+                                            }).addOnFailureListener(e -> {
+                                                loading(false);
+                                                showToast(e.getMessage());
+                                            });
+                                }
+                            }
+                        });
+
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w("TAG", "createUserWithEmail:failure", task.getException());
@@ -103,41 +140,72 @@ public class SignUpActivity extends AppCompatActivity {
                     }
                 });
     }
-/*
-    private void signUp(){
-        loading(true);
-        FirebaseFirestore database = FirebaseFirestore.getInstance();
-        HashMap<String, Object> user = new HashMap<>();
-        user.put(Constants.KEY_NAME, binding.inputName.getText().toString());
-        user.put(Constants.KEY_EMAIL, binding.inputEamil.getText().toString());
-        user.put(Constants.KEY_PASSWORD, binding.inputPassword.getText().toString());
-        user.put(Constants.KEY_IMAGE, encodedImage);
-        database.collection(Constants.KEY_COLLECTION_USERS)
-                .add(user)
-                .addOnSuccessListener(documentReference -> {
-                    loading(false);
-                    preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
-                    preferenceManager.putString(Constants.KEY_USER_ID, documentReference.getId());
-                    preferenceManager.putString(Constants.KEY_NAME, binding.inputName.getText().toString());
-                    preferenceManager.putString(Constants.KEY_IMAGE, encodedImage);
-                    Intent intent = new Intent(getApplicationContext(), ChatMainActivity.class);
-                    intent.addFlags((Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                    startActivity(intent);
-                })
-                .addOnFailureListener(e -> {
-                    loading(false);
-                    showToast(e.getMessage());
-                });
-    }
-*/
-    private String encodeImage(Bitmap bitmap){
-        int previewWidth = 150;
-        int previewHeight = bitmap.getHeight() * previewWidth / bitmap.getWidth();
-        Bitmap previewBitmap = Bitmap.createScaledBitmap(bitmap, previewWidth, previewHeight, false);
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        previewBitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
-        byte[] bytes = byteArrayOutputStream.toByteArray();
-        return Base64.encodeToString(bytes, Base64.DEFAULT);
+
+    private class CreateUserTask extends AsyncTask<Bitmap, Void, Void> {
+        String uid;
+        String name;
+        String email;
+        String downloadUri;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Log.d("TAG", "CreateUserTask:onPreExecute()");
+            name = binding.inputName.getText().toString();
+            email = binding.inputEamil.getText().toString();
+            uid = auth.getCurrentUser().getUid();
+        }
+
+        @Override
+        protected Void doInBackground(Bitmap... bitmaps) {
+            // 사용자 이미지 스토리지에 저장 시작
+            Bitmap bitmap = bitmaps[0];
+            Log.d("TAG", "uid:" + uid);
+            StorageReference storageRef = storage.getReference();
+            StorageReference usersRef = storageRef.child("images/"+ uid + "_profile_image.jpg");
+            Log.d("TAG", "usersRef.getPath():" + usersRef.getPath());
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            Log.d("TAG", bitmap.toString());
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            byte[] data = baos.toByteArray();
+            UploadTask uploadTask = usersRef.putBytes(data);
+
+            uploadTask.continueWithTask(task -> {
+                if (!task.isSuccessful()){
+                    throw task.getException();
+                }
+                return usersRef.getDownloadUrl();
+            }).addOnCompleteListener(task -> {
+                if (task.isSuccessful()){
+                    downloadUri = task.getResult().toString();
+                    Log.d("TAG", "Download Uri:" + downloadUri);
+
+                    if (downloadUri != null){
+                        // 유저 객체 생성한다.
+                        User user = new User(name, downloadUri, email, uid);
+
+                        FirebaseFirestore database = FirebaseFirestore.getInstance();
+                        // 디비에 유저 객체를 저장한다.
+                        database.collection(Constants.KEY_COLLECTION_USERS)
+                                .document(uid)
+                                .set(user)
+                                .addOnSuccessListener(unused -> {
+                                    loading(false);
+                                    preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
+                                    preferenceManager.putString(Constants.KEY_USER_ID, uid);
+                                    preferenceManager.putString(Constants.KEY_USER_NAME, name);
+                                    preferenceManager.putString(Constants.KEY_USER_IMAGE_URI, downloadUri);
+                                    Intent intent = new Intent(getApplicationContext(), ChatMainActivity.class);
+                                    intent.addFlags((Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                                    startActivity(intent);
+                                }).addOnFailureListener(e -> {
+                                    loading(false);
+                                    showToast(e.getMessage());
+                                });
+                    }
+                }
+            });
+            return null;
+        }
     }
 
     private final ActivityResultLauncher<Intent> pickImage = registerForActivityResult(
@@ -148,10 +216,9 @@ public class SignUpActivity extends AppCompatActivity {
                         Uri imageUri = result.getData().getData();
                         try {
                             InputStream inputStream = getContentResolver().openInputStream(imageUri);
-                            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                            bitmap = BitmapFactory.decodeStream(inputStream);
                             binding.imageProfile.setImageBitmap(bitmap);
                             binding.textAddImage.setVisibility(View.GONE);
-                            encodedImage = encodeImage(bitmap);
                         } catch (FileNotFoundException e){
                             e.printStackTrace();
                         }
@@ -160,7 +227,7 @@ public class SignUpActivity extends AppCompatActivity {
             });
 
     private Boolean isValidSignUpDetails(){
-        if (encodedImage == null){
+        if (binding.imageProfile.getDrawable() == null){
             showToast("Select profile image");
             return false;
         } else if(binding.inputName.getText().toString().trim().isEmpty()){

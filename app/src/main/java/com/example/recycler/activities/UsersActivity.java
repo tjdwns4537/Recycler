@@ -53,9 +53,9 @@ public class UsersActivity extends BaseActivity implements UserListener {
                                 continue;
                             }
                             User user = new User();
-                            user.setName(queryDocumentSnapshot.getString(Constants.KEY_NAME));
-                            user.setEmail(queryDocumentSnapshot.getString(Constants.KEY_EMAIL));
-                            user.setImage(queryDocumentSnapshot.getString(Constants.KEY_IMAGE));
+                            user.setName(queryDocumentSnapshot.getString(Constants.KEY_USER_NAME));
+                            user.setEmail(queryDocumentSnapshot.getString(Constants.KEY_USER_EMAIL));
+                            user.setImageUrl(queryDocumentSnapshot.getString(Constants.KEY_USER_IMAGE_URI));
                             user.setToken(queryDocumentSnapshot.getString(Constants.KEY_FCM_TOKEN));
                             user.setId(queryDocumentSnapshot.getId());
                             users.add(user);

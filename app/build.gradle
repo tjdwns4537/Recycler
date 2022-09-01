@@ -56,6 +56,7 @@ dependencies {
 
     // Firebase BoM
     implementation platform('com.google.firebase:firebase-bom:30.3.2')
+    implementation 'com.google.firebase:firebase-core:21.1.0'
 
     // Firebase Auth
     implementation 'com.google.firebase:firebase-auth'
@@ -64,10 +65,14 @@ dependencies {
     // Firebase Analytics
     implementation 'com.google.firebase:firebase-analytics'
 
-    // Firebase
+    // Firebase Messaging
     implementation 'com.google.firebase:firebase-messaging:23.0.7'
+
+    // Firebase Firestore
     implementation 'com.google.firebase:firebase-firestore:24.2.2'
-    implementation 'com.google.firebase:firebase-core:21.1.0'
+
+    // Firebase Storage
+    implementation 'com.google.firebase:firebase-storage'
 
     // Facebook sdk
     implementation 'com.facebook.android:facebook-android-sdk:[8,9)'
@@ -79,4 +84,8 @@ dependencies {
     // Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-scalars:2.9.0'
+
+    // Glide
+    implementation 'com.github.bumptech.glide:glide:4.13.2'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.13.2'
 }

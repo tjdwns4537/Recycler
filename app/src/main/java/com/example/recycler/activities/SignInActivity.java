@@ -51,7 +51,7 @@ public class SignInActivity extends AppCompatActivity {
     private GoogleSignInClient googleSignInClient;
     private FirebaseFirestore database;
     private CallbackManager callbackManager;
-    private String encodedImage;
+//    private String encodedImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +60,7 @@ public class SignInActivity extends AppCompatActivity {
         configSignIn();
         auth = FirebaseAuth.getInstance();
         database = FirebaseFirestore.getInstance();
-        encodedImage = null;
+//        encodedImage = null;
 
         // 페이스북 CallbackManager 초기화
         callbackManager = CallbackManager.Factory.create();
@@ -107,8 +107,8 @@ public class SignInActivity extends AppCompatActivity {
                                             databaseTask.getResult().toObject(User.class);
                                             preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, binding.checkBoxAutoSignIn.isChecked());
                                             preferenceManager.putString(Constants.KEY_USER_ID, user.getUid());
-                                            preferenceManager.putString(Constants.KEY_NAME, databaseTask.getResult().toObject(User.class).getName());
-                                            preferenceManager.putString(Constants.KEY_IMAGE, databaseTask.getResult().toObject(User.class).getImage());
+                                            preferenceManager.putString(Constants.KEY_USER_NAME, databaseTask.getResult().toObject(User.class).getName());
+                                            preferenceManager.putString(Constants.KEY_USER_IMAGE_URI, databaseTask.getResult().toObject(User.class).getImageUrl());
                                             Log.d("TAG", "사용자 ID:" + user.getUid() + ", 사용자 이름:" + databaseTask.getResult().toObject(User.class).getName());
                                             Intent intent = new Intent(getApplicationContext(), ChatMainActivity.class);
                                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -174,8 +174,8 @@ public class SignInActivity extends AppCompatActivity {
                                         User mUser = documentSnapshot.toObject(User.class);
                                         preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, binding.checkBoxAutoSignIn.isChecked());
                                         preferenceManager.putString(Constants.KEY_USER_ID, user.getUid());
-                                        preferenceManager.putString(Constants.KEY_NAME, mUser.getName());
-                                        preferenceManager.putString(Constants.KEY_IMAGE, mUser.getImage());
+                                        preferenceManager.putString(Constants.KEY_USER_NAME, mUser.getName());
+                                        preferenceManager.putString(Constants.KEY_USER_IMAGE_URI, mUser.getImageUrl());
                                         Log.d("TAG", "사용자 ID:" + user.getUid() + ", 사용자 이름:" + mUser.getName());
                                         goToMainActivity();
                                     }).addOnFailureListener(e -> Log.d("TAG", e.getMessage()));
@@ -265,8 +265,8 @@ public class SignInActivity extends AppCompatActivity {
                                             User mUser = documentSnapshot.toObject(User.class);
                                             preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, binding.checkBoxAutoSignIn.isChecked());
                                             preferenceManager.putString(Constants.KEY_USER_ID, user.getUid());
-                                            preferenceManager.putString(Constants.KEY_NAME, mUser.getName());
-                                            preferenceManager.putString(Constants.KEY_IMAGE, mUser.getImage());
+                                            preferenceManager.putString(Constants.KEY_USER_NAME, mUser.getName());
+                                            preferenceManager.putString(Constants.KEY_USER_IMAGE_URI, mUser.getImageUrl());
                                             Log.d("TAG", "사용자 ID:" + user.getUid() + ", 사용자 이름:" + mUser.getName());
                                             goToMainActivity();
                                         }).addOnFailureListener(e -> Log.d("TAG", e.getMessage()));
@@ -311,73 +311,74 @@ public class SignInActivity extends AppCompatActivity {
 
     private void createDatabaseForUser(FirebaseUser curUser){
         if(curUser != null){
-                new DownloadFilesTask().execute(curUser.getPhotoUrl().toString());
+//                new DownloadFilesTask().execute(curUser.getPhotoUrl().toString());
 
-                if (encodedImage != null) {
+//                if (encodedImage != null) {
                     User user = new User(curUser.getDisplayName(),
-                            encodedImage,
-                            curUser.getEmail());
-                    user.setId(curUser.getUid());
+                                        curUser.getPhotoUrl().toString(),
+                                        curUser.getEmail(),
+                                        curUser.getUid());
+//                    user.setId(curUser.getUid());
 
                     database.collection(Constants.KEY_COLLECTION_USERS)
                             .document(curUser.getUid())
                             .set(user)
                             .addOnSuccessListener(unused -> {
-                                Log.d("TAG", "사용자 생성");
+                                Log.d("TAG", "database 접속 성공");
                                 preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
                                 preferenceManager.putString(Constants.KEY_USER_ID, curUser.getUid());
-                                preferenceManager.putString(Constants.KEY_NAME, curUser.getDisplayName());
-                                preferenceManager.putString(Constants.KEY_IMAGE, encodedImage);
+                                preferenceManager.putString(Constants.KEY_USER_NAME, curUser.getDisplayName());
+                                preferenceManager.putString(Constants.KEY_USER_IMAGE_URI, curUser.getPhotoUrl().toString());
                                 goToMainActivity();
                             })
                             .addOnFailureListener(e -> Log.d("TAG", e.getMessage()));
-                } else {
-                    return;
-                }
+//                } else {
+//                    return;
+//                }
 
         }
     }
 
-    private class DownloadFilesTask extends AsyncTask<String,Void, String> {
+//    private class DownloadFilesTask extends AsyncTask<String,Void, String> {
+//
+//        @Override
+//        protected String doInBackground(String... strings) {
+//            String result= null;
+//            try {
+//                String img_url = strings[0]; //url of the image
+//                URL url = new URL(img_url);
+//                Bitmap bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+//                result = encodeImage(bitmap);
+//            } catch (MalformedURLException e) {
+//                e.printStackTrace();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            return result;
+//        }
+//
+//        @Override
+//        protected void onPreExecute() {
+//            super.onPreExecute();
+//            Log.d("TAG", "DownloadFilesTask 시작");
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String result) {
+//            Log.d("TAG", "DownloadFilesTask 끝");
+////            encodedImage = result;
+//        }
+//    }
 
-        @Override
-        protected String doInBackground(String... strings) {
-            String result= null;
-            try {
-                String img_url = strings[0]; //url of the image
-                URL url = new URL(img_url);
-                Bitmap bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                result = encodeImage(bitmap);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return result;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            Log.d("TAG", "DownloadFilesTask 시작");
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            Log.d("TAG", "DownloadFilesTask 끝");
-            encodedImage = result;
-        }
-    }
-
-    private String encodeImage(Bitmap bitmap){
-        int previewWidth = 150;
-        int previewHeight = bitmap.getHeight() * previewWidth / bitmap.getWidth();
-        Bitmap previewBitmap = Bitmap.createScaledBitmap(bitmap, previewWidth, previewHeight, false);
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        previewBitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
-        byte[] bytes = byteArrayOutputStream.toByteArray();
-        return Base64.encodeToString(bytes, Base64.DEFAULT);
-    }
+//    private String encodeImage(Bitmap bitmap){
+//        int previewWidth = 150;
+//        int previewHeight = bitmap.getHeight() * previewWidth / bitmap.getWidth();
+//        Bitmap previewBitmap = Bitmap.createScaledBitmap(bitmap, previewWidth, previewHeight, false);
+//        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//        previewBitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
+//        byte[] bytes = byteArrayOutputStream.toByteArray();
+//        return Base64.encodeToString(bytes, Base64.DEFAULT);
+//    }
 
 /*
     private void signIn(){

@@ -35,7 +35,7 @@
 
     <!--  Facebook  -->
     <string name="facebook_app_id">835613990761642</string>
-    <string name="fb_login_protocol_scheme">835613990761642</string>
+    <string name="fb_login_protocol_scheme">fb835613990761642</string>
     <string name="facebook_client_token">5103ca44345c564fa828b2f0ea0f7f23</string>
 
 

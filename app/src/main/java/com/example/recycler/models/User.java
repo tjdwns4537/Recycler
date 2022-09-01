@@ -3,14 +3,21 @@ package com.example.recycler.models;
 import java.io.Serializable;
 
 public class User implements Serializable {
-    private String name, image, email, token, id;
+    private String name, imageUrl, email, token, id;
 
     public User() {
     }
 
-    public User(String name, String image, String email) {
+    public User(String name, String imageUrl, String email, String id) {
         this.name = name;
-        this.image = image;
+        this.imageUrl = imageUrl;
+        this.email = email;
+        this.id = id;
+    }
+
+    public User(String name, String imageUrl, String email) {
+        this.name = name;
+        this.imageUrl = imageUrl;
         this.email = email;
     }
 
@@ -22,12 +29,12 @@ public class User implements Serializable {
         this.name = name;
     }
 
-    public String getImage() {
-        return image;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getEmail() {

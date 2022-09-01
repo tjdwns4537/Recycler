@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.recycler.databinding.ItemContainerUserBinding;
 import com.example.recycler.listeners.UserListener;
 import com.example.recycler.models.User;
@@ -55,7 +56,8 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
         void setUserData(User user){
             binding.textName.setText(user.getName());
             binding.textEmail.setText(user.getEmail());
-            binding.imageProfile.setImageBitmap(getUserImage(user.getImage()));
+//            binding.imageProfile.setImageBitmap(getUserImage(user.getImage()));
+            Glide.with(binding.getRoot().getContext()).load(user.getImageUrl()).into(binding.imageProfile);
             binding.getRoot().setOnClickListener(view -> userListener.onUserClicked(user));
         }
 

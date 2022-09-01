@@ -65,10 +65,9 @@ public class ChatActivity extends BaseActivity {
     private void init(){
         preferenceManager = new PreferenceManager(getApplicationContext());
         chatMessages = new ArrayList<>();
-        chatAdapter =  new ChatAdapter(
-                chatMessages,
-                getBitmapEncodedString(receiverUser.getImage()),
-                preferenceManager.getSting(Constants.KEY_USER_ID)
+        chatAdapter =  new ChatAdapter(chatMessages,
+                                       receiverUser.getImageUrl(),
+                                       preferenceManager.getSting(Constants.KEY_USER_ID)
         );
         binding.chatRecyclerView.setAdapter(chatAdapter);
         database = FirebaseFirestore.getInstance();
@@ -86,11 +85,11 @@ public class ChatActivity extends BaseActivity {
         } else {
             HashMap<String, Object> conversion = new HashMap<>();
             conversion.put(Constants.KEY_SENDER_ID, preferenceManager.getSting(Constants.KEY_USER_ID));
-            conversion.put(Constants.KEY_SENDER_NAME, preferenceManager.getSting(Constants.KEY_NAME));
-            conversion.put(Constants.KEY_SENDER_IMAGE, preferenceManager.getSting(Constants.KEY_IMAGE));
+            conversion.put(Constants.KEY_SENDER_NAME, preferenceManager.getSting(Constants.KEY_USER_NAME));
+            conversion.put(Constants.KEY_SENDER_IMAGE_URL, preferenceManager.getSting(Constants.KEY_USER_IMAGE_URI));
             conversion.put(Constants.KEY_RECEIVER_ID, receiverUser.getId());
             conversion.put(Constants.KEY_RECEIVER_NAME, receiverUser.getName());
-            conversion.put(Constants.KEY_RECEIVER_IMAGE, receiverUser.getImage());
+            conversion.put(Constants.KEY_RECEIVER_IMAGE_URL, receiverUser.getImageUrl());
             conversion.put(Constants.KEY_LAST_MESSAGE, binding.inputMessage.getText().toString());
             conversion.put(Constants.KEY_TIMESTAMP, new Date());
             addCoversion(conversion);
@@ -214,10 +213,10 @@ public class ChatActivity extends BaseActivity {
         }
     };
 
-    private Bitmap getBitmapEncodedString(String encodedImage){
-        byte[] bytes = Base64.decode(encodedImage, Base64.DEFAULT);
-        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-    }
+//    private Bitmap getBitmapEncodedString(String encodedImage){
+//        byte[] bytes = Base64.decode(encodedImage, Base64.DEFAULT);
+//        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+//    }
 
 
     private void loadReceiverDetails(){
