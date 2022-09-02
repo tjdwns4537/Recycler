@@ -20,6 +20,8 @@ import com.example.recycler.fragment.StoreFragment;
 import com.example.recycler.MainActivity;
 import com.example.recycler.R;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class ListViewActivity extends AppCompatActivity {
 
@@ -36,6 +38,13 @@ public class ListViewActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_community);
+
+        // DB
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+        DatabaseReference myRef = database.getReference("message");
+
+        myRef.setValue("Hello, World!");
 
         listview = (ListView) findViewById(R.id.listview);
         adapter = new ListViewAdapter();

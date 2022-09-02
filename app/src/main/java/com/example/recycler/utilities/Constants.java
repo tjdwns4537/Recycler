@@ -1,5 +1,8 @@
 package com.example.recycler.utilities;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.HashMap;
 
 public class Constants {
@@ -29,6 +32,10 @@ public class Constants {
     public static final String REMOTE_MSG_CONTENT_TYPE = "Content-Type";
     public static final String REMOTE_MSG_DATA = "data";
     public static final String REMOTE_MSG_REGISTRATION_IDS = "registration_ids";
+
+    //DB
+    public static FirebaseDatabase database = FirebaseDatabase.getInstance();
+    public static final DatabaseReference boardRef = database.getReference("board");
 
     public static HashMap<String, String> remoteMsgHeaders = null;
     public static HashMap<String, String> getRemoteMsgHeaders(){

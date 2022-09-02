@@ -54,13 +54,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // DB
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-
-        DatabaseReference myRef = database.getReference("contents");
-
-        myRef.setValue("Hello, World!");
-
         // 하단바 소스 코드
         homeFragment = new HomeFragment();
         mypageFragment = new MypageFragment();

@@ -26,4 +26,10 @@
     <string name="select_user">Select User</string>
     <string name="type_a_message">Type a message</string>
     <string name="online">Online</string>
+
+    <!-- board string -->
+    <string name="registerBtn"> 등록 </string>
+    <string name="registerName"> 게시글 적기 </string>
+    <string name="registerTitle"> 게시글 제목 </string>
+    <string name="registerContent"> 게시글 내용 </string>
 </resources>
