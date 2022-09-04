@@ -1,11 +1,7 @@
 package com.example.recycler.activities;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -37,11 +33,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class SignInActivity extends AppCompatActivity {
 
@@ -51,7 +44,6 @@ public class SignInActivity extends AppCompatActivity {
     private GoogleSignInClient googleSignInClient;
     private FirebaseFirestore database;
     private CallbackManager callbackManager;
-//    private String encodedImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +52,6 @@ public class SignInActivity extends AppCompatActivity {
         configSignIn();
         auth = FirebaseAuth.getInstance();
         database = FirebaseFirestore.getInstance();
-//        encodedImage = null;
 
         // 페이스북 CallbackManager 초기화
         callbackManager = CallbackManager.Factory.create();
@@ -96,23 +87,19 @@ public class SignInActivity extends AppCompatActivity {
         auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        Log.d("TAG", "signInWithEmail:success");
-                        FirebaseUser user = auth.getCurrentUser();
-                        if(user != null) {
+                        Log.d(Constants.TAG, "signInWithEmail:success");
+                        FirebaseUser firebaseUser = auth.getCurrentUser();
+                        if(firebaseUser != null) {
                             database.collection(Constants.KEY_COLLECTION_USERS)
-                                    .document(user.getUid())
+                                    .document(firebaseUser.getUid())
                                     .get()
-                                    .addOnCompleteListener(databaseTask -> {
-                                        if (databaseTask.isSuccessful() && databaseTask.getResult().exists()) {
-                                            databaseTask.getResult().toObject(User.class);
+                                    .addOnCompleteListener(task1 -> {
+                                        if (task1.isSuccessful() && task1.getResult().exists()) {
+                                            User user = task1.getResult().toObject(User.class);
+                                            Log.d(Constants.TAG, "사용자 ID:" + firebaseUser.getUid() + ", 사용자 이름:" + task1.getResult().toObject(User.class).getName());
+                                            setPreferenceManager(user);
                                             preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, binding.checkBoxAutoSignIn.isChecked());
-                                            preferenceManager.putString(Constants.KEY_USER_ID, user.getUid());
-                                            preferenceManager.putString(Constants.KEY_USER_NAME, databaseTask.getResult().toObject(User.class).getName());
-                                            preferenceManager.putString(Constants.KEY_USER_IMAGE_URI, databaseTask.getResult().toObject(User.class).getImageUrl());
-                                            Log.d("TAG", "사용자 ID:" + user.getUid() + ", 사용자 이름:" + databaseTask.getResult().toObject(User.class).getName());
-                                            Intent intent = new Intent(getApplicationContext(), ChatMainActivity.class);
-                                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                            startActivity(intent);
+                                            goToMainActivity();
                                         } else {
                                             loading(false);
                                             showToast("Unable to sign in");
@@ -120,7 +107,7 @@ public class SignInActivity extends AppCompatActivity {
                                     });
                         }
                     } else {
-                        Log.w("TAG", "signInWithEmail:failure", task.getException());
+                        Log.w(Constants.TAG, "signInWithEmail:failure", task.getException());
                         showToast("Authentication failed.");
                     }
                 });
@@ -147,10 +134,10 @@ public class SignInActivity extends AppCompatActivity {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-                Log.d("TAG", "firebaseAuthWithGoogle:" + account.getId());
+                Log.d(Constants.TAG, "firebaseAuthWithGoogle:" + account.getId());
                 firebaseAuthWithGoogle(account.getIdToken());
             } catch (ApiException e) {
-                Log.w("TAG", "Google sign in failed", e);
+                Log.w(Constants.TAG, "Google sign in failed", e);
             }
         } else if (requestCode == Constants.FACEBOOK_SIGN_IN){
             callbackManager.onActivityResult(requestCode, resultCode, data);
@@ -163,55 +150,27 @@ public class SignInActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
                         // Sign in success, update UI with the signed-in user's information
-                        Log.d("TAG", "signInWithCredential:success");
-                        FirebaseUser user = auth.getCurrentUser();
-                        if(!preferenceManager.getBoolean(Constants.KEY_IS_SIGNED_IN)) {
-                            createDatabaseForUser(user);
-                        } else {
-                            database.collection(Constants.KEY_COLLECTION_USERS)
-                                    .document(user.getUid())
-                                    .get().addOnSuccessListener(documentSnapshot -> {
-                                        User mUser = documentSnapshot.toObject(User.class);
-                                        preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, binding.checkBoxAutoSignIn.isChecked());
-                                        preferenceManager.putString(Constants.KEY_USER_ID, user.getUid());
-                                        preferenceManager.putString(Constants.KEY_USER_NAME, mUser.getName());
-                                        preferenceManager.putString(Constants.KEY_USER_IMAGE_URI, mUser.getImageUrl());
-                                        Log.d("TAG", "사용자 ID:" + user.getUid() + ", 사용자 이름:" + mUser.getName());
-                                        goToMainActivity();
-                                    }).addOnFailureListener(e -> Log.d("TAG", e.getMessage()));
-                        }
-
-//                        if(curUser != null){
-//                            if(!preferenceManager.getBoolean(Constants.KEY_IS_SIGNED_IN)){
-//
-//                                new DownloadFilesTask().execute(curUser.getPhotoUrl().toString());
-//
-//                                if (encodedImage != null) {
-//                                    User user = new User(curUser.getDisplayName(),
-//                                                        encodedImage,
-//                                                        curUser.getEmail());
-//                                    user.setId(curUser.getUid());
-//
-//                                    database.collection(Constants.KEY_COLLECTION_USERS)
-//                                            .document(curUser.getUid())
-//                                            .set(user)
-//                                            .addOnSuccessListener(unused -> {
-//                                                Log.d("TAG", "사용자 생성");
-//                                                preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
-//                                                preferenceManager.putString(Constants.KEY_USER_ID, curUser.getUid());
-//                                                preferenceManager.putString(Constants.KEY_NAME, curUser.getDisplayName());
-//                                                preferenceManager.putString(Constants.KEY_IMAGE, encodedImage);
-//                                                Intent intent = new Intent(getApplicationContext(), ChatMainActivity.class);
-//                                                intent.addFlags((Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-//                                                startActivity(intent);
-//                                            })
-//                                            .addOnFailureListener(e -> Log.d("TAG", e.getMessage()));
-//                                } else {
-//                                }
-//                            }
-//                        }
+                        Log.d(Constants.TAG, "signInWithCredential:success");
+                        FirebaseUser firebaseUser = auth.getCurrentUser();
+                        database.collection(Constants.KEY_COLLECTION_USERS)
+                                .whereEqualTo(Constants.KEY_USER, firebaseUser.getUid())
+                                .get()
+                                .addOnCompleteListener(task1 -> {
+                                    if (task1.isSuccessful() && task1.getResult() != null){
+                                        if (firebaseUser.getUid().equals(task1.getResult().getDocuments().isEmpty())){
+                                            User mUser = task1.getResult().getDocuments().get(0).toObject(User.class);
+                                            Log.d(Constants.TAG, "사용자 ID:" + firebaseUser.getUid() + ", 사용자 이름:" + mUser.getName());
+                                            setPreferenceManager(mUser);
+                                            goToMainActivity();
+                                        } else {
+                                            createUserInDatabase(firebaseUser);
+                                        }
+                                    } else {
+                                        Log.d(Constants.TAG, "Error getting documents: ", task1.getException());
+                                    }
+                                });
                     } else {
-                        Log.w("TAG", "signInWithCredential:failure", task.getException());
+                        Log.w(Constants.TAG, "signInWithCredential:failure", task.getException());
                     }
                 });
     }
@@ -225,187 +184,83 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             // 파일로 따로 만들어도 되고, 내부 클래스로 구현해도 된다.
             public void onSuccess(LoginResult loginResult) {                  // 로그인 성공 시
-                Log.d("TAG", "facebook:onSuccess:" + loginResult);
-
-                AccessToken accessToken = AccessToken.getCurrentAccessToken();
-                boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
-
+                Log.d(Constants.TAG, "facebook:onSuccess:" + loginResult);
                 handleFacebookAccessToken(loginResult.getAccessToken());
             }
 
             @Override
             public void onCancel() {
-                Log.d("TAG", "facebook:onCancel");
+                Log.d(Constants.TAG, "facebook:onCancel");
             }
 
             @Override
             public void onError(@NonNull FacebookException error) {
-                Log.d("TAG", "facebook:onError:" + error);
+                Log.d(Constants.TAG, "facebook:onError:" + error);
             }
         });
     }
 
 
     private void handleFacebookAccessToken(AccessToken token) {
-        Log.d("TAG", "handleFacebookAccessToken:" + token);
+        Log.d(Constants.TAG, "handleFacebookAccessToken:" + token);
 
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
         auth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        Log.d("TAG", "signInWithCredential:success");
-                        FirebaseUser user = auth.getCurrentUser();
-
-                            if (!preferenceManager.getBoolean(Constants.KEY_IS_SIGNED_IN)) {
-                                createDatabaseForUser(user);
-                            } else {
-                                database.collection(Constants.KEY_COLLECTION_USERS)
-                                        .document(user.getUid())
-                                        .get().addOnSuccessListener(documentSnapshot -> {
-                                            User mUser = documentSnapshot.toObject(User.class);
-                                            preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, binding.checkBoxAutoSignIn.isChecked());
-                                            preferenceManager.putString(Constants.KEY_USER_ID, user.getUid());
-                                            preferenceManager.putString(Constants.KEY_USER_NAME, mUser.getName());
-                                            preferenceManager.putString(Constants.KEY_USER_IMAGE_URI, mUser.getImageUrl());
-                                            Log.d("TAG", "사용자 ID:" + user.getUid() + ", 사용자 이름:" + mUser.getName());
+                        Log.d(Constants.TAG, "signInWithCredential:success");
+                        FirebaseUser firebaseUser = auth.getCurrentUser();
+                        database.collection(Constants.KEY_COLLECTION_USERS)
+                                .whereEqualTo(Constants.KEY_USER, firebaseUser.getUid())
+                                .get()
+                                .addOnCompleteListener(task1 -> {
+                                    if (task1.isSuccessful() && task1.getResult() != null){
+                                        if (firebaseUser.getUid().equals(task1.getResult().getDocuments().isEmpty())){
+                                            User mUser = task1.getResult().getDocuments().get(0).toObject(User.class);
+                                            Log.d(Constants.TAG, "사용자 ID:" + firebaseUser.getUid() + ", 사용자 이름:" + mUser.getName());
+                                            setPreferenceManager(mUser);
                                             goToMainActivity();
-                                        }).addOnFailureListener(e -> Log.d("TAG", e.getMessage()));
-                            }
-
-//                        if(curUser != null){
-//                            if(!preferenceManager.getBoolean(Constants.KEY_IS_SIGNED_IN)){
-//
-//                                new DownloadFilesTask().execute(curUser.getPhotoUrl().toString());
-//
-//                                if (encodedImage != null) {
-//                                    User user = new User(curUser.getDisplayName(),
-//                                            encodedImage,
-//                                            curUser.getEmail());
-//                                    user.setId(curUser.getUid());
-//
-//                                    database.collection(Constants.KEY_COLLECTION_USERS)
-//                                            .document(curUser.getUid())
-//                                            .set(user)
-//                                            .addOnSuccessListener(unused -> {
-//                                                Log.d("TAG", "사용자 생성");
-//                                                preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
-//                                                preferenceManager.putString(Constants.KEY_USER_ID, curUser.getUid());
-//                                                preferenceManager.putString(Constants.KEY_NAME, curUser.getDisplayName());
-//                                                preferenceManager.putString(Constants.KEY_IMAGE, encodedImage);
-//                                                Intent intent = new Intent(getApplicationContext(), ChatMainActivity.class);
-//                                                intent.addFlags((Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-//                                                startActivity(intent);
-//                                            })
-//                                            .addOnFailureListener(e -> Log.d("TAG", e.getMessage()));
-//                                } else {
-//                                }
-//                            }
-//                        }
-
+                                        } else {
+                                            createUserInDatabase(firebaseUser);
+                                        }
+                                    } else {
+                                        Log.d(Constants.TAG, "Error getting documents: ", task1.getException());
+                                    }
+                                });
                     } else {
-                        Log.w("TAG", "signInWithCredential:failure", task.getException());
+                        Log.w(Constants.TAG, "signInWithCredential:failure", task.getException());
                         showToast("Authentication failed.");
                     }
                 });
     }
 
-    private void createDatabaseForUser(FirebaseUser curUser){
-        if(curUser != null){
-//                new DownloadFilesTask().execute(curUser.getPhotoUrl().toString());
+    private void createUserInDatabase(FirebaseUser firebaseUser){
+        if(firebaseUser != null){
+            User user = new User(firebaseUser.getDisplayName(),
+                    firebaseUser.getPhotoUrl().toString(),
+                    firebaseUser.getEmail(),
+                    firebaseUser.getUid());
 
-//                if (encodedImage != null) {
-                    User user = new User(curUser.getDisplayName(),
-                                        curUser.getPhotoUrl().toString(),
-                                        curUser.getEmail(),
-                                        curUser.getUid());
-//                    user.setId(curUser.getUid());
-
-                    database.collection(Constants.KEY_COLLECTION_USERS)
-                            .document(curUser.getUid())
-                            .set(user)
-                            .addOnSuccessListener(unused -> {
-                                Log.d("TAG", "database 접속 성공");
-                                preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
-                                preferenceManager.putString(Constants.KEY_USER_ID, curUser.getUid());
-                                preferenceManager.putString(Constants.KEY_USER_NAME, curUser.getDisplayName());
-                                preferenceManager.putString(Constants.KEY_USER_IMAGE_URI, curUser.getPhotoUrl().toString());
-                                goToMainActivity();
-                            })
-                            .addOnFailureListener(e -> Log.d("TAG", e.getMessage()));
-//                } else {
-//                    return;
-//                }
-
+            database.collection(Constants.KEY_COLLECTION_USERS)
+                    .document(firebaseUser.getUid())
+                    .set(user)
+                    .addOnSuccessListener(unused -> {
+                        Log.d(Constants.TAG, "database 접속 성공");
+                        setPreferenceManager(user);
+                        goToMainActivity();
+                    })
+                    .addOnFailureListener(e -> Log.d(Constants.TAG, e.getMessage()));
         }
     }
 
-//    private class DownloadFilesTask extends AsyncTask<String,Void, String> {
-//
-//        @Override
-//        protected String doInBackground(String... strings) {
-//            String result= null;
-//            try {
-//                String img_url = strings[0]; //url of the image
-//                URL url = new URL(img_url);
-//                Bitmap bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-//                result = encodeImage(bitmap);
-//            } catch (MalformedURLException e) {
-//                e.printStackTrace();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//            return result;
-//        }
-//
-//        @Override
-//        protected void onPreExecute() {
-//            super.onPreExecute();
-//            Log.d("TAG", "DownloadFilesTask 시작");
-//        }
-//
-//        @Override
-//        protected void onPostExecute(String result) {
-//            Log.d("TAG", "DownloadFilesTask 끝");
-////            encodedImage = result;
-//        }
-//    }
-
-//    private String encodeImage(Bitmap bitmap){
-//        int previewWidth = 150;
-//        int previewHeight = bitmap.getHeight() * previewWidth / bitmap.getWidth();
-//        Bitmap previewBitmap = Bitmap.createScaledBitmap(bitmap, previewWidth, previewHeight, false);
-//        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-//        previewBitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
-//        byte[] bytes = byteArrayOutputStream.toByteArray();
-//        return Base64.encodeToString(bytes, Base64.DEFAULT);
-//    }
-
-/*
-    private void signIn(){
-        loading(true);
-        FirebaseFirestore database = FirebaseFirestore.getInstance();
-        database.collection(Constants.KEY_COLLECTION_USERS)
-                .whereEqualTo(Constants.KEY_EMAIL, binding.inputEamil.getText().toString())
-                .whereEqualTo(Constants.KEY_PASSWORD, binding.inputPassword.getText().toString())
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful() && task.getResult().size() > 0) {
-                        DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
-                        preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
-                        preferenceManager.putString(Constants.KEY_USER_ID, documentSnapshot.getId());
-                        preferenceManager.putString(Constants.KEY_NAME, documentSnapshot.getString(Constants.KEY_NAME));
-                        preferenceManager.putString(Constants.KEY_IMAGE, documentSnapshot.getString(Constants.KEY_IMAGE));
-                        Intent intent = new Intent(getApplicationContext(), ChatMainActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
-                    } else {
-                        loading(false);
-                        showToast("Unable to sign in");
-                    }
-                });
-
+    private void setPreferenceManager(User user){
+        preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
+        preferenceManager.putString(Constants.KEY_USER_ID, user.getId());
+        preferenceManager.putString(Constants.KEY_USER_NAME, user.getName());
+        preferenceManager.putString(Constants.KEY_USER_IMAGE_URI, user.getImageUrl());
     }
-*/
+
+
 
     private void goToMainActivity(){
         Intent intent = new Intent(this, ChatMainActivity.class);

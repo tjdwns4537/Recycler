@@ -3,6 +3,7 @@ package com.example.recycler.utilities;
 import java.util.HashMap;
 
 public class Constants {
+    public static final String TAG = "TAG";
     public static final String KEY_COLLECTION_USERS = "users";
     public static final String KEY_PREFERENCE_NAME = "irudaPreference";
     public static final String KEY_USER = "user";

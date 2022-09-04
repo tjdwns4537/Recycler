@@ -5,6 +5,7 @@ import com.example.recycler.models.User;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.example.recycler.adapters.UsersAdapter;
@@ -13,10 +14,12 @@ import com.example.recycler.listeners.UserListener;
 import com.example.recycler.models.User;
 import com.example.recycler.utilities.Constants;
 import com.example.recycler.utilities.PreferenceManager;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class UsersActivity extends BaseActivity implements UserListener {
@@ -47,17 +50,17 @@ public class UsersActivity extends BaseActivity implements UserListener {
                     loading(false);
                     String currentUserId = preferenceManager.getSting(Constants.KEY_USER_ID);
                     if (task.isSuccessful() && task.getResult() != null){
-                        List<User> users = new ArrayList<>();
-                        for(QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()){
-                            if (currentUserId.equals(queryDocumentSnapshot.getId())){
+                        ArrayList<User> users = new ArrayList<>();
+                        for(QueryDocumentSnapshot document : task.getResult()){
+                            if (currentUserId.equals(document.getId())){
                                 continue;
                             }
                             User user = new User();
-                            user.setName(queryDocumentSnapshot.getString(Constants.KEY_USER_NAME));
-                            user.setEmail(queryDocumentSnapshot.getString(Constants.KEY_USER_EMAIL));
-                            user.setImageUrl(queryDocumentSnapshot.getString(Constants.KEY_USER_IMAGE_URI));
-                            user.setToken(queryDocumentSnapshot.getString(Constants.KEY_FCM_TOKEN));
-                            user.setId(queryDocumentSnapshot.getId());
+                            user.setId(document.getId());
+                            user.setName(document.toObject(User.class).getName());
+                            user.setEmail(document.toObject(User.class).getEmail());
+                            user.setImageUrl(document.toObject(User.class).getImageUrl());
+                            user.setToken(document.toObject(User.class).getToken());
                             users.add(user);
                         }
                         if (users.size() > 0){

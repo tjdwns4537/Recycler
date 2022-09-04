@@ -1,9 +1,7 @@
 package com.example.recycler.activities;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -30,9 +28,9 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -43,7 +41,7 @@ import retrofit2.Response;
 public class ChatActivity extends BaseActivity {
     private ActivityChatBinding binding;
     private User receiverUser;
-    private List<ChatMessage> chatMessages;
+    private ArrayList<ChatMessage> chatMessages;
     private ChatAdapter chatAdapter;
     private PreferenceManager preferenceManager;
     private FirebaseFirestore database;
@@ -190,15 +188,15 @@ public class ChatActivity extends BaseActivity {
             for (DocumentChange documentChange : value.getDocumentChanges()){
                 if (documentChange.getType() == DocumentChange.Type.ADDED) {
                     ChatMessage chatMessage = new ChatMessage();
-                    chatMessage.senderId = documentChange.getDocument().getString(Constants.KEY_SENDER_ID);
-                    chatMessage.receiverId = documentChange.getDocument().getString(Constants.KEY_RECEIVER_ID);
-                    chatMessage.message = documentChange.getDocument().getString(Constants.KEY_MESSAGE);
-                    chatMessage.dateTime = getReadableDateTime(documentChange.getDocument().getDate(Constants.KEY_TIMESTAMP));
-                    chatMessage.dateObject = documentChange.getDocument().getDate(Constants.KEY_TIMESTAMP);
+                    chatMessage.setSenderId(documentChange.getDocument().getString(Constants.KEY_SENDER_ID));
+                    chatMessage.setReceiverId(documentChange.getDocument().getString(Constants.KEY_RECEIVER_ID));
+                    chatMessage.setMessage(documentChange.getDocument().getString(Constants.KEY_MESSAGE));
+                    chatMessage.setDateTime(getReadableDateTime(documentChange.getDocument().getDate(Constants.KEY_TIMESTAMP)));
+                    chatMessage.setDateObject(documentChange.getDocument().getDate(Constants.KEY_TIMESTAMP));
                     chatMessages.add(chatMessage);
                 }
             }
-            Collections.sort(chatMessages, (obj1, obj2) -> obj1.dateObject.compareTo(obj2.dateObject));
+            Collections.sort(chatMessages, Comparator.comparing(ChatMessage::getDateObject));
             if (count == 0){
                 chatAdapter.notifyDataSetChanged();
             } else {
@@ -213,14 +211,9 @@ public class ChatActivity extends BaseActivity {
         }
     };
 
-//    private Bitmap getBitmapEncodedString(String encodedImage){
-//        byte[] bytes = Base64.decode(encodedImage, Base64.DEFAULT);
-//        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-//    }
-
-
     private void loadReceiverDetails(){
         receiverUser = (User) getIntent().getSerializableExtra(Constants.KEY_USER);
+        Log.d(Constants.TAG, receiverUser.getId() + ":" + receiverUser.getName() + ":" + receiverUser.getImageUrl());
         binding.textName.setText(receiverUser.getName());
     }
 

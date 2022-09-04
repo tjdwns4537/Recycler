@@ -31,6 +31,7 @@ import com.google.firebase.storage.UploadTask;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.HashMap;
 
 public class SignUpActivity extends AppCompatActivity {
     private ActivitySignUpBinding binding;
@@ -82,12 +83,6 @@ public class SignUpActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         Log.d("TAG", "createUserWithEmail:success");
                         FirebaseUser user = auth.getCurrentUser();
-                        Log.d("TAG", "Current userId:" + user.getUid());
-
-                        Log.d("TAG", "가져온 비트맵 이미지" + bitmap.toString());
-//                        new CreateUserTask().execute(bitmap);
-
-                        Log.d("TAG", "uid:" + user.getUid());
                         StorageReference storageRef = storage.getReference();
                         StorageReference usersRef = storageRef.child("images/"+ user.getUid() + "_profile_image.jpg");
                         Log.d("TAG", "usersRef.getPath():" + usersRef.getPath());
@@ -111,6 +106,7 @@ public class SignUpActivity extends AppCompatActivity {
                                     // 유저 객체 생성한다.
                                     User newUser = new User(name, downloadUri, email, user.getUid());
 
+                                    // 디비 초기화
                                     FirebaseFirestore database = FirebaseFirestore.getInstance();
                                     // 디비에 유저 객체를 저장한다.
                                     database.collection(Constants.KEY_COLLECTION_USERS)
@@ -139,73 +135,6 @@ public class SignUpActivity extends AppCompatActivity {
                         showToast("Authentication failed.");
                     }
                 });
-    }
-
-    private class CreateUserTask extends AsyncTask<Bitmap, Void, Void> {
-        String uid;
-        String name;
-        String email;
-        String downloadUri;
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            Log.d("TAG", "CreateUserTask:onPreExecute()");
-            name = binding.inputName.getText().toString();
-            email = binding.inputEamil.getText().toString();
-            uid = auth.getCurrentUser().getUid();
-        }
-
-        @Override
-        protected Void doInBackground(Bitmap... bitmaps) {
-            // 사용자 이미지 스토리지에 저장 시작
-            Bitmap bitmap = bitmaps[0];
-            Log.d("TAG", "uid:" + uid);
-            StorageReference storageRef = storage.getReference();
-            StorageReference usersRef = storageRef.child("images/"+ uid + "_profile_image.jpg");
-            Log.d("TAG", "usersRef.getPath():" + usersRef.getPath());
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            Log.d("TAG", bitmap.toString());
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-            byte[] data = baos.toByteArray();
-            UploadTask uploadTask = usersRef.putBytes(data);
-
-            uploadTask.continueWithTask(task -> {
-                if (!task.isSuccessful()){
-                    throw task.getException();
-                }
-                return usersRef.getDownloadUrl();
-            }).addOnCompleteListener(task -> {
-                if (task.isSuccessful()){
-                    downloadUri = task.getResult().toString();
-                    Log.d("TAG", "Download Uri:" + downloadUri);
-
-                    if (downloadUri != null){
-                        // 유저 객체 생성한다.
-                        User user = new User(name, downloadUri, email, uid);
-
-                        FirebaseFirestore database = FirebaseFirestore.getInstance();
-                        // 디비에 유저 객체를 저장한다.
-                        database.collection(Constants.KEY_COLLECTION_USERS)
-                                .document(uid)
-                                .set(user)
-                                .addOnSuccessListener(unused -> {
-                                    loading(false);
-                                    preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
-                                    preferenceManager.putString(Constants.KEY_USER_ID, uid);
-                                    preferenceManager.putString(Constants.KEY_USER_NAME, name);
-                                    preferenceManager.putString(Constants.KEY_USER_IMAGE_URI, downloadUri);
-                                    Intent intent = new Intent(getApplicationContext(), ChatMainActivity.class);
-                                    intent.addFlags((Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                                    startActivity(intent);
-                                }).addOnFailureListener(e -> {
-                                    loading(false);
-                                    showToast(e.getMessage());
-                                });
-                    }
-                }
-            });
-            return null;
-        }
     }
 
     private final ActivityResultLauncher<Intent> pickImage = registerForActivityResult(

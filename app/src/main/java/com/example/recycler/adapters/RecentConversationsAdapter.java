@@ -55,15 +55,14 @@ public class RecentConversationsAdapter extends RecyclerView.Adapter<RecentConve
         }
 
         void setData(ChatMessage chatMessage){
-//            binding.imageProfile.setImageBitmap(getConversionImage(chatMessage.conversionImageUrl));
-            Glide.with(binding.getRoot().getContext()).load(chatMessage.conversionImageUrl).into(binding.imageProfile);
-            binding.textName.setText(chatMessage.conversionName);
-            binding.textRecentMessage.setText(chatMessage.message);
+            Glide.with(binding.getRoot().getContext()).load(chatMessage.getConversionImageUrl()).into(binding.imageProfile);
+            binding.textName.setText(chatMessage.getConversionName());
+            binding.textRecentMessage.setText(chatMessage.getMessage());
             binding.getRoot().setOnClickListener(view -> {
                 User user = new User();
-                user.setId(chatMessage.conversionId);
-                user.setName(chatMessage.conversionName);
-                user.setImageUrl(chatMessage.conversionImageUrl);
+                user.setId(chatMessage.getConversionId());
+                user.setName(chatMessage.getConversionName());
+                user.setImageUrl(chatMessage.getConversionImageUrl());
                 conversionListener.onConversionClicked(user);
             });
         }
