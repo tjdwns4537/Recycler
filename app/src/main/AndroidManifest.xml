@@ -17,10 +17,10 @@
             android:name=".MainActivity"
             android:exported="true"
             >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
 
         <activity
@@ -31,41 +31,51 @@
             android:name=".activities.BoardAddActivity"
             android:exported="false"/>
 
-        <activity
-            android:name=".activities.ChatMainActivity"
-            android:exported="false"/>
+<!--        <activity-->
+<!--            android:name=".activities.ChatMainActivity"-->
+<!--            android:exported="false"/>-->
+
+<!--        <activity-->
+<!--            android:name=".activities.ChatActivity"-->
+<!--            android:windowSoftInputMode="adjustResize"-->
+<!--            android:exported="false" />-->
+
+<!--        <activity-->
+<!--            android:name=".activities.UsersActivity"-->
+<!--            android:exported="false" />-->
+
+<!--        <activity-->
+<!--            android:name=".activities.SignUpActivity"-->
+<!--            android:exported="false"-->
+<!--            android:windowSoftInputMode="adjustPan" />-->
+
+<!--        <activity-->
+<!--            android:name=".activities.SignInActivity"-->
+<!--            android:exported="true"-->
+<!--            android:windowSoftInputMode="adjustResize">-->
+<!--&lt;!&ndash;            <intent-filter>&ndash;&gt;-->
+<!--&lt;!&ndash;                <action android:name="android.intent.action.MAIN" />&ndash;&gt;-->
+<!--&lt;!&ndash;                <category android:name="android.intent.category.LAUNCHER" />&ndash;&gt;-->
+<!--&lt;!&ndash;            </intent-filter>&ndash;&gt;-->
+<!--        </activity>-->
 
         <activity
-            android:name=".activities.ChatActivity"
-            android:windowSoftInputMode="adjustResize"
-            android:exported="false" />
-
-        <activity
-            android:name=".activities.UsersActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".activities.SignUpActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustPan" />
-
-        <activity
-            android:name=".activities.SignInActivity"
+            android:name=".activities.LoginActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+                        <intent-filter>
+                            <action android:name="android.intent.action.MAIN" />
+                            <category android:name="android.intent.category.LAUNCHER" />
+                        </intent-filter>
         </activity>
 
-        <service
-            android:name=".firebase.MessagingService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
+<!--        <service-->
+<!--            android:name=".firebase.MessagingService"-->
+<!--            android:exported="false">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="com.google.firebase.MESSAGING_EVENT" />-->
+<!--            </intent-filter>-->
+<!--        </service>-->
 
     </application>
 

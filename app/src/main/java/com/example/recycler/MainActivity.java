@@ -26,6 +26,7 @@ import com.example.recycler.fragment.HomeFragment;
 import com.example.recycler.fragment.MypageFragment;
 import com.example.recycler.fragment.StoreFragment;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -54,6 +55,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        System.out.println();
+        System.out.println();
+        System.out.println("uid: "+uid);
+        System.out.println();
+        System.out.println();
+
         // 하단바 소스 코드
         homeFragment = new HomeFragment();
         mypageFragment = new MypageFragment();
@@ -81,8 +90,8 @@ public class MainActivity extends AppCompatActivity {
                         Intent intent = new Intent(MainActivity.this, ListViewActivity.class);
                         startActivity(intent);
                     case R.id.chatting:
-                        Intent intent2 = new Intent(MainActivity.this, ChatMainActivity.class);
-                        startActivity(intent2);
+//                        Intent intent2 = new Intent(MainActivity.this, ChatMainActivity.class);
+//                        startActivity(intent2);
 //                        transaction.replace(R.id.containers, chattingFragment).commit();
                     case R.id.mypage:
 //                        transaction.replace(R.id.containers, mypageFragment).commit();

@@ -7,8 +7,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.recycler.adapters.ListViewAdapter;
 import com.example.recycler.BearItem;
@@ -19,14 +21,26 @@ import com.example.recycler.fragment.MypageFragment;
 import com.example.recycler.fragment.StoreFragment;
 import com.example.recycler.MainActivity;
 import com.example.recycler.R;
+import com.example.recycler.models.BoardModel;
+import com.example.recycler.utilities.Constants;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.protobuf.Value;
+
+import org.w3c.dom.Comment;
+
+import java.util.ArrayList;
 
 public class ListViewActivity extends AppCompatActivity {
 
     private ListView listview = null;
     private ListViewAdapter adapter = null;
+    private ArrayList<BoardModel> boardDataList = new ArrayList<>();
 
     private HomeFragment homeFragment;
     private  MypageFragment mypageFragment;
@@ -34,17 +48,14 @@ public class ListViewActivity extends AppCompatActivity {
     private CommunityFragment communityFragment;
     private ChattingFragment chattingFragment;
 
+    String TAG = ListViewActivity.class.getSimpleName();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_community);
 
-        // DB
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-
-        DatabaseReference myRef = database.getReference("message");
-
-        myRef.setValue("Hello, World!");
+        init();
 
         listview = (ListView) findViewById(R.id.listview);
         adapter = new ListViewAdapter();
@@ -102,9 +113,37 @@ public class ListViewActivity extends AppCompatActivity {
 
         // 하단바 설정 끝
 
+
     }
 
+    public void init() {
+        getBoardData();
 
+    }
 
+    private void getBoardData() {
 
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Get Post object and use the values to update the UI
+                for (DataSnapshot dataModel: dataSnapshot.getChildren()) {
+                    // TODO: handle the post
+                    Log.d(TAG, dataModel.toString());
+
+                    BoardModel item = dataModel.getValue(BoardModel.class);
+                    boardDataList.add(item);
+                }
+
+                Log.d(TAG, boardDataList.toString());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+            }
+        };
+        Constants.boardRef.addValueEventListener(postListener);
+    }
 }

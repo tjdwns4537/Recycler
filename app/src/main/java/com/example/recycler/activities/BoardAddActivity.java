@@ -1,21 +1,24 @@
 package com.example.recycler.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.recycler.MainActivity;
 import com.example.recycler.databinding.BoardaddBinding;
 import com.example.recycler.models.BoardModel;
-import com.example.recycler.models.FBAuth;
 import com.example.recycler.utilities.Constants;
+import com.example.recycler.utilities.FBAuth;
 
 public class BoardAddActivity extends AppCompatActivity {
 
-    BoardaddBinding binding;
-    FBAuth FBAuth;
+    private BoardaddBinding binding;
+    private FBAuth mAuth;
     public String TAG = "BoardWriteActivity";
     public String title;
     public String content;
@@ -31,7 +34,7 @@ public class BoardAddActivity extends AppCompatActivity {
     }
 
     public void init() {
-
+        mAuth = new FBAuth();
         registerBtnAction(); // 게시글 등록 버튼
     }
 
@@ -44,8 +47,8 @@ public class BoardAddActivity extends AppCompatActivity {
                 //변수
                 title = binding.titleWrite.getText().toString();
                 content = binding.contentWrite.getText().toString();
-                uid = FBAuth.getFBAuth();
-                time = FBAuth.getTime();
+                uid = mAuth.getUid();
+                time = mAuth.getTime();
 
                 Log.d(TAG, title);
                 Log.d(TAG, content);
@@ -56,7 +59,7 @@ public class BoardAddActivity extends AppCompatActivity {
                         .push()
                         .setValue(new BoardModel(title, content, uid, time));
 
-
+                finish();
             }
         });
     }
