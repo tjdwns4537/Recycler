@@ -43,6 +43,7 @@
         android:padding="30dp">
 
         <ImageButton
+            android:id="@+id/ImagePlus"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="left"
