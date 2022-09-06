@@ -13,21 +13,27 @@ import android.widget.Toast;
 import com.example.recycler.activities.ListViewActivity;
 import com.example.recycler.BearItem;
 import com.example.recycler.R;
+import com.example.recycler.models.BoardModel;
 
 import java.util.ArrayList;
 
 /* 리스트뷰 어댑터 */
 public class ListViewAdapter extends BaseAdapter {
-    private String TAG = ListViewActivity.class.getSimpleName();
-    ArrayList<BearItem> items = new ArrayList<>();
+    public String TAG = ListViewActivity.class.getSimpleName();
+    public ArrayList<BoardModel> items = new ArrayList<>();
+    BoardModel boardModel;
+
+    public ListViewAdapter(ArrayList<BoardModel> boardDataList) {
+        items = boardDataList;
+    }
 
     @Override
     public int getCount() {
         return items.size();
     }
 
-    public void addItem(BearItem item) {
-        items.add(item);
+    public void addItem(ArrayList<BoardModel> item) {
+        this.items = item;
     }
 
     @Override
@@ -43,7 +49,7 @@ public class ListViewAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup viewGroup) {
         final Context context = viewGroup.getContext();
-        final BearItem bearItem = items.get(position);
+        final BoardModel boardModel = items.get(position);
 
         if(convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -54,27 +60,27 @@ public class ListViewAdapter extends BaseAdapter {
             view = (View) convertView;
         }
 
-        TextView tv_num = (TextView) convertView.findViewById(R.id.tv_num);
-        TextView tv_name = (TextView) convertView.findViewById(R.id.tv_name);
-        ImageView iv_icon = (ImageView) convertView.findViewById(R.id.iv_icon);
+        TextView tv_uid = (TextView) convertView.findViewById(R.id.tv_uid);
+        TextView tv_name = (TextView) convertView.findViewById(R.id.tv_title);
         TextView tv_content = (TextView) convertView.findViewById(R.id.tv_content);
-//        TextView tv_likeit = (TextView) convertView.findViewById(R.id.tv_likeit);
+        TextView tv_time = (TextView) convertView.findViewById(R.id.tv_time);
 
-        tv_num.setText(bearItem.getNum());
-        tv_name.setText(bearItem.getName());
-        iv_icon.setImageResource(bearItem.getResId());
-        tv_content.setText(bearItem.getContent());
-//        tv_likeit.setText(bearItem.getLikeit());
+        //        ImageView iv_icon = (ImageView) convertView.findViewById(R.id.iv_icon);
+        //        TextView tv_likeit = (TextView) convertView.findViewById(R.id.tv_likeit);
 
-        Log.d(TAG, "getView() - [ "+position+" ] "+bearItem.getName());
+
+        tv_uid.setText(boardModel.getUid());
+        tv_name.setText(boardModel.getTitle());
+        tv_content.setText(boardModel.getContent());
+        tv_time.setText(boardModel.getTime());
 
         //각 아이템 선택 event
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context,
-                        bearItem.getNum()+" 번 - "+bearItem.getName(),
-                        Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context,
+//                        BoardModel.getTitle(),
+//                        Toast.LENGTH_SHORT).show();
             }
         });
 

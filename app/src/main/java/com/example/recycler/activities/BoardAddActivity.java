@@ -17,8 +17,8 @@ import com.example.recycler.utilities.FBAuth;
 
 public class BoardAddActivity extends AppCompatActivity {
 
-    private BoardaddBinding binding;
-    private FBAuth mAuth;
+    public BoardaddBinding binding;
+    public FBAuth mAuth;
     public String TAG = "BoardWriteActivity";
     public String title;
     public String content;

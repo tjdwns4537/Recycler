@@ -14,6 +14,9 @@ import android.widget.Toast;
 
 import com.example.recycler.adapters.ListViewAdapter;
 import com.example.recycler.BearItem;
+import com.example.recycler.databinding.ActivityListviewBinding;
+import com.example.recycler.databinding.BoardaddBinding;
+import com.example.recycler.databinding.ListviewListItemBinding;
 import com.example.recycler.fragment.ChattingFragment;
 import com.example.recycler.fragment.CommunityFragment;
 import com.example.recycler.fragment.HomeFragment;
@@ -38,37 +41,37 @@ import java.util.ArrayList;
 
 public class ListViewActivity extends AppCompatActivity {
 
-    private ListView listview = null;
-    private ListViewAdapter adapter = null;
-    private ArrayList<BoardModel> boardDataList = new ArrayList<>();
+    public ListView listview;
+    public ArrayList<BoardModel> boardDataList = new ArrayList<>();
 
-    private HomeFragment homeFragment;
-    private  MypageFragment mypageFragment;
-    private StoreFragment storeFragment;
-    private CommunityFragment communityFragment;
-    private ChattingFragment chattingFragment;
+    public HomeFragment homeFragment;
+    public MypageFragment mypageFragment;
+    public StoreFragment storeFragment;
+    public CommunityFragment communityFragment;
+    public ChattingFragment chattingFragment;
 
-    String TAG = ListViewActivity.class.getSimpleName();
+    public ListViewAdapter adapter;
+
+    public String TAG = ListViewActivity.class.getSimpleName();
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_community);
 
-        init();
-
         listview = (ListView) findViewById(R.id.listview);
-        adapter = new ListViewAdapter();
 
         //Adapter 안에 아이템의 정보 담기
-        adapter.addItem(new BearItem("1", "1번 제목", R.drawable.ic_launcher_background,"1번 내용",1));
-        adapter.addItem(new BearItem("2", "2번 제목", R.drawable.ic_launcher_foreground,"2번 내용",2));
-        adapter.addItem(new BearItem("3", "3번 제목", R.drawable.ic_settings,"3번 내용",3));
-        adapter.addItem(new BearItem("4", "제목", R.drawable.ic_settings,"4번 내용",4));
-        adapter.addItem(new BearItem("5", "제목", R.drawable.ic_settings,"1번 내용",1));
-        adapter.addItem(new BearItem("6", "제목", R.drawable.ic_settings,"1번 내용",1));
-        adapter.addItem(new BearItem("7", "제목", R.drawable.ic_settings,"1번 내용",1));
-        adapter.addItem(new BearItem("8", "제목", R.drawable.ic_settings,"1번 내용",1));
+//        adapter.addItem(new BearItem("1", "1번 제목", R.drawable.ic_launcher_background,"1번 내용",1));
+//        adapter.addItem(new BearItem("2", "2번 제목", R.drawable.ic_launcher_foreground,"2번 내용",2));
+//        adapter.addItem(new BearItem("3", "3번 제목", R.drawable.ic_settings,"3번 내용",3));
+//        adapter.addItem(new BearItem("4", "제목", R.drawable.ic_settings,"4번 내용",4));
+//        adapter.addItem(new BearItem("5", "제목", R.drawable.ic_settings,"1번 내용",1));
+//        adapter.addItem(new BearItem("6", "제목", R.drawable.ic_settings,"1번 내용",1));
+//        adapter.addItem(new BearItem("7", "제목", R.drawable.ic_settings,"1번 내용",1));
+//        adapter.addItem(boardDataList);
+
+        adapter = new ListViewAdapter(boardDataList);
 
         //리스트뷰에 Adapter 설정
         listview.setAdapter(adapter);
@@ -90,19 +93,19 @@ public class ListViewActivity extends AppCompatActivity {
                         Intent intent1 = new Intent(ListViewActivity.this, MainActivity.class);
                         startActivity(intent1);
                     case R.id.store:
-                        Intent intent2 = new Intent(ListViewActivity.this, MainActivity.class);
-                        startActivity(intent2);
+//                        Intent intent2 = new Intent(ListViewActivity.this, MainActivity.class);
+//                        startActivity(intent2);
 //                        getSupportFragmentManager().beginTransaction().replace(R.id.containers, storeFragment).commit();
                     case R.id.community:
                         Intent intent3 = new Intent(ListViewActivity.this, ListViewActivity.class);
                         startActivity(intent3);
 //                        getSupportFragmentManager().beginTransaction().replace(R.id.containers, communityFragment).commit();
                     case R.id.chatting:
-                        Intent intent4 = new Intent(ListViewActivity.this, MainActivity.class);
-                        startActivity(intent4);
+//                        Intent intent4 = new Intent(ListViewActivity.this, MainActivity.class);
+//                        startActivity(intent4);
                     case R.id.mypage:
-                        Intent intent5 = new Intent(ListViewActivity.this, MainActivity.class);
-                        startActivity(intent5);
+//                        Intent intent5 = new Intent(ListViewActivity.this, MainActivity.class);
+//                        startActivity(intent5);
                         break;
                     default:
                         throw new IllegalStateException("Unexpected value: " + item.getItemId());
@@ -113,29 +116,39 @@ public class ListViewActivity extends AppCompatActivity {
 
         // 하단바 설정 끝
 
+        init();
 
     }
 
     public void init() {
-        getBoardData();
+        getBoardData(); // 리스트에 데이터를 담는다.
 
     }
-
-    private void getBoardData() {
+    public BoardModel item;
+    public void getBoardData() {
 
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Get Post object and use the values to update the UI
+
                 for (DataSnapshot dataModel: dataSnapshot.getChildren()) {
                     // TODO: handle the post
                     Log.d(TAG, dataModel.toString());
 
-                    BoardModel item = dataModel.getValue(BoardModel.class);
+                    item = dataModel.getValue(BoardModel.class);
                     boardDataList.add(item);
                 }
 
-                Log.d(TAG, boardDataList.toString());
+                for(BoardModel i : boardDataList){
+                    Log.d(TAG, i.getTitle());
+                    Log.d(TAG, i.getContent());
+                    Log.d(TAG, i.getUid());
+                    Log.d(TAG, i.getTime());
+                }
+
+                adapter.notifyDataSetChanged();
+
             }
 
             @Override
@@ -144,6 +157,7 @@ public class ListViewActivity extends AppCompatActivity {
                 Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
             }
         };
+
         Constants.boardRef.addValueEventListener(postListener);
     }
 }
