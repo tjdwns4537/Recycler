@@ -77,18 +77,18 @@ public class ListViewAdapter extends BaseAdapter {
         tv_content.setText(boardModel.getContent());
         tv_time.setText(boardModel.getTime());
 
+//        ArrayList<String> list = listViewActivity.returnKeyList();
 
         //각 아이템 선택 event
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent intent = new Intent(context,BoardInsideActivity.class);
                 intent.putExtra("title", boardModel.getTitle());
                 intent.putExtra("content", boardModel.getContent());
                 intent.putExtra("time", boardModel.getTime());
-                Toast.makeText(context,
-                        boardModel.getTitle(),
-                        Toast.LENGTH_SHORT).show();
+//                intent.putExtra("key", list);
                 context.startActivity(intent);
             }
         });

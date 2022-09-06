@@ -15,10 +15,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.recycler.adapters.ListViewAdapter;
-import com.example.recycler.BearItem;
-import com.example.recycler.databinding.ActivityListviewBinding;
-import com.example.recycler.databinding.BoardaddBinding;
-import com.example.recycler.databinding.ListviewListItemBinding;
 import com.example.recycler.fragment.ChattingFragment;
 import com.example.recycler.fragment.CommunityFragment;
 import com.example.recycler.fragment.HomeFragment;
@@ -71,22 +67,6 @@ public class ListViewActivity extends AppCompatActivity {
         //리스트뷰에 Adapter 설정
         listview.setAdapter(adapter);
 
-//        listview.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                System.out.println("click ########################################################");
-//                Intent intent = new Intent(ListViewActivity.this, BoardInsideActivity.class);
-//                intent.putExtra("title", boardDataList.get(i).getTitle());
-//                intent.putExtra("content", boardDataList.get(i).getContent());
-//                intent.putExtra("time", boardDataList.get(i).getTime());
-//                startActivity(intent);
-//            }
-//        });
-
-        // insider board 로 이동
-
-
-
         // 하단바 설정 시작
         homeFragment = new HomeFragment();
         mypageFragment = new MypageFragment();
@@ -124,20 +104,6 @@ public class ListViewActivity extends AppCompatActivity {
                 return false;
             }
         });
-
-
-        //Adapter 안에 아이템의 정보 담기
-//        adapter.addItem(new BearItem("1", "1번 제목", R.drawable.ic_launcher_background,"1번 내용",1));
-//        adapter.addItem(new BearItem("2", "2번 제목", R.drawable.ic_launcher_foreground,"2번 내용",2));
-//        adapter.addItem(new BearItem("3", "3번 제목", R.drawable.ic_settings,"3번 내용",3));
-//        adapter.addItem(new BearItem("4", "제목", R.drawable.ic_settings,"4번 내용",4));
-//        adapter.addItem(new BearItem("5", "제목", R.drawable.ic_settings,"1번 내용",1));
-//        adapter.addItem(new BearItem("6", "제목", R.drawable.ic_settings,"1번 내용",1));
-//        adapter.addItem(new BearItem("7", "제목", R.drawable.ic_settings,"1번 내용",1));
-//        adapter.addItem(boardDataList);
-        // 하단바 설정 끝
-
-
 
     }
 
