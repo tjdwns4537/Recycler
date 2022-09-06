@@ -31,6 +31,10 @@
             android:name=".activities.BoardAddActivity"
             android:exported="false"/>
 
+        <activity
+            android:name=".activities.BoardInsideActivity"
+            android:exported="false"/>
+
 <!--        <activity-->
 <!--            android:name=".activities.ChatMainActivity"-->
 <!--            android:exported="false"/>-->

@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -49,6 +51,7 @@ public class ListViewActivity extends AppCompatActivity {
     public StoreFragment storeFragment;
     public CommunityFragment communityFragment;
     public ChattingFragment chattingFragment;
+    public BoardModel item;
 
     public ListViewAdapter adapter;
 
@@ -59,22 +62,30 @@ public class ListViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_community);
 
-        listview = (ListView) findViewById(R.id.listview);
+        init();
 
-        //Adapter 안에 아이템의 정보 담기
-//        adapter.addItem(new BearItem("1", "1번 제목", R.drawable.ic_launcher_background,"1번 내용",1));
-//        adapter.addItem(new BearItem("2", "2번 제목", R.drawable.ic_launcher_foreground,"2번 내용",2));
-//        adapter.addItem(new BearItem("3", "3번 제목", R.drawable.ic_settings,"3번 내용",3));
-//        adapter.addItem(new BearItem("4", "제목", R.drawable.ic_settings,"4번 내용",4));
-//        adapter.addItem(new BearItem("5", "제목", R.drawable.ic_settings,"1번 내용",1));
-//        adapter.addItem(new BearItem("6", "제목", R.drawable.ic_settings,"1번 내용",1));
-//        adapter.addItem(new BearItem("7", "제목", R.drawable.ic_settings,"1번 내용",1));
-//        adapter.addItem(boardDataList);
+        listview = (ListView) findViewById(R.id.listview);
 
         adapter = new ListViewAdapter(boardDataList);
 
         //리스트뷰에 Adapter 설정
         listview.setAdapter(adapter);
+
+//        listview.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                System.out.println("click ########################################################");
+//                Intent intent = new Intent(ListViewActivity.this, BoardInsideActivity.class);
+//                intent.putExtra("title", boardDataList.get(i).getTitle());
+//                intent.putExtra("content", boardDataList.get(i).getContent());
+//                intent.putExtra("time", boardDataList.get(i).getTime());
+//                startActivity(intent);
+//            }
+//        });
+
+        // insider board 로 이동
+
+
 
         // 하단바 설정 시작
         homeFragment = new HomeFragment();
@@ -114,9 +125,19 @@ public class ListViewActivity extends AppCompatActivity {
             }
         });
 
+
+        //Adapter 안에 아이템의 정보 담기
+//        adapter.addItem(new BearItem("1", "1번 제목", R.drawable.ic_launcher_background,"1번 내용",1));
+//        adapter.addItem(new BearItem("2", "2번 제목", R.drawable.ic_launcher_foreground,"2번 내용",2));
+//        adapter.addItem(new BearItem("3", "3번 제목", R.drawable.ic_settings,"3번 내용",3));
+//        adapter.addItem(new BearItem("4", "제목", R.drawable.ic_settings,"4번 내용",4));
+//        adapter.addItem(new BearItem("5", "제목", R.drawable.ic_settings,"1번 내용",1));
+//        adapter.addItem(new BearItem("6", "제목", R.drawable.ic_settings,"1번 내용",1));
+//        adapter.addItem(new BearItem("7", "제목", R.drawable.ic_settings,"1번 내용",1));
+//        adapter.addItem(boardDataList);
         // 하단바 설정 끝
 
-        init();
+
 
     }
 
@@ -124,7 +145,7 @@ public class ListViewActivity extends AppCompatActivity {
         getBoardData(); // 리스트에 데이터를 담는다.
 
     }
-    public BoardModel item;
+
     public void getBoardData() {
 
         ValueEventListener postListener = new ValueEventListener() {
@@ -132,19 +153,17 @@ public class ListViewActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Get Post object and use the values to update the UI
 
+                boardDataList.clear();
+
                 for (DataSnapshot dataModel: dataSnapshot.getChildren()) {
                     // TODO: handle the post
-                    Log.d(TAG, dataModel.toString());
 
                     item = dataModel.getValue(BoardModel.class);
                     boardDataList.add(item);
                 }
 
                 for(BoardModel i : boardDataList){
-                    Log.d(TAG, i.getTitle());
-                    Log.d(TAG, i.getContent());
-                    Log.d(TAG, i.getUid());
-                    Log.d(TAG, i.getTime());
+                    Log.d(TAG, i.getTitle());Log.d(TAG, i.getContent());Log.d(TAG, i.getUid());Log.d(TAG, i.getTime());
                 }
 
                 adapter.notifyDataSetChanged();
