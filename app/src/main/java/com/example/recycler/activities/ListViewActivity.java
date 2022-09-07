@@ -12,12 +12,11 @@ import android.widget.ListView;
 
 import com.example.recycler.adapters.ListViewAdapter;
 import com.example.recycler.BearItem;
-import com.example.recycler.fragment.ChattingFragment;
+import com.example.recycler.fragment.ChatFragment;
 import com.example.recycler.fragment.CommunityFragment;
 import com.example.recycler.fragment.HomeFragment;
 import com.example.recycler.fragment.MypageFragment;
 import com.example.recycler.fragment.StoreFragment;
-import com.example.recycler.MainActivity;
 import com.example.recycler.R;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -30,7 +29,7 @@ public class ListViewActivity extends AppCompatActivity {
     private  MypageFragment mypageFragment;
     private StoreFragment storeFragment;
     private CommunityFragment communityFragment;
-    private ChattingFragment chattingFragment;
+    private ChatFragment chatFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,9 +57,9 @@ public class ListViewActivity extends AppCompatActivity {
         mypageFragment = new MypageFragment();
         storeFragment = new StoreFragment();
         communityFragment = new CommunityFragment();
-        chattingFragment = new ChattingFragment();
+        chatFragment = new ChatFragment();
 
-        NavigationBarView navigationBarView = findViewById(R.id.bottom_navigationview);
+        NavigationBarView navigationBarView = findViewById(R.id.bottomNavigationView);
         navigationBarView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -77,7 +76,7 @@ public class ListViewActivity extends AppCompatActivity {
                         Intent intent3 = new Intent(ListViewActivity.this, ListViewActivity.class);
                         startActivity(intent3);
 //                        getSupportFragmentManager().beginTransaction().replace(R.id.containers, communityFragment).commit();
-                    case R.id.chatting:
+                    case R.id.chat:
                         Intent intent4 = new Intent(ListViewActivity.this, MainActivity.class);
                         startActivity(intent4);
                     case R.id.mypage:

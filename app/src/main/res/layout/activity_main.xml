@@ -4,78 +4,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".activities.MainActivity">
 
-    <!-- 상단 검색바 시작-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="20dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:layout_gravity="center"
-        >
-        <ImageButton
-            android:id="@+id/searchImage"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/search"
-            />
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            app:buttonGravity="center_vertical"
+            app:labelVisibilityMode="unlabeled"
+            app:logo="@null"
+            app:maxButtonHeight="@dimen/_24sdp"
+            app:menu="@menu/appbar_top"/>
 
-        <EditText
-            android:id="@+id/editSearch"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_weight="1"
-            android:hint="검색어를 입력하세요."/>
+        <FrameLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
 
-        <ImageButton
-            android:id="@+id/alarmButton"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/ic_settings"
-            />
-
-        <ImageButton
-            android:id="@+id/scrapButton"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/scrap"
-            />
-    </LinearLayout>
-    <!-- 상단 검색바 끝-->
-
-
-
-    <FrameLayout
-        android:id="@+id/containers"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-
-    <Button
-        android:id="@+id/boardadd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/ic_settings"
-        android:layout_gravity="right"
-        />
-
-    <!-- 하단 고정바 시작 -->
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigationview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:labelVisibilityMode="labeled"
-        app:itemBackground="@color/white"
-        app:menu="@menu/navbar_bottom"
-        />
-    <!-- 하단 고정바 끝-->
-
+        <!-- 하단 고정바 시작 -->
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigationView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_52sdp"
+            app:labelVisibilityMode="unlabeled"
+            app:itemIconSize="@dimen/_28sdp"
+            app:itemIconTint="@color/bottom_icon_clicked"
+            app:itemBackground="@color/white"
+            app:menu="@menu/navbar_bottom" />
+        <!-- 하단 고정바 끝-->
 
 </LinearLayout>

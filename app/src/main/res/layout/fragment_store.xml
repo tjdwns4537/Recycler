@@ -5,13 +5,9 @@
     android:layout_height="match_parent"
     tools:context=".fragment.StoreFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:layout_gravity="center"
-        android:gravity="center_horizontal"
-        android:text="@string/hello_blank_fragment" />
-
+        android:text="스토어 프래그먼트" />
 </FrameLayout>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/bookmark"
+        android:enabled="true"
+        android:icon="@drawable/bookmark_simple_thin_icon_171955"
+        app:showAsAction="always"
+        android:title="북마크"/>
+
+    <item android:id="@+id/cart"
+        android:enabled="true"
+        android:icon="@drawable/shopping_cart_thin_icon_171537"
+        app:showAsAction="always"
+        android:title="북마크"/>
+
+</menu>

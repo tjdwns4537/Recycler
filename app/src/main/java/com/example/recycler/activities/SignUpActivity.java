@@ -118,7 +118,7 @@ public class SignUpActivity extends AppCompatActivity {
                                                 preferenceManager.putString(Constants.KEY_USER_ID, user.getUid());
                                                 preferenceManager.putString(Constants.KEY_USER_NAME, name);
                                                 preferenceManager.putString(Constants.KEY_USER_IMAGE_URI, downloadUri);
-                                                Intent intent = new Intent(getApplicationContext(), ChatMainActivity.class);
+                                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                                 intent.addFlags((Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                                                 startActivity(intent);
                                             }).addOnFailureListener(e -> {

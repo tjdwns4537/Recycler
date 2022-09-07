@@ -57,9 +57,7 @@ public class SignInActivity extends AppCompatActivity {
         callbackManager = CallbackManager.Factory.create();
 
         if(preferenceManager.getBoolean(Constants.KEY_IS_SIGNED_IN)){
-            Intent intent = new Intent(getApplicationContext(), ChatMainActivity.class);
-            startActivity(intent);
-            finish();
+            goToMainActivity();
         }
 
         binding = ActivitySignInBinding.inflate(getLayoutInflater());
@@ -263,7 +261,7 @@ public class SignInActivity extends AppCompatActivity {
 
 
     private void goToMainActivity(){
-        Intent intent = new Intent(this, ChatMainActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
