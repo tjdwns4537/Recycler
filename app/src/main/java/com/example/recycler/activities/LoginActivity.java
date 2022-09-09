@@ -27,9 +27,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private String TAG = "LoginActivity";
 
-
-
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

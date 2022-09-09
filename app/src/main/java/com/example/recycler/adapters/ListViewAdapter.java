@@ -88,7 +88,8 @@ public class ListViewAdapter extends BaseAdapter {
                 intent.putExtra("title", boardModel.getTitle());
                 intent.putExtra("content", boardModel.getContent());
                 intent.putExtra("time", boardModel.getTime());
-//                intent.putExtra("key", list);
+                intent.putExtra("photoName", boardModel.getPhoto());
+                intent.putExtra("uid",boardModel.getUid());
                 context.startActivity(intent);
             }
         });

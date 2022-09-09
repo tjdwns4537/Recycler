@@ -50,7 +50,7 @@
 
 
     <ImageView
-        android:id="@+id/getImageArea"
+        android:id="@+id/ImageArea"
         android:layout_margin="30dp"
         android:layout_width="match_parent"
         android:layout_height="300dp"/>

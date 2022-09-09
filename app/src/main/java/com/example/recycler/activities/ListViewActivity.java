@@ -15,6 +15,10 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.recycler.adapters.ListViewAdapter;
+import com.example.recycler.BearItem;
+import com.example.recycler.databinding.ActivityListviewBinding;
+import com.example.recycler.databinding.BoardaddBinding;
+import com.example.recycler.databinding.ListviewListItemBinding;
 import com.example.recycler.fragment.ChattingFragment;
 import com.example.recycler.fragment.CommunityFragment;
 import com.example.recycler.fragment.HomeFragment;
@@ -24,6 +28,7 @@ import com.example.recycler.MainActivity;
 import com.example.recycler.R;
 import com.example.recycler.models.BoardModel;
 import com.example.recycler.utilities.Constants;
+import com.example.recycler.utilities.FBdatabase;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -41,6 +46,7 @@ public class ListViewActivity extends AppCompatActivity {
 
     public ListView listview;
     public ArrayList<BoardModel> boardDataList = new ArrayList<>();
+    public ArrayList<String> boardKeyList = new ArrayList<>();
 
     public HomeFragment homeFragment;
     public MypageFragment mypageFragment;
@@ -143,6 +149,6 @@ public class ListViewActivity extends AppCompatActivity {
             }
         };
 
-        Constants.boardRef.addValueEventListener(postListener);
+        FBdatabase.boardRef.addValueEventListener(postListener);
     }
 }

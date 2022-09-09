@@ -55,13 +55,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-        System.out.println();
-        System.out.println();
-        System.out.println("uid: "+uid);
-        System.out.println();
-        System.out.println();
+//        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         // 하단바 소스 코드
         homeFragment = new HomeFragment();
