@@ -10,11 +10,13 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="60dp"
+        android:background="@color/white"
+        >
 
         <TextView
             android:id="@+id/titleArea"
-            android:text="title"
+            android:text="상품"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -26,33 +28,44 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:background="@color/black"
-        android:layout_height="0.5dp">
+        android:layout_height="match_parent"
+        android:background="@color/lightGray"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/timeArea"
+            android:text="time"
+            android:layout_width="match_parent"
+            android:gravity="right"
+            android:layout_margin="10dp"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/title"
+            android:text="제목"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="20dp"
+            android:padding="10dp"
+            />
+
+        <TextView
+            android:id="@+id/textArea"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_margin="20dp"
+            android:textColor="@color/black"
+            android:text="여기는 내용 영역"
+            android:padding="10dp"/>
+
+
+        <ImageView
+            android:id="@+id/ImageArea"
+            android:layout_margin="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"/>
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/timeArea"
-        android:text="time"
-        android:layout_width="match_parent"
-        android:gravity="right"
-        android:layout_margin="10dp"
-        android:layout_height="wrap_content"/>
-
-    <TextView
-        android:id="@+id/textArea"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_margin="20dp"
-        android:textColor="@color/black"
-        android:text="여기는 내용 영역"
-        android:padding="10dp"/>
-
-
-    <ImageView
-        android:id="@+id/ImageArea"
-        android:layout_margin="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"/>
 
 </LinearLayout>

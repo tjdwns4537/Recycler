@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/all_border.xml" value="0.13385416666666666" />
         <entry key="app/src/main/res/drawable/background_radius_yellow.xml" value="0.13489583333333333" />
+        <entry key="app/src/main/res/drawable/bottom_border.xml" value="0.13385416666666666" />
         <entry key="app/src/main/res/drawable/ic_home.xml" value="0.13177083333333334" />
         <entry key="app/src/main/res/drawable/ic_send.xml" value="0.13125" />
         <entry key="app/src/main/res/layout/activity_board_inside.xml" value="0.11875" />
@@ -17,7 +19,7 @@
         <entry key="app/src/main/res/layout/activity_sign_up.xml" value="0.11510416666666666" />
         <entry key="app/src/main/res/layout/activity_testjoin.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_users.xml" value="0.11510416666666666" />
-        <entry key="app/src/main/res/layout/boardadd.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/boardadd.xml" value="0.165" />
         <entry key="app/src/main/res/layout/bottom_navbar.xml" value="0.115625" />
         <entry key="app/src/main/res/layout/content_list_view.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_chatting.xml" value="0.1" />
@@ -31,7 +33,7 @@
         <entry key="app/src/main/res/layout/item_container_recent_conversion.xml" value="0.11510416666666666" />
         <entry key="app/src/main/res/layout/item_container_sent_message.xml" value="0.11510416666666666" />
         <entry key="app/src/main/res/layout/item_container_user.xml" value="0.11510416666666666" />
-        <entry key="app/src/main/res/layout/listview_list_item.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/listview_list_item.xml" value="0.165" />
         <entry key="app/src/main/res/layout/search_listview.xml" value="0.11458333333333333" />
         <entry key="app/src/main/res/layout/testjoin.xml" value="0.1" />
         <entry key="app/src/main/res/layout/tst.xml" value="0.23177083333333334" />

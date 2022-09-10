@@ -29,7 +29,7 @@
 
     <!-- board string -->
     <string name="registerBtn"> 등록 </string>
-    <string name="registerName"> 게시글 적기 </string>
-    <string name="registerTitle"> 게시글 제목 </string>
-    <string name="registerContent"> 게시글 내용 </string>
+    <string name="registerName"> 상품 등록하기 </string>
+    <string name="registerTitle"> 제목 </string>
+    <string name="registerContent"> 내용 </string>
 </resources>

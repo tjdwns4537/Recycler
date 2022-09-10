@@ -63,21 +63,13 @@ public class ListViewAdapter extends BaseAdapter {
             view = (View) convertView;
         }
 
-        TextView tv_uid = (TextView) convertView.findViewById(R.id.tv_uid);
         TextView tv_name = (TextView) convertView.findViewById(R.id.tv_title);
         TextView tv_content = (TextView) convertView.findViewById(R.id.tv_content);
         TextView tv_time = (TextView) convertView.findViewById(R.id.tv_time);
 
-        //        ImageView iv_icon = (ImageView) convertView.findViewById(R.id.iv_icon);
-        //        TextView tv_likeit = (TextView) convertView.findViewById(R.id.tv_likeit);
-
-
-        tv_uid.setText(boardModel.getUid());
         tv_name.setText(boardModel.getTitle());
         tv_content.setText(boardModel.getContent());
         tv_time.setText(boardModel.getTime());
-
-//        ArrayList<String> list = listViewActivity.returnKeyList();
 
         //각 아이템 선택 event
         convertView.setOnClickListener(new View.OnClickListener() {
@@ -88,7 +80,7 @@ public class ListViewAdapter extends BaseAdapter {
                 intent.putExtra("title", boardModel.getTitle());
                 intent.putExtra("content", boardModel.getContent());
                 intent.putExtra("time", boardModel.getTime());
-                intent.putExtra("photoName", boardModel.getPhoto());
+                intent.putExtra("photoName", boardModel.getPhotoName());
                 intent.putExtra("uid",boardModel.getUid());
                 context.startActivity(intent);
             }

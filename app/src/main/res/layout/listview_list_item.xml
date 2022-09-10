@@ -13,28 +13,22 @@
         android:orientation="horizontal"
         android:layout_gravity="center"
         android:weightSum="10"
+        android:padding="10dp"
+        android:background="@drawable/bottom_border"
         >
-
-        <TextView
-            android:id="@+id/tv_uid"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:text="회원아이디"
-            android:background="#B2EBF4"
-            android:gravity="center"/>
 
         <ImageView
             android:id="@+id/iv_icon"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="3"
-            android:background="#FFD9FA" />
+            android:background="@drawable/all_border"
+            />
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="4"
+            android:layout_weight="7"
             android:orientation="vertical"
             android:weightSum="3"
             >
@@ -44,27 +38,37 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="제목"
-                android:background="#B7F0B1"
-                android:gravity="center"/>
+                android:background="@drawable/all_border"
+                android:gravity="left"
+                android:text="제목" />
 
-            <TextView
-                android:id="@+id/tv_content"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="내용"
-                android:background="@color/cardview_dark_background"
-                android:gravity="center"/>
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
 
-<!--            <TextView-->
-<!--                android:id="@+id/tv_likeit"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="0dp"-->
-<!--                android:layout_weight="1"-->
-<!--                android:text="좋아요수"-->
-<!--                android:background="@color/purple_200"-->
-<!--                android:gravity="center"/>-->
+                <ImageView
+                    android:id="@+id/sellState"
+                    android:background="@drawable/sell_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    >
+
+                </ImageView>
+
+                <TextView
+                    android:id="@+id/tv_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="가격"
+                    android:textStyle="bold"
+                    android:background="@drawable/all_border"
+                    />
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/tv_time"
@@ -72,21 +76,12 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:text="등록 시간"
-                android:background="@color/purple_200"
-                android:gravity="center"/>
+                android:textSize="10sp"
+                android:textColor="#727272"
+                android:background="@drawable/all_border"
+                android:gravity="left"/>
 
         </LinearLayout>
-
-
-        <ImageButton
-            android:id="@+id/likeit"
-            android:layout_width="0dp"
-            android:layout_height="20dp"
-            android:layout_weight="1"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/likeit"
-            />
-
     </LinearLayout>
 
 </LinearLayout>

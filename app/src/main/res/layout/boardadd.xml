@@ -10,8 +10,9 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/teal_700"
-        android:padding="10dp">
+        android:padding="10dp"
+        android:background="@color/white"
+        >
 
         <TextView
             android:layout_width="wrap_content"
@@ -26,9 +27,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:background="@color/black"
+            android:backgroundTint="@color/lightGray"
             android:text="@string/registerBtn"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="15sp" />
     </FrameLayout>
 
@@ -40,6 +41,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
+        android:backgroundTint="@color/lightGray"
         android:padding="30dp">
 
         <ImageButton
@@ -49,7 +51,7 @@
             android:layout_gravity="left"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
-            android:background="@drawable/cameraimage" />
+            android:background="@drawable/camera" />
 
         <EditText
             android:id="@+id/titleWrite"
@@ -57,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="20dp"
-            android:background="@color/design_default_color_primary"
+            android:background="@color/white"
             android:padding="10dp"
             android:hint="@string/registerTitle"
             android:textAlignment="center" />
@@ -67,7 +69,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="@color/design_default_color_primary"
+            android:background="@color/white"
             android:padding="10dp"
             android:hint="@string/registerContent"
             android:textAlignment="center" />

@@ -40,21 +40,19 @@ public class BoardInsideActivity extends AppCompatActivity {
     private String TAG = BoardInsideActivity.class.getSimpleName();
 
     ActivityBoardInsideBinding binding;
+
     FirebaseStorage storage = FirebaseStorage.getInstance();
+
     StorageReference storageRef = storage.getReference();
     StorageReference pathRef = storageRef.child("images/");
 
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
     String title;
     String content;
     String time;
     String uid;
-
-    ArrayList<String> IUri;
-    BoardModel value;
-
-    private DatabaseReference mDatabase;
-    String r = "";
-
+    String photoName;
+    ImageView imageView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,12 +60,14 @@ public class BoardInsideActivity extends AppCompatActivity {
         binding = ActivityBoardInsideBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        imageView = binding.ImageArea;
 
         title = getIntent().getStringExtra("title").toString();
         content = getIntent().getStringExtra("content").toString();
         time = getIntent().getStringExtra("time").toString();
         uid = getIntent().getStringExtra("uid").toString();
+        photoName = getIntent().getStringExtra("photoName").toString();
+
 
         binding.titleArea.setText(title);
         binding.textArea.setText(content);
@@ -78,75 +78,16 @@ public class BoardInsideActivity extends AppCompatActivity {
         Log.d(TAG, time);
 
         FirbaseGetImageData2();
+
     }
 
 
     public void FirbaseGetImageData2(){
-        ImageView imageView = binding.ImageArea;
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("board");
-
-        IUri = new ArrayList<>();
-        String uid = "";
-
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-
-                    value = dataSnapshot.getValue(BoardModel.class);
-                    IUri.add(value.getPhotoName());
-                }
-                if (pathRef == null) {
-                    Log.d(TAG, "저장된 사진 없음");
-                } else {
-                    StorageReference submitProfile = storageRef.child("images/" + value.getPhotoName());
-                    submitProfile.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            Log.d(TAG, uri.toString());
-                            Glide.with(BoardInsideActivity.this).load(uri).into(imageView);
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-
-                        }
-                    });
-                }
-                
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-//        ValueEventListener postListener = new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                // Get Post object and use the values to update the UI
-//                BoardModel boardModel = dataSnapshot.getValue(BoardModel.class);
-//                r = boardModel.getPhotoName();
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//                // Getting Post failed, log a message
-//                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-//            }
-//        };
-//        mDatabase.addValueEventListener(postListener);
-
 
         if (pathRef == null) {
             Log.d(TAG, "저장된 사진 없음");
-        } else{
-            StorageReference submitProfile = storageRef.child("images/"+FBdatabase.Imagepath);
+        } else {
+            StorageReference submitProfile = storageRef.child("images/" + photoName);
             submitProfile.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
@@ -160,76 +101,5 @@ public class BoardInsideActivity extends AppCompatActivity {
                 }
             });
         }
-
     }
-
-//    public void FirbaseGetImageData(){
-//        // Reference to an image file in Cloud Storage
-//        ImageView imageView = binding.getImageArea;
-//
-//        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
-//
-////        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child(key+".png");
-////        StorageReference storageReference = FirebaseStorage.getInstance().getReference("-NBHafkXFUOTgVVToEFL.png");
-//
-//        // ImageView in your Activity
-//
-//        storageRef.child("images/mountains.jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//            @Override
-//            public void onSuccess(Uri uri) {
-//                // Got the download URL for 'users/me/profile.png'
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception exception) {
-//                // Handle any errors
-//            }
-//        });
-//
-//
-////        Test1
-////        Glide.with(this /* context */)
-////                .load(storageReference)
-////                .into(imageView);
-//
-////test3
-////        storageReference.getDownloadUrl().addOnCompleteListener(new OnCompleteListener() {
-////            @Override
-////            public void onComplete(@NonNull Task task) {
-////                if(task.isSuccessful()){
-////                    Glide.with(BoardInsideActivity.this)
-////                            .load(task.getResult())
-////                            .into(imageView);
-////               } else {
-////
-////                }
-////            }
-////        });
-//
-//        //Test2
-////        storageRef.child("users/me/profile.png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-////            @Override
-////            public void onSuccess(Uri uri) {
-////                // Got the download URL for 'users/me/profile.png'
-////            }
-////        }).addOnFailureListener(new OnFailureListener() {
-////            @Override
-////            public void onFailure(@NonNull Exception exception) {
-////                // Handle any errors
-////            }
-////        });
-//
-//        //Test3
-////        // Download directly from StorageReference using Glide
-////        // (See MyAppGlideModule for Loader registration)
-////        storageReference.getDownloadUrl().addOnCompleteListener(new OnCompleteListener(Task<TResult> task) {
-////            @Override
-////            public void onComplete() {
-////                if(task.isSuccessful()){
-////
-////                }
-////            }
-////        });)
-//    }
-
 }

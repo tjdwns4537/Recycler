@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.example.recycler.activities.BoardAddActivity;
@@ -98,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         // 하단바 끝
 
         // 게시글 추가 버튼 시작
-        Button button = (Button) findViewById(R.id.boardadd);
+        ImageButton button = (ImageButton) findViewById(R.id.boardadd);
         button.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v) {

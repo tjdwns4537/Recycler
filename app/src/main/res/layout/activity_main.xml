@@ -48,23 +48,23 @@
     </LinearLayout>
     <!-- 상단 검색바 끝-->
 
-
-
     <FrameLayout
         android:id="@+id/containers"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1" >
 
-    <Button
-        android:id="@+id/boardadd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/ic_settings"
-        android:layout_gravity="right"
-        />
+        <ImageButton
+            android:id="@+id/boardadd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:background="@drawable/board_add"
+            android:layout_gravity="bottom|right"
+            />
+    </FrameLayout>
+
+
 
     <!-- 하단 고정바 시작 -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
