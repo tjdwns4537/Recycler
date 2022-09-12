@@ -9,17 +9,19 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.recycler.databinding.ItemContainerUserBinding;
 import com.example.recycler.listeners.UserListener;
 import com.example.recycler.models.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHolder> {
 
-    private final List<User> users;
+    private final ArrayList<User> users;
     private final UserListener userListener;
-    public UsersAdapter(List<User> users, UserListener userListener) {
+    public UsersAdapter(ArrayList<User> users, UserListener userListener) {
         this.users = users;
         this.userListener = userListener;
     }
@@ -53,16 +55,11 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
         }
 
         void setUserData(User user){
-            binding.textName.setText(user.name);
-            binding.textEmail.setText(user.email);
-            binding.imageProfile.setImageBitmap(getUserImage(user.image));
+            binding.textName.setText(user.getName());
+            binding.textEmail.setText(user.getEmail());
+            Glide.with(binding.getRoot().getContext()).load(user.getImageUrl()).into(binding.imageProfile);
             binding.getRoot().setOnClickListener(view -> userListener.onUserClicked(user));
         }
 
-    }
-
-    private Bitmap getUserImage(String encodedImage){
-        byte[] bytes = Base64.decode(encodedImage, Base64.DEFAULT);
-        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
     }
 }

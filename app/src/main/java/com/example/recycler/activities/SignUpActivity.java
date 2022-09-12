@@ -4,9 +4,10 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Base64;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Toast;
@@ -16,9 +17,16 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.recycler.databinding.ActivitySignUpBinding;
+import com.example.recycler.models.User;
 import com.example.recycler.utilities.Constants;
 import com.example.recycler.utilities.PreferenceManager;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -28,22 +36,27 @@ import java.util.HashMap;
 public class SignUpActivity extends AppCompatActivity {
     private ActivitySignUpBinding binding;
     private PreferenceManager preferenceManager;
-    private String encodedImage;
-
+    private Bitmap bitmap;
+    private FirebaseAuth auth;
+    private FirebaseStorage storage;
+    private String downloadUri;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivitySignUpBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         preferenceManager = new PreferenceManager(getApplicationContext());
+        auth = FirebaseAuth.getInstance();
+        storage = FirebaseStorage.getInstance();
         setListeners();
     }
 
     private void setListeners(){
-        binding.textSignIn.setOnClickListener(view -> onBackPressed());
+        binding.buttonBack.setOnClickListener(view -> onBackPressed());
+        binding.textSignInToContinue.setOnClickListener(view -> onBackPressed());
         binding.buttonSignUp.setOnClickListener(view -> {
             if (isValidSignUpDetails()){
-                signUp();
+                createAccount();
             }
         });
         binding.layoutImage.setOnClickListener(view -> {
@@ -57,40 +70,69 @@ public class SignUpActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 
-    private void signUp(){
+    private void createAccount() {
         loading(true);
-        FirebaseFirestore database = FirebaseFirestore.getInstance();
-        HashMap<String, Object> user = new HashMap<>();
-        user.put(Constants.KEY_NAME, binding.inputName.getText().toString());
-        user.put(Constants.KEY_EMAIL, binding.inputEamil.getText().toString());
-        user.put(Constants.KEY_PASSWORD, binding.inputPassword.getText().toString());
-        user.put(Constants.KEY_IMAGE, encodedImage);
-        database.collection(Constants.KEY_COLLECTION_USERS)
-                .add(user)
-                .addOnSuccessListener(documentReference -> {
-                    loading(false);
-                    preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
-                    preferenceManager.putString(Constants.KEY_USER_ID, documentReference.getId());
-                    preferenceManager.putString(Constants.KEY_NAME, binding.inputName.getText().toString());
-                    preferenceManager.putString(Constants.KEY_IMAGE, encodedImage);
-                    Intent intent = new Intent(getApplicationContext(), ChatMainActivity.class);
-                    intent.addFlags((Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                    startActivity(intent);
-                })
-                .addOnFailureListener(e -> {
-                    loading(false);
-                    showToast(e.getMessage());
-                });
-    }
+        String email = binding.inputEamil.getText().toString().trim();
+        String password = binding.inputPassword.getText().toString().trim();
+        String name = binding.inputName.getText().toString().trim();
 
-    private String encodeImage(Bitmap bitmap){
-        int previewWidth = 150;
-        int previewHeight = bitmap.getHeight() * previewWidth / bitmap.getWidth();
-        Bitmap previewBitmap = Bitmap.createScaledBitmap(bitmap, previewWidth, previewHeight, false);
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        previewBitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
-        byte[] bytes = byteArrayOutputStream.toByteArray();
-        return Base64.encodeToString(bytes, Base64.DEFAULT);
+        auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        Log.d("TAG", "createUserWithEmail:success");
+                        FirebaseUser user = auth.getCurrentUser();
+                        StorageReference storageRef = storage.getReference();
+                        StorageReference usersRef = storageRef.child("images/"+ user.getUid() + "_profile_image.jpg");
+                        Log.d("TAG", "usersRef.getPath():" + usersRef.getPath());
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                        Log.d("TAG", bitmap.toString());
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                        byte[] data = baos.toByteArray();
+                        UploadTask uploadTask = usersRef.putBytes(data);
+
+                        uploadTask.continueWithTask(subTask -> {
+                            if (!subTask.isSuccessful()){
+                                throw subTask.getException();
+                            }
+                            return usersRef.getDownloadUrl();
+                        }).addOnCompleteListener(subTask -> {
+                            if (subTask.isSuccessful()){
+                                downloadUri = subTask.getResult().toString();
+                                Log.d("TAG", "Download Uri:" + downloadUri);
+
+                                if (downloadUri != null){
+                                    // 유저 객체 생성한다.
+                                    User newUser = new User(name, downloadUri, email, user.getUid());
+
+                                    // 디비 초기화
+                                    FirebaseFirestore database = FirebaseFirestore.getInstance();
+                                    // 디비에 유저 객체를 저장한다.
+                                    database.collection(Constants.KEY_COLLECTION_USERS)
+                                            .document(user.getUid())
+                                            .set(newUser)
+                                            .addOnSuccessListener(unused -> {
+                                                loading(false);
+                                                preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
+                                                preferenceManager.putString(Constants.KEY_USER_ID, user.getUid());
+                                                preferenceManager.putString(Constants.KEY_USER_NAME, name);
+                                                preferenceManager.putString(Constants.KEY_USER_IMAGE_URI, downloadUri);
+                                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                                intent.addFlags((Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                                                startActivity(intent);
+                                            }).addOnFailureListener(e -> {
+                                                loading(false);
+                                                showToast(e.getMessage());
+                                            });
+                                }
+                            }
+                        });
+
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.w("TAG", "createUserWithEmail:failure", task.getException());
+                        showToast("Authentication failed.");
+                    }
+                });
     }
 
     private final ActivityResultLauncher<Intent> pickImage = registerForActivityResult(
@@ -101,10 +143,9 @@ public class SignUpActivity extends AppCompatActivity {
                         Uri imageUri = result.getData().getData();
                         try {
                             InputStream inputStream = getContentResolver().openInputStream(imageUri);
-                            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                            bitmap = BitmapFactory.decodeStream(inputStream);
                             binding.imageProfile.setImageBitmap(bitmap);
                             binding.textAddImage.setVisibility(View.GONE);
-                            encodedImage = encodeImage(bitmap);
                         } catch (FileNotFoundException e){
                             e.printStackTrace();
                         }
@@ -113,7 +154,7 @@ public class SignUpActivity extends AppCompatActivity {
             });
 
     private Boolean isValidSignUpDetails(){
-        if (encodedImage == null){
+        if (binding.imageProfile.getDrawable() == null){
             showToast("Select profile image");
             return false;
         } else if(binding.inputName.getText().toString().trim().isEmpty()){

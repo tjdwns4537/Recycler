@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.recycler.databinding.ItemContainerRecentConversionBinding;
 import com.example.recycler.listeners.ConversionListener;
 import com.example.recycler.models.ChatMessage;
@@ -30,13 +31,8 @@ public class RecentConversationsAdapter extends RecyclerView.Adapter<RecentConve
     @NonNull
     @Override
     public ConversionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ConversionViewHolder(
-                ItemContainerRecentConversionBinding.inflate(
-                        LayoutInflater.from(parent.getContext()),
-                        parent,
-                        false
-                )
-        );
+        return new ConversionViewHolder(ItemContainerRecentConversionBinding
+                                        .inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
@@ -59,14 +55,14 @@ public class RecentConversationsAdapter extends RecyclerView.Adapter<RecentConve
         }
 
         void setData(ChatMessage chatMessage){
-            binding.imageProfile.setImageBitmap(getConversionImage(chatMessage.conversionImage));
-            binding.textName.setText(chatMessage.conversionName);
-            binding.textRecentMessage.setText(chatMessage.message);
+            Glide.with(binding.getRoot().getContext()).load(chatMessage.getConversionImageUrl()).into(binding.imageProfile);
+            binding.textName.setText(chatMessage.getConversionName());
+            binding.textRecentMessage.setText(chatMessage.getMessage());
             binding.getRoot().setOnClickListener(view -> {
                 User user = new User();
-                user.id = chatMessage.conversionId;
-                user.name = chatMessage.conversionName;
-                user.image = chatMessage.conversionImage;
+                user.setId(chatMessage.getConversionId());
+                user.setName(chatMessage.getConversionName());
+                user.setImageUrl(chatMessage.getConversionImageUrl());
                 conversionListener.onConversionClicked(user);
             });
         }

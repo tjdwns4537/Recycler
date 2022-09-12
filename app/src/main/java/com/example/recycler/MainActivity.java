@@ -68,51 +68,51 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 
-        transaction.replace(R.id.containers, homeFragment).commit();
+//        transaction.replace(R.id.containers, homeFragment).commit();
 
-        NavigationBarView navigationBarView = findViewById(R.id.bottom_navigationview);
-        navigationBarView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                switch (item.getItemId()){
-                    case R.id.home:
-                        transaction.replace(R.id.containers, homeFragment).commit();
-                    case R.id.store:
-                        transaction.replace(R.id.containers, storeFragment).commit();
-                    case R.id.community:
-//                        transaction.replace(R.id.containers, communityFragment).commit();
-                        Intent intent = new Intent(MainActivity.this, ListViewActivity.class);
-                        startActivity(intent);
-                    case R.id.chatting:
-//                        Intent intent2 = new Intent(MainActivity.this, ChatMainActivity.class);
-//                        startActivity(intent2);
-//                        transaction.replace(R.id.containers, chattingFragment).commit();
-                    case R.id.mypage:
-//                        transaction.replace(R.id.containers, mypageFragment).commit();
-                }
-
-                return false;
-            }
-        });
-
-        // 하단바 끝
-
-        // 게시글 추가 버튼 시작
-        ImageButton button = (ImageButton) findViewById(R.id.boardadd);
-        button.setOnClickListener(new Button.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, BoardAddActivity.class);
-                startActivity(intent);
-            }
-        });
+//        NavigationBarView navigationBarView = findViewById(R.id.bottom_navigationview);
+//        navigationBarView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//
+//                switch (item.getItemId()){
+//                    case R.id.home:
+//                        transaction.replace(R.id.containers, homeFragment).commit();
+//                    case R.id.store:
+//                        transaction.replace(R.id.containers, storeFragment).commit();
+//                    case R.id.community:
+////                        transaction.replace(R.id.containers, communityFragment).commit();
+//                        Intent intent = new Intent(MainActivity.this, ListViewActivity.class);
+//                        startActivity(intent);
+//                    case R.id.chatting:
+////                        Intent intent2 = new Intent(MainActivity.this, ChatMainActivity.class);
+////                        startActivity(intent2);
+////                        transaction.replace(R.id.containers, chattingFragment).commit();
+//                    case R.id.mypage:
+////                        transaction.replace(R.id.containers, mypageFragment).commit();
+//                }
+//
+//                return false;
+//            }
+//        });
+//
+//        // 하단바 끝
+//
+//        // 게시글 추가 버튼 시작
+//        ImageButton button = (ImageButton) findViewById(R.id.boardadd);
+//        button.setOnClickListener(new Button.OnClickListener(){
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(MainActivity.this, BoardAddActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
         // 게시글 추가 버튼 끝
 
 
         // 상단바 시작
-        editSearch = ((EditText) findViewById(R.id.editSearch));
+//        editSearch = ((EditText) findViewById(R.id.editSearch));
 //        listView = ((ListView) findViewById(R.id.searchList));
 
         // 리스트를 생성한다.

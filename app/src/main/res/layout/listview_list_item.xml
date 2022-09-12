@@ -16,7 +16,6 @@
         android:padding="10dp"
         android:background="@drawable/bottom_border"
         >
-
         <ImageView
             android:id="@+id/iv_icon"
             android:layout_width="0dp"
@@ -82,6 +81,7 @@
                 android:gravity="left"/>
 
         </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>

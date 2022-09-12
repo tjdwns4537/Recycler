@@ -6,7 +6,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -48,11 +47,6 @@ public class ListViewActivity extends AppCompatActivity {
     public ArrayList<BoardModel> boardDataList = new ArrayList<>();
     public ArrayList<String> boardKeyList = new ArrayList<>();
 
-    public HomeFragment homeFragment;
-    public MypageFragment mypageFragment;
-    public StoreFragment storeFragment;
-    public CommunityFragment communityFragment;
-    public ChattingFragment chattingFragment;
     public BoardModel item;
 
     public ListViewAdapter adapter;
@@ -72,44 +66,6 @@ public class ListViewActivity extends AppCompatActivity {
 
         //리스트뷰에 Adapter 설정
         listview.setAdapter(adapter);
-
-        // 하단바 설정 시작
-        homeFragment = new HomeFragment();
-        mypageFragment = new MypageFragment();
-        storeFragment = new StoreFragment();
-        communityFragment = new CommunityFragment();
-        chattingFragment = new ChattingFragment();
-
-        NavigationBarView navigationBarView = findViewById(R.id.bottom_navigationview);
-        navigationBarView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                switch (item.getItemId()){
-                    case R.id.home:
-                        Intent intent1 = new Intent(ListViewActivity.this, MainActivity.class);
-                        startActivity(intent1);
-                    case R.id.store:
-//                        Intent intent2 = new Intent(ListViewActivity.this, MainActivity.class);
-//                        startActivity(intent2);
-//                        getSupportFragmentManager().beginTransaction().replace(R.id.containers, storeFragment).commit();
-                    case R.id.community:
-                        Intent intent3 = new Intent(ListViewActivity.this, ListViewActivity.class);
-                        startActivity(intent3);
-//                        getSupportFragmentManager().beginTransaction().replace(R.id.containers, communityFragment).commit();
-                    case R.id.chatting:
-//                        Intent intent4 = new Intent(ListViewActivity.this, MainActivity.class);
-//                        startActivity(intent4);
-                    case R.id.mypage:
-//                        Intent intent5 = new Intent(ListViewActivity.this, MainActivity.class);
-//                        startActivity(intent5);
-                        break;
-                    default:
-                        throw new IllegalStateException("Unexpected value: " + item.getItemId());
-                }
-                return false;
-            }
-        });
 
     }
 

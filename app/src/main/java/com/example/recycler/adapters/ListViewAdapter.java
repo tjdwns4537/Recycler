@@ -11,7 +11,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.recycler.activities.BoardInsideActivity;
 import com.example.recycler.activities.ListViewActivity;
 import com.example.recycler.BearItem;
@@ -34,7 +33,6 @@ public class ListViewAdapter extends BaseAdapter {
     public int getCount() {
         return items.size();
     }
-
     public void addItem(ArrayList<BoardModel> item) {
         this.items = item;
     }
@@ -54,6 +52,7 @@ public class ListViewAdapter extends BaseAdapter {
         final Context context = viewGroup.getContext();
         final BoardModel boardModel = items.get(position);
 
+
         if(convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.listview_list_item, viewGroup, false);
@@ -62,7 +61,6 @@ public class ListViewAdapter extends BaseAdapter {
             View view = new View(context);
             view = (View) convertView;
         }
-
         TextView tv_name = (TextView) convertView.findViewById(R.id.tv_title);
         TextView tv_content = (TextView) convertView.findViewById(R.id.tv_content);
         TextView tv_time = (TextView) convertView.findViewById(R.id.tv_time);
@@ -75,7 +73,6 @@ public class ListViewAdapter extends BaseAdapter {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent intent = new Intent(context,BoardInsideActivity.class);
                 intent.putExtra("title", boardModel.getTitle());
                 intent.putExtra("content", boardModel.getContent());
