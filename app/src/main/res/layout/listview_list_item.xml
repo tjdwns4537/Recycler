@@ -5,80 +5,68 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="5dp">
+    android:layout_marginBottom="10dp"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:layout_gravity="center"
-        android:weightSum="10"
         android:padding="10dp"
-        android:background="@drawable/bottom_border"
+        android:background="@drawable/all_border"
         >
-        <ImageView
-            android:id="@+id/iv_icon"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:background="@drawable/all_border"
-            />
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="7"
+            android:padding="10dp"
             android:orientation="vertical"
-            android:weightSum="3"
             >
 
             <TextView
                 android:id="@+id/tv_title"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="@drawable/all_border"
-                android:gravity="left"
-                android:text="제목" />
-
-            <LinearLayout
+                android:text="제목"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                />
 
-                <ImageView
-                    android:id="@+id/sellState"
-                    android:background="@drawable/sell_state"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    >
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="내용"
+                android:textSize="10sp"
+                android:textColor="#727272"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                />
 
-                </ImageView>
-
-                <TextView
-                    android:id="@+id/tv_content"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="가격"
-                    android:textStyle="bold"
-                    android:background="@drawable/all_border"
-                    />
-
-            </LinearLayout>
+            <ImageView
+                android:id="@+id/iv_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/category"
+                />
 
             <TextView
                 android:id="@+id/tv_time"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
                 android:text="등록 시간"
                 android:textSize="10sp"
                 android:textColor="#727272"
-                android:background="@drawable/all_border"
-                android:gravity="left"/>
+                android:gravity="right"
+                />
 
         </LinearLayout>
 

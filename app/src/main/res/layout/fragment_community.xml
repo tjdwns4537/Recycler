@@ -25,59 +25,66 @@
 
             <LinearLayout
                 android:id="@+id/tv_title"
-                android:background="#FAED7D"
+                android:background="@drawable/bottom_border"
                 android:gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
                 android:orientation="horizontal"
                 >
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="10dp"
-                    android:text="#플라스틱"
+                    android:text="전체보기"
                     android:layout_gravity="center"
-                    android:textAlignment="center"
+                    android:layout_marginRight="15dp"
                     />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="#플라스틱"
+                    android:text="자유게시판"
                     android:layout_gravity="center"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="15dp"
                     />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="#플라스틱"
+                    android:text="베스트"
                     android:layout_gravity="center"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="15dp"
                     />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="#플라스틱"
+                    android:text="질문"
                     android:layout_gravity="center"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="15dp"
                     />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="#플라스틱"
+                    android:text="노하우"
                     android:layout_gravity="center"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="15dp"
                     />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="#플라스틱"
+                    android:text="처리고민"
                     android:layout_gravity="center"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="15dp"
                     />
-
             </LinearLayout>
 
         </HorizontalScrollView>
+
+        <ImageView
+            android:id="@+id/AdBanner"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@color/lightGray"
+            />
+
 
         <ListView
             android:id="@+id/listview"
@@ -87,7 +94,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="10dp"
-            android:background="#dedede"/>
+            />
     </LinearLayout>
     <!-- 리스트뷰 끝 -->
 
