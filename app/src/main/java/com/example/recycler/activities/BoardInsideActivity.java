@@ -65,8 +65,10 @@ public class BoardInsideActivity extends AppCompatActivity {
         content = getIntent().getStringExtra("content").toString();
         time = getIntent().getStringExtra("time").toString();
         uid = getIntent().getStringExtra("uid").toString();
-        photoName = getIntent().getStringExtra("photoName").toString();
-
+        if (getIntent().getStringExtra("photoName") != null) {
+            photoName = getIntent().getStringExtra("photoName").toString();
+            FirbaseGetImageData2(photoName);
+        }
 
         binding.titleArea.setText(title);
         binding.textArea.setText(content);
@@ -75,9 +77,6 @@ public class BoardInsideActivity extends AppCompatActivity {
         Log.d(TAG, title);
         Log.d(TAG, content);
         Log.d(TAG, time);
-
-        FirbaseGetImageData2(photoName);
-
     }
 
 

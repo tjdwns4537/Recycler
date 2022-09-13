@@ -19,9 +19,9 @@
 
     <!-- board string -->
     <string name="registerBtn"> 등록 </string>
-    <string name="registerName"> 상품 등록하기 </string>
+    <string name="registerName"> 게시글 적기 </string>
     <string name="registerTitle"> 제목 </string>
-    <string name="registerContent"> 내용 </string>
+    <string name="registerContent"> 내용을 입력해주세요. </string>
 
     <string name="singin_to_continue"><u>혹시 회원이신가요?</u></string>
     <string name="email">이메일</string>

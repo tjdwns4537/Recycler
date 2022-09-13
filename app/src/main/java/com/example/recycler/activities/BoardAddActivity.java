@@ -39,9 +39,9 @@ public class BoardAddActivity extends AppCompatActivity {
     public String uid;
     public String time;
     public static String path;
-    public static String key;
     public Uri imageUri;
     public String pathUri;
+    public String uriPath;
     public String resultPath;
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
@@ -58,9 +58,58 @@ public class BoardAddActivity extends AppCompatActivity {
 
     public void init() {
         mAuth = new FBAuth();
-        registerBtnAction(); // 게시글 등록 버튼
+        CameraButtonClick(); // 카메라 버튼 클릭
+        registerBtnAction(); // 게시글 등록 버튼 클릭
     }
 
+//    public void registerBtnAction() {
+//        binding.registerBtn.setOnClickListener(new Button.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Log.d(TAG, "click");
+//
+//                //변수
+//                title = binding.titleWrite.getText().toString();
+//                content = binding.contentWrite.getText().toString();
+//                uid = mAuth.getUid();
+//                time = mAuth.getTime();
+//
+//                String uriPath = getPath(imageUri);
+//
+//                Uri file = Uri.fromFile(new File(uriPath)); // 절대경로uri를 file에 할당
+//                Log.d(TAG, "photo file : " + file);
+//
+//                // stroage images에 절대경로파일 저장
+//                StorageReference riversRef = storageRef.child("images/" + file.getLastPathSegment());
+//
+//                riversRef.putFile(file).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+//                        String tempPath = file.getLastPathSegment();
+//                        resultPath = tempPath.substring(tempPath.lastIndexOf("/")+1);
+//
+//                        BoardModel boardModel = new BoardModel(title, content, uid, time, uriPath, resultPath);
+//
+//                        db.collection("board")
+//                                .add(boardModel)
+//                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+//                                    @Override
+//                                    public void onSuccess(DocumentReference documentReference) {
+//                                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+//                                    }
+//                                })
+//                                .addOnFailureListener(new OnFailureListener() {
+//                                    @Override
+//                                    public void onFailure(@NonNull Exception e) {
+//                                        Log.w(TAG, "Error adding document", e);
+//                                    }
+//                                });
+//                    }
+//                });
+//                finish();
+//            }
+//        });
+//    }
     public void registerBtnAction() {
         binding.registerBtn.setOnClickListener(new Button.OnClickListener() {
             @Override
@@ -73,7 +122,34 @@ public class BoardAddActivity extends AppCompatActivity {
                 uid = mAuth.getUid();
                 time = mAuth.getTime();
 
-                String uriPath = getPath(imageUri);
+
+                BoardModel boardModel = new BoardModel(title, content, uid, time, uriPath, resultPath);
+
+                db.collection("board")
+                        .add(boardModel)
+                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error adding document", e);
+                            }
+                        });
+                finish();
+            }
+        });
+    }
+
+    public void CameraButtonClick() {
+        binding.ImagePlus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                uriPath = getPath(imageUri);
 
                 Uri file = Uri.fromFile(new File(uriPath)); // 절대경로uri를 file에 할당
                 Log.d(TAG, "photo file : " + file);
@@ -86,42 +162,13 @@ public class BoardAddActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                         String tempPath = file.getLastPathSegment();
                         resultPath = tempPath.substring(tempPath.lastIndexOf("/")+1);
-
-                        BoardModel boardModel = new BoardModel(title, content, uid, time, uriPath, resultPath);
-
-//                        Toast.makeText(BoardAddActivity.this, resultPath,Toast.LENGTH_SHORT).show();
-
-                        db.collection("board")
-                                .add(boardModel)
-                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                    @Override
-                                    public void onSuccess(DocumentReference documentReference) {
-                                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.w(TAG, "Error adding document", e);
-                                    }
-                                });
                     }
                 });
 
-                finish();
-            }
-        });
-
-
-        binding.ImagePlus.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
                 Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
                 startActivityForResult(gallery, 100);
             }
         });
-
     }
 
     @Override
@@ -130,7 +177,7 @@ public class BoardAddActivity extends AppCompatActivity {
         if(resultCode == RESULT_OK && requestCode == 100) {
             imageUri = data.getData();
             pathUri = getPath(data.getData());
-            binding.ImagePlus.setImageURI(data.getData());
+            binding.ImagePlusCamera.setImageURI(data.getData());
 
         }
     }

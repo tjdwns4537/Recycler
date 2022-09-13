@@ -41,25 +41,14 @@
         android:gravity="center"
         android:orientation="vertical"
         android:backgroundTint="@color/lightGray"
-        android:padding="30dp">
-
-        <ImageButton
-            android:id="@+id/ImagePlus"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="left"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/camera" />
+        android:padding="20dp">
 
         <EditText
             android:id="@+id/titleWrite"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_gravity="center"
-            android:layout_marginBottom="20dp"
-            android:background="@color/white"
-            android:padding="10dp"
+            android:background="@drawable/bottom_border"
             android:hint="@string/registerTitle"
             android:textAlignment="center" />
 
@@ -68,9 +57,70 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="@color/white"
+            android:background="@drawable/bottom_border"
             android:padding="10dp"
             android:hint="@string/registerContent"
             android:textAlignment="center" />
+
+        <LinearLayout
+            android:id="@+id/ImagePlus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:background="@color/white"
+            android:layout_marginBottom="10dp"
+            android:paddingLeft="10dp"
+            >
+
+            <ImageButton
+                android:id="@+id/ImagePlusCamera"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="left|center"
+                android:background="@drawable/camera"
+                />
+
+            <TextView
+                android:id="@+id/cameraButtonText"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="이미지 업로드"
+                android:textSize="20sp"
+                android:textColor="#BFBFBF"
+                android:gravity="left|center"
+                android:paddingLeft="30dp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:background="@color/white"
+            android:layout_marginBottom="10dp"
+            android:paddingLeft="10dp"
+            >
+
+            <ImageButton
+                android:id="@+id/category"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="left|center"
+                android:background="@drawable/category"
+                />
+
+            <TextView
+                android:id="@+id/categoryButtonText"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="카테고리 설정"
+                android:textSize="20sp"
+                android:textColor="#BFBFBF"
+                android:gravity="left|center"
+                android:paddingLeft="30dp"
+                />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

@@ -1,71 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.BoardInsideActivity"
-    android:orientation="vertical">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/white"
-        >
-
-        <TextView
-            android:id="@+id/titleArea"
-            android:text="상품"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"/>
-
-    </LinearLayout>
-
+    >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/lightGray"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/timeArea"
-            android:text="time"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:gravity="right"
-            android:layout_margin="10dp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="60dp"
+            android:background="@drawable/bottom_border"
+            >
 
-        <TextView
-            android:id="@+id/title"
-            android:text="제목"
+            <TextView
+                android:text="커뮤니티"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_margin="20dp"
-            android:padding="10dp"
-            />
+            android:layout_height="wrap_content"
+            android:background="@drawable/bottom_border"
+            android:orientation="vertical"
+            android:padding="20dp"
+            >
 
-        <TextView
-            android:id="@+id/textArea"
+            <TextView
+                android:id="@+id/titleArea"
+                android:text="제목"
+                android:textSize="20sp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="left|center"
+                android:paddingLeft="10dp"
+                />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/bottom_border"
+                android:padding="10dp"
+                >
+
+                <TextView
+                    android:id="@+id/replyCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="댓글수"
+                    android:textSize="12sp"
+                    android:layout_marginRight="10dp"
+                    />
+
+                <TextView
+                    android:id="@+id/likeitCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="좋아요수"
+                    android:textSize="12sp"
+                    android:layout_marginRight="10dp"
+                    />
+
+
+                <TextView
+                    android:id="@+id/timeArea"
+                    android:text="time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:textColor="#727272"
+                    android:layout_marginRight="10dp"
+                    />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textArea"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="내용 입력해주세요."
+                android:textSize="15sp"
+                android:padding="10dp"/>
+
+            <ImageView
+                android:id="@+id/ImageArea"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_margin="20dp"
-            android:textColor="@color/black"
-            android:text="여기는 내용 영역"
-            android:padding="10dp"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_gravity="left|center"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            >
+
+            <TextView
+                android:id="@+id/replyName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="아이디" />
+
+            <TextView
+                android:id="@+id/replyTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="시간"
+                android:textSize="14sp"
+                />
+
+            <TextView
+                android:id="@+id/reply"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="내용"
+                android:textSize="14sp"
+                />
 
 
-        <ImageView
-            android:id="@+id/ImageArea"
-            android:layout_margin="30dp"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"/>
+        </LinearLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+</ScrollView>
