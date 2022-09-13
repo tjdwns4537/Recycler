@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_marginBottom="10dp"
     >
 
     <LinearLayout
@@ -50,16 +49,15 @@
                 android:id="@+id/iv_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="5dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/category"
                 />
 
             <TextView
                 android:id="@+id/tv_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
                 android:text="등록 시간"
@@ -67,9 +65,6 @@
                 android:textColor="#727272"
                 android:gravity="right"
                 />
-
         </LinearLayout>
-
     </LinearLayout>
-
 </LinearLayout>

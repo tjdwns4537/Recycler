@@ -42,7 +42,6 @@ public class BoardInsideActivity extends AppCompatActivity {
     ActivityBoardInsideBinding binding;
 
     FirebaseStorage storage = FirebaseStorage.getInstance();
-
     StorageReference storageRef = storage.getReference();
     StorageReference pathRef = storageRef.child("images/");
 
@@ -65,6 +64,7 @@ public class BoardInsideActivity extends AppCompatActivity {
         content = getIntent().getStringExtra("content").toString();
         time = getIntent().getStringExtra("time").toString();
         uid = getIntent().getStringExtra("uid").toString();
+
         if (getIntent().getStringExtra("photoName") != null) {
             photoName = getIntent().getStringExtra("photoName").toString();
             FirbaseGetImageData2(photoName);
