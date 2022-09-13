@@ -19,7 +19,11 @@ import com.example.recycler.models.BoardModel;
 import com.example.recycler.utilities.FBAuth;
 import com.example.recycler.utilities.FBdatabase;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -41,7 +45,7 @@ public class BoardAddActivity extends AppCompatActivity {
     public String resultPath;
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
-    BoardModel boardModel = new BoardModel();
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -80,28 +84,30 @@ public class BoardAddActivity extends AppCompatActivity {
                 riversRef.putFile(file).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-
-                        final Task<Uri> imageUrl = task.getResult().getStorage().getDownloadUrl();
-
-                        boardModel.setPhoto(uriPath);
-
                         String tempPath = file.getLastPathSegment();
                         resultPath = tempPath.substring(tempPath.lastIndexOf("/")+1);
 
-                        boardModel.setPhotoName(resultPath);
+                        BoardModel boardModel = new BoardModel(title, content, uid, time, uriPath, resultPath);
 
-                        boardModel.photoName = resultPath;
+//                        Toast.makeText(BoardAddActivity.this, resultPath,Toast.LENGTH_SHORT).show();
 
-                        FBdatabase.Imagepath = resultPath; // 전역 변수라 사용 못함
-
-                        Toast.makeText(BoardAddActivity.this, boardModel.photoName,Toast.LENGTH_SHORT).show();
-
-                        FBdatabase.boardRef
-                                .push()
-                                .setValue(new BoardModel(title, content, uid, time, resultPath));
-
+                        db.collection("board")
+                                .add(boardModel)
+                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                    @Override
+                                    public void onSuccess(DocumentReference documentReference) {
+                                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w(TAG, "Error adding document", e);
+                                    }
+                                });
                     }
                 });
+
                 finish();
             }
         });

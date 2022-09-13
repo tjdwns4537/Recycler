@@ -2,6 +2,8 @@ package com.example.recycler.fragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -12,14 +14,25 @@ import android.widget.ListView;
 
 import com.example.recycler.activities.ListViewActivity;
 import com.example.recycler.adapters.ListViewAdapter;
-import com.example.recycler.BearItem;
 import com.example.recycler.R;
 import com.example.recycler.databinding.BoardaddBinding;
 import com.example.recycler.models.BoardModel;
+import com.example.recycler.models.User;
+import com.example.recycler.utilities.Constants;
 import com.example.recycler.utilities.FBdatabase;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -28,9 +41,9 @@ public class CommunityFragment extends Fragment {
     public CommunityFragment binding;
     public ListView listview;
     public ArrayList<BoardModel> boardDataList = new ArrayList<>();
-    public BoardModel item;
     public ListViewAdapter adapter;
     public String TAG = ListViewActivity.class.getSimpleName();
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public static CommunityFragment newInstance(){
         return new CommunityFragment();
@@ -50,7 +63,6 @@ public class CommunityFragment extends Fragment {
         listview.setAdapter(adapter);
 
         init();
-
         return inflate;
     }
 
@@ -61,35 +73,30 @@ public class CommunityFragment extends Fragment {
 
     public void getBoardData() {
 
-        ValueEventListener postListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // Get Post object and use the values to update the UI
+        db.collection("board")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
 
-                boardDataList.clear();
+                            boardDataList.clear();
 
-                for (DataSnapshot dataModel: dataSnapshot.getChildren()) {
-                    // TODO: handle the post
+                            for (QueryDocumentSnapshot document : task.getResult()) {
 
-                    item = dataModel.getValue(BoardModel.class);
-                    boardDataList.add(item);
-                }
+                                BoardModel item = document.toObject(BoardModel.class);
 
-                for(BoardModel i : boardDataList){
-                    Log.d(TAG, i.getTitle());Log.d(TAG, i.getContent());Log.d(TAG, i.getUid());Log.d(TAG, i.getTime());
-                }
+                                boardDataList.add(item);
 
-                adapter.notifyDataSetChanged();
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                            }
 
-            }
+                            adapter.notifyDataSetChanged();
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Getting Post failed, log a message
-                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-            }
-        };
-
-        FBdatabase.boardRef.addValueEventListener(postListener);
+                        } else {
+                            Log.w(TAG, "Error getting documents.", task.getException());
+                        }
+                    }
+                });
     }
 }

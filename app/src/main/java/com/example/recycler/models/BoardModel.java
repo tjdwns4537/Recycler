@@ -5,19 +5,20 @@ public class BoardModel {
     public String content = "";
     public String uid = "";
     public String time = "";
-    public String photo;
-    public String photoName;
+    public String photo = "";
+    public String photoName = "";
 
     public BoardModel() {
 
     }
 
-    public BoardModel(String title, String content, String uid, String time, String photo) {
+    public BoardModel(String title, String content, String uid, String time, String photo, String photoName) {
         this.title = title;
         this.content = content;
         this.uid = uid;
         this.time = time;
         this.photo = photo;
+        this.photoName = photoName;
     }
 
     public String getPhoto() {

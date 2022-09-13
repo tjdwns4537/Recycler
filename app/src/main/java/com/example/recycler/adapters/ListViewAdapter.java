@@ -13,7 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.example.recycler.activities.BoardInsideActivity;
 import com.example.recycler.activities.ListViewActivity;
-import com.example.recycler.BearItem;
 import com.example.recycler.R;
 import com.example.recycler.models.BoardModel;
 
@@ -78,6 +77,7 @@ public class ListViewAdapter extends BaseAdapter {
                 intent.putExtra("content", boardModel.getContent());
                 intent.putExtra("time", boardModel.getTime());
                 intent.putExtra("photoName", boardModel.getPhotoName());
+                intent.putExtra("photo", boardModel.getPhoto());
                 intent.putExtra("uid",boardModel.getUid());
                 context.startActivity(intent);
             }

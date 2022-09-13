@@ -14,20 +14,12 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.recycler.adapters.ListViewAdapter;
-import com.example.recycler.BearItem;
-import com.example.recycler.databinding.ActivityListviewBinding;
-import com.example.recycler.databinding.BoardaddBinding;
-import com.example.recycler.databinding.ListviewListItemBinding;
-import com.example.recycler.fragment.ChattingFragment;
-import com.example.recycler.fragment.CommunityFragment;
-import com.example.recycler.fragment.HomeFragment;
-import com.example.recycler.fragment.MypageFragment;
-import com.example.recycler.fragment.StoreFragment;
-import com.example.recycler.MainActivity;
 import com.example.recycler.R;
 import com.example.recycler.models.BoardModel;
 import com.example.recycler.utilities.Constants;
 import com.example.recycler.utilities.FBdatabase;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -35,6 +27,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.protobuf.Value;
 
 import org.w3c.dom.Comment;
@@ -44,21 +39,21 @@ import java.util.ArrayList;
 public class ListViewActivity extends AppCompatActivity {
 
     public ListView listview;
-    public ArrayList<BoardModel> boardDataList = new ArrayList<>();
-    public ArrayList<String> boardKeyList = new ArrayList<>();
 
-    public BoardModel item;
+    public ArrayList<BoardModel> boardDataList = new ArrayList<>();
 
     public ListViewAdapter adapter;
 
     public String TAG = ListViewActivity.class.getSimpleName();
+
+//    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_community);
 
-        init();
+//        init();
 
         listview = (ListView) findViewById(R.id.listview);
 
@@ -69,42 +64,36 @@ public class ListViewActivity extends AppCompatActivity {
 
     }
 
-    public void init() {
-        getBoardData(); // 리스트에 데이터를 담는다.
-
-    }
-
-    public void getBoardData() {
-
-        ValueEventListener postListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // Get Post object and use the values to update the UI
-
-                boardDataList.clear();
-
-                for (DataSnapshot dataModel: dataSnapshot.getChildren()) {
-                    // TODO: handle the post
-
-                    item = dataModel.getValue(BoardModel.class);
-                    boardDataList.add(item);
-                }
-
-                for(BoardModel i : boardDataList){
-                    Log.d(TAG, i.getTitle());Log.d(TAG, i.getContent());Log.d(TAG, i.getUid());Log.d(TAG, i.getTime());
-                }
-
-                adapter.notifyDataSetChanged();
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Getting Post failed, log a message
-                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-            }
-        };
-
-        FBdatabase.boardRef.addValueEventListener(postListener);
-    }
+//    public void init() {
+//        getBoardData(); // 리스트에 데이터를 담는다.
+//
+//    }
+//
+//    public void getBoardData() {
+//
+//        db.collection("board")
+//                .get()
+//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                        if (task.isSuccessful()) {
+//
+//                            boardDataList.clear();
+//
+//                            for (QueryDocumentSnapshot document : task.getResult()) {
+//                                BoardModel item = document.toObject(BoardModel.class);
+//
+//                                boardDataList.add(item);
+//
+//                                Log.d(TAG, document.getId() + " => " + document.getData());
+//                            }
+//
+//                            adapter.notifyDataSetChanged();
+//
+//                        } else {
+//                            Log.w(TAG, "Error getting documents.", task.getException());
+//                        }
+//                    }
+//                });
+//    }
 }

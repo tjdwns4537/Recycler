@@ -46,7 +46,6 @@ public class BoardInsideActivity extends AppCompatActivity {
     StorageReference storageRef = storage.getReference();
     StorageReference pathRef = storageRef.child("images/");
 
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
     String title;
     String content;
     String time;
@@ -77,17 +76,19 @@ public class BoardInsideActivity extends AppCompatActivity {
         Log.d(TAG, content);
         Log.d(TAG, time);
 
-        FirbaseGetImageData2();
+        FirbaseGetImageData2(photoName);
 
     }
 
 
-    public void FirbaseGetImageData2(){
+    public void FirbaseGetImageData2(String photoName){
+
+        String resultPath = photoName.substring(photoName.lastIndexOf("/")+1);
 
         if (pathRef == null) {
             Log.d(TAG, "저장된 사진 없음");
         } else {
-            StorageReference submitProfile = storageRef.child("images/" + photoName);
+            StorageReference submitProfile = storageRef.child("images/" + resultPath);
             submitProfile.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {

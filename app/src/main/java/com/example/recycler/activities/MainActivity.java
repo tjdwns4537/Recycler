@@ -1,6 +1,9 @@
 package com.example.recycler.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -45,8 +48,11 @@ public class MainActivity extends AppCompatActivity {
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(binding.container.getId(), homeFragment).commit();
+
         setListeners();
 
+        // 게시물 더하기 버튼
+        boardAddButton();
     }
 
     private void setListeners(){
@@ -92,4 +98,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    private void boardAddButton() {
+//         게시글 추가 버튼 시작
+        ImageButton button = (ImageButton) findViewById(R.id.boardadd);
+        button.setOnClickListener(new ImageButton.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, BoardAddActivity.class);
+                startActivity(intent);
+            }
+        });
+
+//         게시글 추가 버튼 끝
+    }
 }
