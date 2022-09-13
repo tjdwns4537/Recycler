@@ -1,11 +1,15 @@
 package com.example.recycler.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -22,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     // 프래그먼트 객체 선언
     private HomeFragment homeFragment;
-    private  MypageFragment mypageFragment;
+    private MypageFragment mypageFragment;
     private StoreFragment storeFragment;
     private CommunityFragment communityFragment;
     private ChatFragment chatFragment;
@@ -52,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         setListeners();
 
         // 게시물 더하기 버튼
-        boardAddButton();
+        AddButton();
     }
 
     private void setListeners(){
@@ -98,17 +102,44 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void boardAddButton() {
-//         게시글 추가 버튼 시작
-        ImageButton button = (ImageButton) findViewById(R.id.boardadd);
+    private void AddButton() {
+        ImageButton button = (ImageButton) findViewById(R.id.add);
+
         button.setOnClickListener(new ImageButton.OnClickListener(){
             @Override
             public void onClick(View view) {
+                custom_dialog(view);
+            }
+        });
+    }
+
+    public void custom_dialog(View v) {
+        View dialogView = getLayoutInflater().inflate(R.layout.button_dialog, null);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+        builder.setView(dialogView);
+
+        final AlertDialog alertDialog = builder.create();
+
+        alertDialog.getWindow().setGravity(Gravity.BOTTOM);
+        alertDialog.show();
+
+        Button board_btn = dialogView.findViewById(R.id.boardAdd);
+        board_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, BoardAddActivity.class);
                 startActivity(intent);
             }
         });
 
-//         게시글 추가 버튼 끝
+        Button store_btn = dialogView.findViewById(R.id.storeAdd);
+        store_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, StoreAddActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

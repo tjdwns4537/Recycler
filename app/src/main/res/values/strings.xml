@@ -19,7 +19,8 @@
 
     <!-- board string -->
     <string name="registerBtn"> 등록 </string>
-    <string name="registerName"> 게시글 적기 </string>
+    <string name="registerBoardName"> 게시글 등록 </string>
+    <string name="registerStoreName"> 상품 판매 </string>
     <string name="registerTitle"> 제목 </string>
     <string name="registerContent"> 내용을 입력해주세요. </string>
 

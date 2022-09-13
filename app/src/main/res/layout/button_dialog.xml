@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:orientation="vertical"
+    >
+    <Button
+        android:id="@+id/boardAdd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/all_border"
+        android:text="게시글 적기"
+        android:textStyle="bold"
+        />
+
+    <Button
+        android:id="@+id/storeAdd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/all_border"
+        android:text="상품 등록하기"
+        android:textStyle="bold"
+        />
+</LinearLayout>

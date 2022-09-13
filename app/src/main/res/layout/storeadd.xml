@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/registerBoardName"
+            android:text="@string/registerStoreName"
             android:textAlignment="center"
             android:textSize="15sp" />
 
@@ -35,6 +35,7 @@
     <!-- 타이틀명과 버튼 레이아웃 끝 -->
 
     <!-- main 기능 레이아웃-->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -42,6 +43,88 @@
         android:orientation="vertical"
         android:backgroundTint="@color/lightGray"
         android:padding="20dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/white"
+            android:layout_gravity="left"
+            >
+
+            <ImageButton
+                android:id="@+id/ImagePlusCamera"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/camera_light"
+                android:layout_margin="10dp"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:background="@color/white"
+            android:layout_marginBottom="10dp"
+            android:paddingLeft="20dp"
+            >
+
+            <ImageButton
+                android:id="@+id/category"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="left|center"
+                android:background="@drawable/category_bold"
+                />
+
+            <TextView
+                android:id="@+id/categoryButtonText"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="카테고리 설정"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:gravity="left|center"
+                android:paddingLeft="30dp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:background="@color/white"
+            android:layout_marginBottom="10dp"
+            android:paddingLeft="20dp"
+            >
+
+            <ImageButton
+                android:id="@+id/price"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="left|center"
+                android:background="@drawable/price"
+                />
+
+            <TextView
+                android:id="@+id/priceButtonText"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="판매가격 설정"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:gravity="left|center"
+                android:paddingLeft="30dp"
+                />
+        </LinearLayout>
 
         <EditText
             android:id="@+id/titleWrite"
@@ -61,66 +144,5 @@
             android:padding="10dp"
             android:hint="@string/registerContent"
             android:textAlignment="center" />
-
-        <LinearLayout
-            android:id="@+id/ImagePlus"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center"
-            android:background="@color/white"
-            android:layout_marginBottom="10dp"
-            android:paddingLeft="10dp"
-            >
-
-            <ImageButton
-                android:id="@+id/ImagePlusCamera"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="left|center"
-                android:background="@drawable/camera"
-                />
-
-            <TextView
-                android:id="@+id/cameraButtonText"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:text="이미지 업로드"
-                android:textSize="20sp"
-                android:textColor="#BFBFBF"
-                android:gravity="left|center"
-                android:paddingLeft="30dp"
-                />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center"
-            android:background="@color/white"
-            android:layout_marginBottom="10dp"
-            android:paddingLeft="10dp"
-            >
-
-            <ImageButton
-                android:id="@+id/category"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="left|center"
-                android:background="@drawable/category"
-                />
-
-            <TextView
-                android:id="@+id/categoryButtonText"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:text="카테고리 설정"
-                android:textSize="20sp"
-                android:textColor="#BFBFBF"
-                android:gravity="left|center"
-                android:paddingLeft="30dp"
-                />
-        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

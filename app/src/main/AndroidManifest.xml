@@ -50,7 +50,15 @@
             android:exported="false" />
 
         <activity
+            android:name=".activities.StoreAddActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".activities.BoardInsideActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".activities.StoreInsideActivity"
             android:exported="true" />
 
         <activity
