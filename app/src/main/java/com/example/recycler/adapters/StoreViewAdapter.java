@@ -72,14 +72,14 @@ public class StoreViewAdapter extends BaseAdapter {
             View view = new View(context);
             view = (View) convertView;
         }
-        TextView tv_name = (TextView) convertView.findViewById(R.id.tv_title);
-        TextView tv_content = (TextView) convertView.findViewById(R.id.tv_content);
-        TextView tv_time = (TextView) convertView.findViewById(R.id.tv_time);
+        TextView store_title = (TextView) convertView.findViewById(R.id.store_title);
+        TextView store_content = (TextView) convertView.findViewById(R.id.store_content);
+        TextView store_registertime = (TextView) convertView.findViewById(R.id.store_registertime);
         ImageView ivIcon = (ImageView) convertView.findViewById(R.id.iv_icon);
 
-        tv_name.setText(storeModel.getTitle());
-        tv_content.setText(storeModel.getContent());
-        tv_time.setText(storeModel.getTime());
+        store_title.setText(storeModel.getTitle());
+        store_content.setText(storeModel.getContent());
+        store_registertime.setText(storeModel.getTime());
 
         // 이미지 불러오기
         if ((storeModel.getPhotoName() != null) && (storeModel.getPhotoName() != "")) {

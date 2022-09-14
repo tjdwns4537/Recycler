@@ -1,19 +1,23 @@
 package com.example.recycler.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.loader.content.CursorLoader;
 
+import com.example.recycler.R;
 import com.example.recycler.databinding.BoardaddBinding;
 import com.example.recycler.databinding.StoreaddBinding;
 import com.example.recycler.models.BoardModel;
@@ -45,6 +49,10 @@ public class StoreAddActivity extends AppCompatActivity {
     public String pathUri;
     public String uriPath;
     public String resultPath;
+    public String[] category;
+    public AlertDialog.Builder builder;
+    public String selectCategory;
+    public int selectNum = 0;
 
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
@@ -63,6 +71,7 @@ public class StoreAddActivity extends AppCompatActivity {
         mAuth = new FBAuth();
         registerBtnAction(); // 게시글 등록 버튼 클릭
         CameraButtonClick(); // 카메라 버튼 클릭
+        CategoryButton(); // 카테고리 버튼 클릭
     }
 
     public void registerBtnAction() {
@@ -76,6 +85,7 @@ public class StoreAddActivity extends AppCompatActivity {
                 content = binding.contentWrite.getText().toString();
                 uid = mAuth.getUid();
                 time = mAuth.getTime();
+                selectCategory = category[selectNum];
 
 
                 if(imageUri != null){
@@ -99,7 +109,7 @@ public class StoreAddActivity extends AppCompatActivity {
                     resultPath = "";
                 }
 
-                StoreModel storeModel = new StoreModel(title, content, uid, time, uriPath, resultPath);
+                StoreModel storeModel = new StoreModel(title, content, uid, time, uriPath, resultPath, selectCategory);
 
                 db.collection("store")
                         .add(storeModel)
@@ -150,6 +160,44 @@ public class StoreAddActivity extends AppCompatActivity {
         cursor.moveToFirst();
 
         return cursor.getString(index);
+    }
+
+    public void CategoryButton() {
+        binding.category.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialog();
+            }
+        });
+    }
+
+    public void showDialog() {
+        category = getResources().getStringArray(R.array.category);
+
+        builder = new AlertDialog.Builder(StoreAddActivity.this);
+
+        builder.setTitle("카테고리");
+        builder.setIcon(R.drawable.category_bold);
+
+        builder.setItems(category, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                setArrayNumber(which);
+                binding.categoryButtonText.setText(category[selectNum]);
+            }
+        });
+
+        final AlertDialog alertDialog = builder.create();
+        alertDialog.getWindow().setGravity(Gravity.CENTER);
+        alertDialog.show();
+    }
+
+    public void setArrayNumber(int which) {
+        for (int i = 0; i < category.length; i++) {
+            if(category[i].equals(category[which])){
+                selectNum = which;
+            }
+        }
     }
 
 }

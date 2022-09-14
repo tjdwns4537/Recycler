@@ -7,18 +7,20 @@ public class BoardModel {
     public String time = "";
     public String photo = "";
     public String photoName = "";
+    public String category = "";
 
     public BoardModel() {
 
     }
 
-    public BoardModel(String title, String content, String uid, String time, String photo, String photoName) {
+    public BoardModel(String title, String content, String uid, String time, String photo, String photoName, String category) {
         this.title = title;
         this.content = content;
         this.uid = uid;
         this.time = time;
         this.photo = photo;
         this.photoName = photoName;
+        this.category = category;
     }
 
     public String getPhoto() {
@@ -51,5 +53,13 @@ public class BoardModel {
 
     public String getTime() {
         return time;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

@@ -105,14 +105,13 @@
             android:paddingLeft="20dp"
             >
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/price"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_gravity="left|center"
                 android:background="@drawable/price"
+                android:layout_gravity="left|center"
                 />
-
             <TextView
                 android:id="@+id/priceButtonText"
                 android:layout_width="match_parent"

@@ -24,6 +24,21 @@
     <string name="registerTitle"> 제목 </string>
     <string name="registerContent"> 내용을 입력해주세요. </string>
 
+    <!-- category list data -->
+    <string name="카테고리"></string>
+    <string-array name="category">
+        <item> 기타제품 </item>
+        <item> 리사이클 제품 </item>
+        <item> 리사이클 공예품 </item>
+        <item> 패트병 </item>
+        <item> 플라스틱 </item>
+        <item> 종이 및 책 </item>
+        <item> 공병 및 유리병 </item>
+        <item> 금속류 </item>
+        <item> 가전기기 </item>
+        <item> 유리 </item>
+    </string-array>
+
     <string name="singin_to_continue"><u>혹시 회원이신가요?</u></string>
     <string name="email">이메일</string>
     <string name="password">비밀번호</string>
