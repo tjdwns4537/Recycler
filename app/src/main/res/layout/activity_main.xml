@@ -23,16 +23,17 @@
             android:layout_height="0dp"
             android:layout_weight="1">
 
-        </FrameLayout>
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/add"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:src="@drawable/board_add"
+                    android:backgroundTint="#727272"
+                    android:layout_gravity="bottom|right"
+                    />
 
-        <ImageButton
-            android:id="@+id/add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:background="@drawable/board_add"
-            android:layout_gravity="bottom|right"
-            />
+        </FrameLayout>
 
         <!-- 하단 고정바 시작 -->
         <com.google.android.material.bottomnavigation.BottomNavigationView

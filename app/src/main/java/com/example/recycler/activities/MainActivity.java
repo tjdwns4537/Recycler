@@ -21,6 +21,7 @@ import com.example.recycler.fragment.CommunityFragment;
 import com.example.recycler.fragment.HomeFragment;
 import com.example.recycler.fragment.MypageFragment;
 import com.example.recycler.fragment.StoreFragment;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -103,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void AddButton() {
-        ImageButton button = (ImageButton) findViewById(R.id.add);
+        FloatingActionButton button = (FloatingActionButton) findViewById(R.id.add);
 
         button.setOnClickListener(new ImageButton.OnClickListener(){
             @Override
