@@ -23,16 +23,16 @@
             android:layout_height="0dp"
             android:layout_weight="1">
 
-                <ImageButton
-                    android:id="@+id/add"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
-                    android:background="@drawable/board_add"
-                    android:layout_gravity="bottom|right"
-                    />
-
         </FrameLayout>
+
+        <ImageButton
+            android:id="@+id/add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:background="@drawable/board_add"
+            android:layout_gravity="bottom|right"
+            />
 
         <!-- 하단 고정바 시작 -->
         <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -47,77 +47,3 @@
         <!-- 하단 고정바 끝-->
 
 </LinearLayout>
-
-<!--
-<<<<<<< HEAD
-    android:padding="10dp"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
-
-<LinearLayout
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:orientation="horizontal"
-android:layout_marginTop="20dp"
-android:paddingLeft="10dp"
-android:paddingRight="10dp"
-android:layout_gravity="center"
-    >
-<ImageButton
-    android:id="@+id/searchImage"
-    android:layout_width="50dp"
-    android:layout_height="50dp"
-    android:background="@drawable/search"
-    />
-
-<EditText
-    android:id="@+id/editSearch"
-    android:layout_width="0dp"
-    android:layout_height="60dp"
-    android:layout_weight="1"
-    android:hint="검색어를 입력하세요."/>
-
-<ImageButton
-    android:id="@+id/alarmButton"
-    android:layout_width="50dp"
-    android:layout_height="50dp"
-    android:background="@drawable/ic_settings"
-    />
-
-<ImageButton
-    android:id="@+id/scrapButton"
-    android:layout_width="50dp"
-    android:layout_height="50dp"
-    android:background="@drawable/scrap"
-    />
-</LinearLayout>
-
-<FrameLayout
-android:id="@+id/containers"
-android:layout_width="match_parent"
-android:layout_height="0dp"
-android:layout_weight="1" >
-
-<ImageButton
-    android:id="@+id/boardadd"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_margin="20dp"
-    android:background="@drawable/board_add"
-    android:layout_gravity="bottom|right"
-    />
-</FrameLayout>
-
-
-
-<com.google.android.material.bottomnavigation.BottomNavigationView
-android:id="@+id/bottom_navigationview"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-app:labelVisibilityMode="labeled"
-app:itemBackground="@color/white"
-app:menu="@menu/navbar_bottom"
-    />
-
-    =======
--->

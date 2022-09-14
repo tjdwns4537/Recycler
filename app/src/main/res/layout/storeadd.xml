@@ -64,36 +64,20 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <Button
+            android:id="@+id/category"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_height="60dp"
+            android:background="@drawable/btn_round"
+            android:drawableLeft="@drawable/category_bold"
+            android:text="@string/categoryButton"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="20sp"
             android:layout_gravity="center"
-            android:background="@color/white"
-            android:layout_marginBottom="10dp"
             android:paddingLeft="20dp"
-            >
-
-            <ImageButton
-                android:id="@+id/category"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="left|center"
-                android:background="@drawable/category_bold"
-                />
-
-            <TextView
-                android:id="@+id/categoryButtonText"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:text="카테고리 설정"
-                android:textSize="20sp"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:gravity="left|center"
-                android:paddingLeft="30dp"
-                />
-        </LinearLayout>
+            android:layout_marginBottom="10dp"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -104,7 +88,6 @@
             android:layout_marginBottom="10dp"
             android:paddingLeft="20dp"
             >
-
             <ImageView
                 android:id="@+id/price"
                 android:layout_width="40dp"
@@ -112,16 +95,17 @@
                 android:background="@drawable/price"
                 android:layout_gravity="left|center"
                 />
-            <TextView
-                android:id="@+id/priceButtonText"
+
+            <EditText
+                android:id="@+id/priceText"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:text="판매가격 설정"
                 android:textSize="20sp"
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                android:gravity="left|center"
-                android:paddingLeft="30dp"
+                android:gravity="center"
+                android:hint="판매가격 설정"
+                android:paddingRight="30dp"
                 />
         </LinearLayout>
 

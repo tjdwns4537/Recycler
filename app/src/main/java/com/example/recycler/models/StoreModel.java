@@ -9,12 +9,13 @@ public class StoreModel {
     public String photo = "";
     public String photoName = "";
     public String category = "";
+    public String price = "";
 
     public StoreModel() {
 
     }
 
-    public StoreModel(String title, String content, String uid, String time, String photo, String photoName, String category) {
+    public StoreModel(String title, String content, String uid, String time, String photo, String photoName, String category, String price) {
         this.title = title;
         this.content = content;
         this.uid = uid;
@@ -22,6 +23,7 @@ public class StoreModel {
         this.photo = photo;
         this.photoName = photoName;
         this.category = category;
+        this.price = price;
     }
 
     public String getPhoto() {
@@ -62,5 +64,13 @@ public class StoreModel {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
     }
 }

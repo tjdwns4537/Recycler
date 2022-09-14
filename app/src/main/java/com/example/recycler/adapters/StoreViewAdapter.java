@@ -73,12 +73,12 @@ public class StoreViewAdapter extends BaseAdapter {
             view = (View) convertView;
         }
         TextView store_title = (TextView) convertView.findViewById(R.id.store_title);
-        TextView store_content = (TextView) convertView.findViewById(R.id.store_content);
+        TextView store_price = (TextView) convertView.findViewById(R.id.store_price);
         TextView store_registertime = (TextView) convertView.findViewById(R.id.store_registertime);
         ImageView ivIcon = (ImageView) convertView.findViewById(R.id.iv_icon);
 
         store_title.setText(storeModel.getTitle());
-        store_content.setText(storeModel.getContent());
+        store_price.setText(storeModel.getPrice());
         store_registertime.setText(storeModel.getTime());
 
         // 이미지 불러오기

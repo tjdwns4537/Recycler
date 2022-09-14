@@ -5,9 +5,38 @@
     android:layout_height="match_parent"
     tools:context=".fragment.HomeFragment">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+    <!-- 리스트 뷰 시작 -->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="홈 프래그먼트" />
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/AdBanner"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@drawable/category"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="지금 올라온 거래"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            />
+
+
+        <ListView
+            android:id="@+id/listview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="10dp"
+            />
+    </LinearLayout>
+    <!-- 리스트뷰 끝 -->
 </FrameLayout>

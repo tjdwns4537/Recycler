@@ -89,7 +89,7 @@ public class ListViewAdapter extends BaseAdapter {
             String photoName = boardModel.getPhotoName();
             String resultPath = photoName.substring(photoName.lastIndexOf("/") + 1);
 
-            Toast.makeText(context, boardModel.getTitle(),Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, boardModel.getTitle(),Toast.LENGTH_SHORT).show();
 
             StorageReference submitProfile = storageRef.child("images/" + resultPath);
             submitProfile.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {

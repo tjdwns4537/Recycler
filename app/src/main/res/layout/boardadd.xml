@@ -70,57 +70,42 @@
             android:layout_gravity="center"
             android:background="@color/white"
             android:layout_marginBottom="10dp"
-            android:paddingLeft="10dp"
             >
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/ImagePlusCamera"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:layout_gravity="left|center"
-                android:background="@drawable/camera"
                 />
 
             <TextView
                 android:id="@+id/cameraButtonText"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
+                android:drawableLeft="@drawable/camera_light"
                 android:text="이미지 업로드"
                 android:textSize="20sp"
-                android:textColor="#BFBFBF"
-                android:gravity="left|center"
-                android:paddingLeft="30dp"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:paddingLeft="20dp"
                 />
         </LinearLayout>
 
-        <LinearLayout
+        <Button
+            android:id="@+id/category"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_height="60dp"
+            android:background="@drawable/btn_round"
+            android:drawableLeft="@drawable/category_bold"
+            android:text="@string/categoryButton"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="20sp"
             android:layout_gravity="center"
-            android:background="@color/white"
+            android:paddingLeft="20dp"
             android:layout_marginBottom="10dp"
-            android:paddingLeft="10dp"
-            >
+            />
 
-            <ImageButton
-                android:id="@+id/category"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="left|center"
-                android:background="@drawable/category"
-                />
-
-            <TextView
-                android:id="@+id/categoryButtonText"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:text="카테고리 설정"
-                android:textSize="20sp"
-                android:textColor="#BFBFBF"
-                android:gravity="left|center"
-                android:paddingLeft="30dp"
-                />
-        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

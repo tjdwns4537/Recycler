@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -193,7 +192,7 @@ public class BoardAddActivity extends AppCompatActivity {
 //    }
 //
     public void CameraButtonClick() {
-        binding.ImagePlusCamera.setOnClickListener(new View.OnClickListener() {
+        binding.ImagePlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -262,7 +261,7 @@ public class BoardAddActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 setArrayNumber(which); // 카테고리를 정해준다.
-                binding.categoryButtonText.setText(category[selectNum]); // 카테고리명 변경
+                binding.category.setText(category[selectNum]); // 카테고리명 변경
             }
         });
 

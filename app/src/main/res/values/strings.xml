@@ -23,6 +23,9 @@
     <string name="registerStoreName"> 상품 판매 </string>
     <string name="registerTitle"> 제목 </string>
     <string name="registerContent"> 내용을 입력해주세요. </string>
+    <string name="categoryButton"> 카테고리 설정 </string>
+    <string name="imageButton"> 이미지 업로드 </string>
+    <string name="priceButton"> 판매 가격 설정 </string>
 
     <!-- category list data -->
     <string name="카테고리"></string>
