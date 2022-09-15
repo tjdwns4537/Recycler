@@ -10,11 +10,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/bottom_border"
             >
 
@@ -28,6 +31,14 @@
                 android:gravity="center"/>
 
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/AdBanner"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/banner"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"

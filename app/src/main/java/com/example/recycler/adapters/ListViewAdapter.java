@@ -48,6 +48,7 @@ public class ListViewAdapter extends BaseAdapter {
     public int getCount() {
         return items.size();
     }
+
     public void addItem(ArrayList<BoardModel> item) {
         this.items = item;
     }
@@ -80,8 +81,18 @@ public class ListViewAdapter extends BaseAdapter {
         TextView tv_time = (TextView) convertView.findViewById(R.id.tv_time);
         ImageView ivIcon = (ImageView) convertView.findViewById(R.id.iv_icon);
 
+        String boardTExt = boardModel.getContent();
+        if(boardTExt.length() >= 7){
+            boardTExt = boardTExt.substring(0, 7) + "...";
+        }
+
+        String contentText = boardModel.getContent();
+        if(contentText.length() >= 10){
+            contentText = contentText.substring(0, 10) + "...";
+        }
+
         tv_name.setText(boardModel.getTitle());
-        tv_content.setText(boardModel.getContent());
+        tv_content.setText(contentText);
         tv_time.setText(boardModel.getTime());
 
         // 이미지 불러오기

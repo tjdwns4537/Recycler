@@ -77,7 +77,13 @@ public class StoreViewAdapter extends BaseAdapter {
         TextView store_registertime = (TextView) convertView.findViewById(R.id.store_registertime);
         ImageView ivIcon = (ImageView) convertView.findViewById(R.id.iv_icon);
 
-        store_title.setText(storeModel.getTitle());
+        String boardText = storeModel.getContent();
+
+        if(boardText.length() >= 7){
+            boardText = boardText.substring(0, 7) + "...";
+        }
+
+        store_title.setText(boardText);
         store_price.setText(storeModel.getPrice());
         store_registertime.setText(storeModel.getTime());
 

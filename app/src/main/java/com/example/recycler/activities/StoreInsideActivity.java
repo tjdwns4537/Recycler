@@ -73,6 +73,8 @@ public class StoreInsideActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(Uri uri) {
                     Log.d(TAG, uri.toString());
+                    StoreInsideActivity activity = StoreInsideActivity.this;
+                    if (activity.isFinishing()) return;
                     Glide.with(StoreInsideActivity.this).load(uri).into(imageView);
                 }
             }).addOnFailureListener(new OnFailureListener() {

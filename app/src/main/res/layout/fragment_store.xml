@@ -77,14 +77,6 @@
 
         </HorizontalScrollView>
 
-        <ImageView
-            android:id="@+id/AdBanner"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:background="@drawable/category"
-            />
-
-
         <ListView
             android:id="@+id/listview"
             android:layout_width="match_parent"

@@ -22,13 +22,6 @@ import com.example.recycler.utilities.FBdatabase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -91,6 +84,8 @@ public class BoardInsideActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(Uri uri) {
                     Log.d(TAG, uri.toString());
+                    BoardInsideActivity activity = BoardInsideActivity.this;
+                    if (activity.isFinishing()) return;
                     Glide.with(BoardInsideActivity.this).load(uri).into(imageView);
                 }
             }).addOnFailureListener(new OnFailureListener() {
