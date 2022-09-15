@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.CommunityFragment"
-    android:padding="10dp"
     android:orientation="vertical"
     >
 
@@ -29,8 +28,9 @@
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
                 android:orientation="horizontal"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 >
                 <TextView
                     android:layout_width="wrap_content"
@@ -38,6 +38,7 @@
                     android:text="전체보기"
                     android:layout_gravity="center"
                     android:layout_marginRight="15dp"
+                    android:paddingLeft="10dp"
                     />
                 <TextView
                     android:layout_width="wrap_content"
@@ -73,6 +74,15 @@
                     android:text="처리고민"
                     android:layout_gravity="center"
                     android:layout_marginRight="15dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="무료나눔"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="15dp"
+                    android:paddingRight="10dp"
                     />
             </LinearLayout>
 

@@ -66,16 +66,6 @@ public class HomeFragment extends Fragment {
 
         adapter = new ProductAdapter(storeDataList);
 
-//        adapter.addItem(new Product("구찌", "90만" , "세상에 12개 밖에 없음", R.drawable.scrap));
-//        adapter.addItem(new Product("루이", "190만" , "세상에 1개 밖에 없음", R.drawable.scrap));
-//        adapter.addItem(new Product("휠라", "9만" , "세상에 145개 밖에 없음", R.drawable.scrap));
-//        adapter.addItem(new Product("슈프림", "90만" , "세상에 11개 밖에 없음", R.drawable.scrap));
-//        adapter.addItem(new Product("아보키", "0.9만" , "세상에 11234개 밖에 없음", R.drawable.scrap));
-//        adapter.addItem(new Product("바보", "100만" , "세상에 1111개 밖에 없음", R.drawable.scrap));
-//        adapter.addItem(new Product("아메리카노", "90만" , "세상에 12개 밖에 없음", R.drawable.scrap));
-//        adapter.addItem(new Product("횟초리", "190만" , "세상에 1개 밖에 없음", R.drawable.scrap));
-//        adapter.addItem(new Product("찰싹", "9만" , "세상에 145개 밖에 없음", R.drawable.scrap));
-
         recyclerView.setAdapter(adapter);
 
         adapter.setOnItemClickListener(new OnProductItemClickListener() {

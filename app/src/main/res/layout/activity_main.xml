@@ -11,11 +11,27 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_50sdp"
+            android:background="@drawable/bottom_border"
             app:buttonGravity="center_vertical"
             app:labelVisibilityMode="unlabeled"
             app:logo="@null"
             app:maxButtonHeight="@dimen/_24sdp"
-            app:menu="@menu/appbar_top"/>
+            app:menu="@menu/appbar_top">
+
+                <androidx.constraintlayout.utils.widget.ImageFilterButton
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/logo"
+                    />
+
+                <androidx.appcompat.widget.SearchView
+                    android:id="@+id/search_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:iconifiedByDefault="false"
+                    app:queryHint="검색어를 입력하시오" />
+
+        </androidx.appcompat.widget.Toolbar>
 
         <FrameLayout
             android:id="@+id/container"
