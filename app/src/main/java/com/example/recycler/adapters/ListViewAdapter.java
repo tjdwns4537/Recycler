@@ -19,9 +19,6 @@ import com.bumptech.glide.Glide;
 import com.example.recycler.activities.BoardInsideActivity;
 import com.example.recycler.activities.ListViewActivity;
 import com.example.recycler.R;
-import com.example.recycler.databinding.ActivityListviewBinding;
-import com.example.recycler.databinding.ListviewListItemBinding;
-import com.example.recycler.fragment.CommunityFragment;
 import com.example.recycler.models.BoardModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -87,8 +84,8 @@ public class ListViewAdapter extends BaseAdapter {
         }
 
         String contentText = boardModel.getContent();
-        if(contentText.length() >= 10){
-            contentText = contentText.substring(0, 10) + "...";
+        if(contentText.length() >= 7){
+            contentText = contentText.substring(0, 7) + "...";
         }
 
         tv_name.setText(boardModel.getTitle());

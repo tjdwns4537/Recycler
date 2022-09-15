@@ -19,6 +19,7 @@ import androidx.loader.content.CursorLoader;
 import com.example.recycler.R;
 import com.example.recycler.databinding.BoardaddBinding;
 import com.example.recycler.models.BoardModel;
+import com.example.recycler.models.MainPageData;
 import com.example.recycler.utilities.FBAuth;
 import com.example.recycler.utilities.FBdatabase;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -106,6 +107,7 @@ public class BoardAddActivity extends AppCompatActivity {
                 }
 
                 BoardModel boardModel = new BoardModel(title, content, uid, time, uriPath, resultPath, selectCategory);
+                MainPageData mainPageData = new MainPageData(2, title, content, time, resultPath);
 
                 db.collection("board")
                         .add(boardModel)
@@ -121,96 +123,31 @@ public class BoardAddActivity extends AppCompatActivity {
                                 Log.w(TAG, "Error adding document", e);
                             }
                         });
+
+                db.collection("homePage")
+                        .add(mainPageData)
+                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error adding document", e);
+                            }
+                        });
+
                 finish();
             }
-
-//                Log.d(TAG, "photo file : " + file);
-
-                // stroage images에 절대경로파일 저장
-//                StorageReference riversRef = storageRef.child("images/" + file.getLastPathSegment());
-
-//                riversRef.putFile(file).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-//                        String tempPath = file.getLastPathSegment();
-//                        resultPath = tempPath.substring(tempPath.lastIndexOf("/")+1);
-//
-//                        BoardModel boardModel = new BoardModel(title, content, uid, time, uriPath, resultPath);
-//
-//                        db.collection("board")
-//                                .add(boardModel)
-//                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-//                                    @Override
-//                                    public void onSuccess(DocumentReference documentReference) {
-//                                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-//                                    }
-//                                })
-//                                .addOnFailureListener(new OnFailureListener() {
-//                                    @Override
-//                                    public void onFailure(@NonNull Exception e) {
-//                                        Log.w(TAG, "Error adding document", e);
-//                                    }
-//                                });
-//                    }
-//                });
-//                finish();
-//            }
         });
     }
 
-//    public void registerBtnAction() {
-//        binding.registerBtn.setOnClickListener(new Button.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Log.d(TAG, "click");
-//
-//                //변수
-//                title = binding.titleWrite.getText().toString();
-//                content = binding.contentWrite.getText().toString();
-//                uid = mAuth.getUid();
-//                time = mAuth.getTime();
-//
-//                BoardModel boardModel = new BoardModel(title, content, uid, time, uriPath, resultPath);
-//
-//                db.collection("board")
-//                        .add(boardModel)
-//                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-//                            @Override
-//                            public void onSuccess(DocumentReference documentReference) {
-//                                Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-//                            }
-//                        })
-//                        .addOnFailureListener(new OnFailureListener() {
-//                            @Override
-//                            public void onFailure(@NonNull Exception e) {
-//                                Log.w(TAG, "Error adding document", e);
-//                            }
-//                        });
-//                finish();
-//            }
-//        });
-//    }
-//
     public void CameraButtonClick() {
         binding.ImagePlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-//                uriPath = getPath(imageUri);
-//
-//                Uri file = Uri.fromFile(new File(uriPath)); // 절대경로uri를 file에 할당
-//                Log.d(TAG, "photo file : " + file);
-//
-//                // stroage images에 절대경로파일 저장
-//                StorageReference riversRef = storageRef.child("images/" + file.getLastPathSegment());
-//
-//                riversRef.putFile(file).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-//                        String tempPath = file.getLastPathSegment();
-//                        resultPath = tempPath.substring(tempPath.lastIndexOf("/")+1);
-//                    }
-//                });
 
                 Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
                 startActivityForResult(gallery, 100);

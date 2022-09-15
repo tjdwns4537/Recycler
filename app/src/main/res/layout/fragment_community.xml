@@ -1,104 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.CommunityFragment"
-    android:orientation="vertical"
-    >
+    android:fillViewport="true"
+    tools:context=".fragment.CommunityFragment">
 
-    <!-- 리스트 뷰 시작 -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="vertical">
-
-        <HorizontalScrollView
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <!-- 리스트 뷰 시작 -->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            >
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/tv_title"
-                android:background="@drawable/bottom_border"
-                android:gravity="center"
+            <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="전체보기"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="15dp"
-                    android:paddingLeft="10dp"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="자유게시판"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="15dp"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="베스트"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="15dp"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="질문"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="15dp"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="노하우"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="15dp"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="처리고민"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="15dp"
-                    />
+                android:layout_marginBottom="10dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="무료나눔"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="15dp"
-                    android:paddingRight="10dp"
-                    />
-            </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/tv_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bottom_border"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp">
 
-        </HorizontalScrollView>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="15dp"
+                        android:paddingLeft="10dp"
+                        android:text="전체보기" />
 
-        <ListView
-            android:id="@+id/listview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="10dp"
-            />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="15dp"
+                        android:text="자유게시판" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="15dp"
+                        android:text="베스트" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="15dp"
+                        android:text="질문" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="15dp"
+                        android:text="노하우" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="15dp"
+                        android:text="처리고민" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="15dp"
+                        android:paddingRight="10dp"
+                        android:text="무료나눔" />
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+            <ListView
+                android:id="@+id/listview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="10dp" />
+        </LinearLayout>
+        <!-- 리스트뷰 끝 -->
+
+
     </LinearLayout>
-    <!-- 리스트뷰 끝 -->
 
-
-</LinearLayout>
+</ScrollView>

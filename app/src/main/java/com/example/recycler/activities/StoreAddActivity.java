@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
@@ -19,9 +18,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.loader.content.CursorLoader;
 
 import com.example.recycler.R;
-import com.example.recycler.databinding.BoardaddBinding;
 import com.example.recycler.databinding.StoreaddBinding;
-import com.example.recycler.models.BoardModel;
+import com.example.recycler.models.MainPageData;
 import com.example.recycler.models.StoreModel;
 import com.example.recycler.utilities.FBAuth;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -114,9 +112,25 @@ public class StoreAddActivity extends AppCompatActivity {
                 }
 
                 StoreModel storeModel = new StoreModel(title, content, uid, time, uriPath, resultPath, selectCategory, price);
+                MainPageData mainPageModel = new MainPageData(title, time, price, resultPath, 1);
 
                 db.collection("store")
                         .add(storeModel)
+                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error adding document", e);
+                            }
+                        });
+
+                db.collection("homePage")
+                        .add(mainPageModel)
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                             @Override
                             public void onSuccess(DocumentReference documentReference) {
