@@ -40,7 +40,6 @@ public class HomeFragment extends Fragment {
     public RecyclerView md_recyclerView;
 
     public GridLayoutManager layoutManager;
-    public GridLayoutManager story_layoutManager;
     public GridLayoutManager md_layoutManager;
     public GridLayoutManager close_layoutManager;
 
